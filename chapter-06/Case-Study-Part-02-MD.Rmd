@@ -1,9 +1,7 @@
 ---
 title: "Case Study Part 2: Healthy Controls"
-format:
-    html:
-      toc: true
-author: "Edward Gunning"
+output: github_document
+always_allow_html: true
 ---
 
 Analysis of healthy controls using FPCA and scalar-on-function regression.

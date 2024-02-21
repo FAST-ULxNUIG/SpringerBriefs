@@ -6,15 +6,19 @@ format:
 author: "Edward Gunning"
 ---
 
+
 Analysis of healthy controls using FPCA and scalar-on-function regression.
 
 # Set Up
+
 
 ```{r}
 time_start <- Sys.time()
 ```
 
+
 Packages.
+
 
 ```{r packages, message=FALSE, warning = FALSE}
 library(tidyverse)  # CRAN v1.3.1 
@@ -23,7 +27,9 @@ library(fda)        # CRAN v5.5.1
 library(refund)     # CRAN v0.1-26
 ```
 
+
 Some graphics settings.
+
 
 ```{r}
 source(here::here("functions", "theme_gunning.R"))
@@ -34,14 +40,18 @@ theme_update(strip.text = element_text(size = 10),
              plot.title = element_text(size = 11))
 ```
 
+
 Load some other helper functions.
+
 
 ```{r}
 source(here::here("functions", "center_fd_around_new_mean.R"))
 source(here::here("functions", "project_data_onto_fpcs.R"))
 ```
 
+
 Read in the data.
+
 
 ```{r}
 data_path <- here::here("chapter-06", "data", "interpolated-data.rds")
@@ -51,7 +61,9 @@ bspl_35 <- interpolated_data$bspl_35
 GRF_dataset_PRO_meta[, uniqueN(SESSION_ID), by = SUBJECT_ID][, stopifnot(V1 == 1)]
 ```
 
+
 Calculate unilateral average curves for each subject and force component:
+
 
 ```{r}
 GRF_dataset_PRO_meta[, paste0("time_",0:100) := NULL]
@@ -63,9 +75,11 @@ GRF_dataset_PRO_averages <- GRF_dataset_PRO_meta[,
                     .SDcols = paste0("bspl4.",1:35)] # says which columns to average
 ```
 
+
 In this work, we focus on the **Vertical** and **Anterior-Posterior** force components.
 Focus on right side averages from  healthy controls only.
 Construct `fd` objects from basis coefficients and basis.
+
 
 ```{r}
 averages_vertical <- GRF_dataset_PRO_averages[component == "vertical" & CLASS_LABEL == "HC" & side == "right"]
@@ -80,9 +94,11 @@ fdobj_averages_anterior_posterior <- fd(coef = t(as.matrix(averages_anterior_pos
 ```
 
 
+
 # FPCA
 
 Then perform FPCA using `pca.fd()`
+
 
 ```{r}
 # vertical:
@@ -93,7 +109,9 @@ fpca_averages_anterior_posterior <- pca.fd(fdobj = fdobj_averages_anterior_poste
                                            nharm = 35)
 ```
 
+
 Look at cumulative variance explained.
+
 
 ```{r}
 data.table(k = 1:10,
@@ -104,7 +122,9 @@ data.table(k = 1:10,
 ```
 
 
+
 Gather and reshape data to do a nice plot of FPCs as perturbations of the mean function.
+
 
 ```{r, fig.asp=0.66}
 # Figure for Vertical: ----------------------------------------------------
@@ -165,7 +185,9 @@ anterior_posterior_plot <- ggplot(anterior_posterior_fpcs_dt_long[variable %in% 
 (combined_plot <- ggpubr::ggarrange(vertical_plot, anterior_posterior_plot, nrow = 2, ncol = 1))
 ```
 
+
 Look at cross correlation between first two sets of FPC scores:
+
 
 ```{r, fig.asp=1, fig.width=5, fig.align='center'}
 cross_cor_mat <- cor(fpca_averages_vertical$scores[,1:5],
@@ -189,9 +211,11 @@ cross_correlation <- ggcorrplot::ggcorrplot(corr = cross_cor_mat, lab = TRUE) +
 cross_correlation
 ```
 
+
 Look at how **maximum AP force** (discrete scalar variable) relates to **vertical FPC scores**.
 
 Get maximum force first:
+
 
 ```{r}
 stopifnot(averages_anterior_posterior$SUBJECT_ID == averages_vertical$SUBJECT_ID)
@@ -199,7 +223,9 @@ max_anterior_posterior <- apply(eval.fd(0:100, fdobj_averages_anterior_posterior
 vertical_fpca_scores <- fpca_averages_vertical$scores
 ```
 
+
 And plot vs. FPC scores.
+
 
 ```{r, fig.asp = 0.5, fig.width = 5, fig.align = 'center'}
 scores_and_max_dt <- data.table(max_anterior_posterior, vertical_fpca_scores)
@@ -222,11 +248,13 @@ p2 <- ggplot(data = scores_and_max_dt) +
 ```
 
 
+
 # Scalar-on-Function Regression
 
 Now, let's use the **Vertical Curves** to predict the (scalar/ discrete) Maximum Anterior-Posterior Force.
 
 Update some graphics settings for this section.
+
 
 ```{r}
 theme_update(strip.text = element_text(size = 10),
@@ -235,6 +263,7 @@ theme_update(strip.text = element_text(size = 10),
              plot.title = element_text(size = 13))
 ```
 
+
 ## Functional Principal Component Regression (FPCR) (`lm()`)
 
 ### Demo:
@@ -242,6 +271,7 @@ theme_update(strip.text = element_text(size = 10),
 Use the FPC scores from the last step in a standard linear regression model to predict the max. AP force.
 
 Let's do it first using different numbers of FPCs, before choosing a "best" number to use:
+
 
 ```{r}
 # Do the multivariable linear regression:
@@ -277,6 +307,7 @@ fpcr_plot
 ```
 
 
+
 ### Cross-Validation
 
 Use a cross-validation routine to choose number of FPCs to use:
@@ -286,6 +317,7 @@ Use a cross-validation routine to choose number of FPCs to use:
 * Writing CV manually using [https://gist.github.com/duttashi/a51c71acb7388c535e30b57854598e77](https://gist.github.com/duttashi/a51c71acb7388c535e30b57854598e77)
 
 * Do a new FPCA and `lm()` fit on each iteration -- no data leakage
+
 
 
 ```{r}
@@ -325,11 +357,13 @@ for(i in seq_len(nfolds)){
 }
 ```
 
+
 Gather and plot results of CV:
+
 
 ```{r}
 SSE_hat <- apply(SSE_cv_mat, 2, mean)
-SSE_se <- apply(SSE_cv_mat, 2, sd) / sqrt(nrow(SSE_cv_mat))
+SSE_se <- apply(SSE_cv_mat, 2, mean) / sqrt(nrow(SSE_cv_mat))
 # plot(1:kmax, SSE_hat, ylim = range(SSE_hat - 2*SSE_se, SSE_hat + 2*SSE_se), type = "b", xlab = "k", ylab = "SSE")
 # points(1:kmax, SSE_hat + 2*SSE_se, type = "b", col = "red", lty = 2, pch = 14)
 # points(1:kmax, SSE_hat - 2*SSE_se, type = "b", col = "red", lty = 2, pch = 14)
@@ -352,7 +386,9 @@ SSE_se <- apply(SSE_cv_mat, 2, sd) / sqrt(nrow(SSE_cv_mat))
 ```
 
 
+
 Do fit on full data with chosen $R=11$.
+
 
 
 ```{r}
@@ -363,14 +399,18 @@ formula_fpcr <- formula(paste("max_anterior_posterior ~", paste(paste0("vertical
 fpcr_best <- lm(formula = formula_fpcr, data = df_fpcr)
 ```
 
+
 And get confidence intervals using:
+
 
 ```{r}
 fpcr_beta_best <-(vertical_fpcs_eval[, 1:k_best] %*% matrix(fpcr_best$coefficients[-1], nrow = k_best, ncol = 1))[,1]
 fpcr_beta_se_best <- sqrt(diag(vertical_fpcs_eval[, 1:k_best] %*%  vcov(fpcr_best)[-1,-1] %*% t(vertical_fpcs_eval[, 1:k_best])))
 ```
 
+
 Rough plot of estimated coefficient function $\beta(t)$ and CIs:
+
 
 ```{r, fig.asp=0.75, fig.width=5, fig.align='center'}
 plot(fpcr_beta_best, type = "l", xlab = "Normalised Time (% of Stance)", ylab = expression(beta(t)))
@@ -379,13 +419,16 @@ lines(fpcr_beta_best - 2 * fpcr_beta_se_best, lty = 2)
 lines(fpcr_beta_best + 2 * fpcr_beta_se_best, lty = 2)
 ```
 
+
 Some quick diagnostic plots for linear model:
+
 
 ```{r, fig.asp = 0.5, fig.width=10, fig.align='center'}
 par(mfrow = c(1, 2))
 plot(x = max_anterior_posterior,  y = predict(fpcr_best), ylab = "predicted", xlab = "observed")
 hist(resid(fpcr_best), main = "Hist. of Resid.")
 ```
+
 
 
 ## `fRegress()`
@@ -397,6 +440,7 @@ Some notes:
 * We do LOO-CV using built in function `fRegress.CV()`. Requires scalar parameters be set up as a "function" with a constant basis.
 
 * Use same basis of $35$ B-splines for $\beta(t)$, integrated squared second derivative penalty (see `Lfdobj = 2`).
+
 
 ```{r}
 # Need to create constant fd object for scalar predictor to work in fRegress.CV(), weird, I know.
@@ -424,13 +468,17 @@ for(i in seq_along(log_lambda_seq)) {
   }
 ```
 
+
 Choose best $\lambda$ based on CV:
+
 
 ```{r}
 (log_lamba_best <- log_lambda_seq[which.min(SSE_vec)])
 ```
 
+
 Look at difference in CV estimates for FPCR and `fRegress()` -- the smoothing penalty approach varies much more smoothly!
+
 
 ```{r, fig.asp=0.5}
 par(mfrow = c(1, 2))
@@ -438,7 +486,9 @@ plot(1:35, SSE_hat, ylim = range(SSE_hat, SSE_vec/ length(max_anterior_posterior
 plot(log_lambda_seq, SSE_vec/ length(max_anterior_posterior), ylim = range(SSE_hat, SSE_vec/ length(max_anterior_posterior)))
 ```
 
+
 Do model fit on full dataset using best smoothing parameter:
+
 
 ```{r}
 beta_list_best <- list(fdPar(create.constant.basis(c(0,100))), # for intercept
@@ -450,9 +500,11 @@ fRegress_best_fit <- fRegress(y = max_anterior_posterior,
 ```
 
 
+
 Get confidence intervals for model fit (note we have conditioned on our "best" $\lambda$):
 
 Based on Ramsay, Hooker and Graves pp.140-141.
+
 
 ```{r}
 N <- length(max_anterior_posterior)
@@ -467,7 +519,9 @@ fRegress_best_fit_stderrList <- fRegress.stderr(y = fRegress_best_fit,
 ```
 
 
+
 And a nice plot to show what happend when we vary lambda:
+
 
 ```{r}
 # Let's do a plot of varying lambda: --------------------------------------
@@ -503,6 +557,7 @@ fregress_varying_lambda_plot <- ggplot(data = fregress_varying_lambda_dt) +
 fregress_varying_lambda_plot 
 ```
 
+
 ## `pfr()`
 
 With `pfr()` it is **really** simple. We need to feed in the functional predictor evaluated on a grid (note: manual says that we can supply `fd` object). For now, we just evaluate at $0,1,2\dots,100$:
@@ -511,15 +566,18 @@ With `pfr()` it is **really** simple. We need to feed in the functional predicto
 
  * Use `bs = "bs"` for a "B-spline basis with integrated squared derivative penalties" (see `?mgcv::smooth.terms` for details).
 
+
 ```{r}
 vertical_fd_eval <- t(eval.fd(evalarg = 0:100, fdobj = fdobj_averages_vertical))
 pfr <- pfr(max_anterior_posterior ~ lf(X = vertical_fd_eval, bs = "bs", k = 35, argvals = 0:100))
 ```
 
 
+
 ## Comparison of three fitting approaches
 
 ### Estimates of $\beta(t)$
+
 
 ```{r}
 best_estimates_dt <- data.table(time = 0:100, 
@@ -574,9 +632,11 @@ best_estimates_plot <- ggplot(data = plot_dt) +
 best_estimates_plot
 ```
 
+
 ### In-Sample Goodness of Fit
 
 Get $R^2$ values from each model. Note $R^2$ for `fRegress()` based on Ramsay, Hooker and Graves p. 134.
+
 
 ```{r}
 # Print R-squared:
@@ -590,9 +650,11 @@ RSQ1 = (SSE0-SSE1.1)/SSE0
 
 print(paste0("fRegress: ", 100 * round(RSQ1, 2), "%"))
 ```
+
 ### Out-of-Sample Predictions
 
 #### Read in Test Data 
+
 
 ```{r}
 data_for_testing <- readRDS(file = here::here("chapter-06", "data", "test-data.rds"))
@@ -600,9 +662,11 @@ fdobj_averages_vertical_test <- data_for_testing$fdobj_averages_vertical_test
 max_anterior_posterior_test <- data_for_testing$max_anterior_posterior_test
 ```
 
+
 #### FPCR Predictions
 
 Need to calculate the FPC scores for the test data using the traning FPCS:
+
 
 ```{r}
 fdobj_averages_vertical_test_cent <- center_fd_around_new_mean(fdobj = fdobj_averages_vertical_test, fpca_averages_vertical$meanfd)
@@ -614,7 +678,9 @@ test_df_fpcr <- data.frame(max_anterior_posterior = max_anterior_posterior_test,
 names(test_df_fpcr)[-1] <- paste0("vertical_fpca_scores", 1:35)
 ```
 
+
 And then used our trained model to predict:
+
 
 ```{r, fig.asp=1, fig.width=4, fig.align='center'}
 fpcr_test_yhat <- predict(object = fpcr_best, newdata = test_df_fpcr)
@@ -625,9 +691,11 @@ plot(x = max_anterior_posterior_test,
      ylab = "predicted")
 ```
 
+
 #### `fRegress()` Predictions
 
 Again we need our the design matrix (list) entry for our intercept to be a constant "function".
+
 
 ```{r, fig.asp=1, fig.width=4, fig.align='center'}
 constant_fd_test <- fd(coef = matrix(1,
@@ -646,7 +714,9 @@ plot(x = max_anterior_posterior_test,
      ylab = "predicted")
 ```
 
+
 #### `pfr()`
+
 
 ```{r}
 vertical_fd_eval_test <- t(eval.fd(evalarg = 0:100, fdobj = fdobj_averages_vertical_test))
@@ -660,7 +730,9 @@ plot(x = max_anterior_posterior_test,
 ```
 
 
+
 #### Comparison of Absolute Errors 
+
 
 ```{r, fig.asp=0.75, fig.width=7, fig.align='center'}
 abs_errors_dt <- data.table(
@@ -689,6 +761,8 @@ error_plot <- ggplot(abs_errors_dt_lng) +
 error_plot
 ```
 
+
 # References
 
 * James O.. Ramsay, Giles Hooker, and Spencer Graves. Functional Data Analysis with R and MATLAB. USA: Springer, 2009.
+

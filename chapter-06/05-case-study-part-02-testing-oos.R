@@ -1,8 +1,8 @@
 # Packages: ---------------------------------------------------------------
-library(readr) # CRAN v1.3.1
-library(fda) # CRAN v5.1.9
-library(tidyverse) # CRAN v1.3.0
-
+library(readr)      # CRAN v1.3.1
+library(fda)        # CRAN v5.1.9
+library(tidyverse)  # CRAN v1.3.0
+library(data.table) # CRAN v1.14.2
 source(here::here("functions", "theme_gunning.R"))
 
 # Some settings for the Figure: -------------------------------------------
@@ -151,20 +151,29 @@ GRF_dataset_PRO_averages_test <- GRF_dataset_PRO_meta_test[,
                                                  by = .(SUBJECT_ID,component),
                                                  .SDcols = paste0("bspl4.",1:35)] # says which columns to average
 
-GRF_dataset_PRO_averages_vertical_test <- GRF_dataset_PRO_averages_test[component == "vertical"]
-# create fd object defined by coefficients and basis object
-GRF_fdobj_PRO_averages_vertical_test <- fd(coef = t(as.matrix(GRF_dataset_PRO_averages_vertical_test[, paste0("bspl4.",1:35)])),
+averages_vertical_test <- GRF_dataset_PRO_averages_test[component == "vertical"]
+                    # create fd object defined by coefficients and basis object
+fdobj_averages_vertical_test <- fd(coef = t(as.matrix(averages_vertical_test[, paste0("bspl4.",1:35)])),
                                       basisobj = bspl_35)
 
-GRF_dataset_PRO_averages_anterior_posterior_test <- GRF_dataset_PRO_averages_test[component == "anterior_posterior"]
-# create fd object defined by coefficients and basis object
-GRF_fdobj_PRO_averages_anterior_posterior_test <- fd(coef = t(as.matrix(GRF_dataset_PRO_averages_anterior_posterior_test[, paste0("bspl4.",1:35)])),
+averages_anterior_posterior_test <- GRF_dataset_PRO_averages_test[component == "anterior_posterior"]
+                    # create fd object defined by coefficients and basis object
+fdobj_averages_anterior_posterior_test <- fd(coef = t(as.matrix(averages_anterior_posterior_test[, paste0("bspl4.",1:35)])),
                                                 basisobj = bspl_35)
 
-anterior_posterior_fd_eval_test <- eval.fd(evalarg = 0:100, fdobj = GRF_fdobj_PRO_averages_anterior_posterior_test)
+
+anterior_posterior_fd_eval_test <- eval.fd(evalarg = 0:100, fdobj = fdobj_averages_anterior_posterior_test)
 max_anterior_posterior_test <- apply(anterior_posterior_fd_eval_test, 2, max)
 
 
+data_for_testing <- list(
+  fdobj_averages_vertical_test = fdobj_averages_vertical_test,
+  max_anterior_posterior_test = max_anterior_posterior_test
+)
+
+
+saveRDS(object = data_for_testing,
+        file = here::here("chapter-06", "data", "test-data.rds"))
 
 # Extract Model Results: --------------------------------------------------
 
@@ -179,8 +188,8 @@ pfr <- model_results$pfr
 # FPCR --------------------------------------------------------------------
 
 
-GRF_fdobj_PRO_averages_vertical_test_cent <- center_fd_around_new_mean(fdobj = GRF_fdobj_PRO_averages_vertical_test, GRF_fpca_averages_vertical$meanfd)
-GRF_fpc_scores_test <- project_data_onto_fpcs(fdobj = GRF_fdobj_PRO_averages_vertical_test_cent,
+fdobj_averages_vertical_test_cent <- center_fd_around_new_mean(fdobj = fdobj_averages_vertical_test, GRF_fpca_averages_vertical$meanfd)
+GRF_fpc_scores_test <- project_data_onto_fpcs(fdobj = fdobj_averages_vertical_test_cent,
                                               pca.fd_obj = GRF_fpca_averages_vertical)
 
 test_df_fpcr <- data.frame(max_anterior_posterior = max_anterior_posterior_test,
@@ -191,7 +200,7 @@ plot(predict(object = fpcr_best, newdata = test_df_fpcr),
      max_anterior_posterior_test)
 
 fpcr_test_yhat <- predict(object = fpcr_best, newdata = test_df_fpcr)
-plot(fpcr_test_yhat, fregress_test_yhat)
+
 
 
 
@@ -200,23 +209,19 @@ plot(fpcr_test_yhat, fregress_test_yhat)
 # fRegress() --------------------------------------------------------------
 # Need to create constant fd object for scalar predictor to work in fRegress.CV(), weird, I know.
 constant_basis <- create.constant.basis(c(0,100))
-constant_fd <- fd(coef = matrix(1, nrow = 1, ncol = ncol(GRF_fdobj_PRO_averages_vertical_test$coefs)), basisobj = constant_basis)
+constant_fd <- fd(coef = matrix(1, nrow = 1, ncol = ncol(fdobj_averages_vertical_test$coefs)), basisobj = constant_basis)
 # List containing predictors (jntercept and functional covariate)
 xfd_list_test <- list(constant_fd, # for intercept
-                 GRF_fdobj_PRO_averages_vertical_test) 
+                 fdobj_averages_vertical_test) 
 fregress_test_yhat <- predict.fRegress(object = fRegress_best_fit,
-                 newdata = xfd_list_test
-                 )
+                 newdata = xfd_list_test)
 
-cor(fregress_test_yhat, max_anterior_posterior_test)
 
-boxplot(abs(fpcr_test_yhat - max_anterior_posterior_test),
-        abs(fregress_test_yhat - max_anterior_posterior_test))
 
 
 # pfr ---------------------------------------------------------------------
 
-vertical_fd_eval_test <- t(eval.fd(evalarg = 0:100, fdobj = GRF_fdobj_PRO_averages_vertical_test))
+vertical_fd_eval_test <- t(eval.fd(evalarg = 0:100, fdobj = fdobj_averages_vertical_test))
 pfr <- pfr(max_anterior_posterior ~ lf(X = vertical_fd_eval, bs = "bs", k = 35, argvals = 0:100))
 pfr_test_yhat <- predict(object = pfr, newdata = list(vertical_fd_eval = vertical_fd_eval_test))
 
