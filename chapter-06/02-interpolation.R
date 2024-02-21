@@ -25,7 +25,6 @@ nrow(GRF_dataset_PRO_meta)
 
 
 k_seq <- seq(15, 80, by = 5)
-SSE_vec <- vector("numeric", length = length(k_seq))
 y <- t(GRF_dataset_PRO_meta[, paste0("time_", 0:100)])
 SSE_mat <- matrix(NA, nrow = ncol(y), ncol = length(k_seq))
 for(k in seq_along(k_seq)) {

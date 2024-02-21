@@ -21,7 +21,7 @@ This repository contains `R` code for the manuscript 'FDA in Biomechanics'.
 
 * For the 'Case Study' chapter, _**Quarto**_ (and `.RMD`) notebooks that document the case study analysis in a step-by-step fashion are also provided:
   * 📔 [**Part 1** - Data Import and Exploration](chapter-06/Case-Study-Part-01-MD.md)
-  * 📔 [**Part 2** - Analysis of Healthy Controls]()
+  * 📔 [**Part 2** - Analysis of Healthy Controls](chapter-06/Case-Study-Part-01-MD.md)
   * 📔 [**Part 3** - Analysis of Impaired Movement]()
 
 
@@ -145,7 +145,7 @@ title("Medio-Lateral")
 
 * Horsak, B., Slijepcevic, D., Raberger, A.-M., Schwab, C., Worisch, M., & Zeppelzauer, M. (2020). GaitRec, a large-scale ground reaction force dataset of healthy and impaired gait. Scientific Data, 7(1), Article 1. https://doi.org/10.1038/s41597-020-0481-z
 
-* Publicly Available Data-Sharing Repository: doi:10.6084/m9.figshare.c.4788012.v1
+* Publicly Available Data-Sharing Repository: https://doi.org:10.6084/m9.figshare.c.4788012.v1
 
 ## Edward Gunning's Ph.D. Thesis
 

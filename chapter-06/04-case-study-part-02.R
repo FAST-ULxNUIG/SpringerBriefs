@@ -1,7 +1,8 @@
-library(data.table) # CRAN v1.14.2
-library(fda)        # CRAN v5.5.1
-library(tidyverse)  # CRAN v1.3.1
-library(tikzDevice) # CRAN v0.12.3.1
+library(data.table)                                                            # CRAN v1.14.2
+library(fda)                                                                   # CRAN v5.5.1
+library(tidyverse)                                                             # CRAN v1.3.1
+library(tikzDevice)                                                            # CRAN v0.12.3.1
+library(refund)                                                                # CRAN v0.1-26
 source(here::here("functions", "theme_gunning.R"))
 
 # Some settings for the Figure: -------------------------------------------
@@ -19,16 +20,18 @@ plots_path <- here::here("chapter-06", "figures")
 source(here::here("functions/center_fd_around_new_mean.R"))
 source(here::here("functions/project_data_onto_fpcs.R"))
 
-interpolated_data <- readRDS(here::here("chapter-06", "data", "interpolated-data.rds"))
+
+# Read in the data --------------------------------------------------------
+data_path <- here::here("chapter-06", "data", "interpolated-data.rds")
+interpolated_data <- readRDS(data_path)
 GRF_dataset_PRO_meta <- interpolated_data$GRF_dataset_PRO_meta
 bspl_35 <- interpolated_data$bspl_35
+GRF_dataset_PRO_meta[, uniqueN(SESSION_ID), by = SUBJECT_ID][, stopifnot(V1 == 1)]
 
-GRF_dataset_PRO_meta[, uniqueN(SESSION_ID), by = SUBJECT_ID]
 
-
+# Calculate Unilateral Averages: ------------------------------------------
 # remove discrete values from dataset now we just working with basis coefficients.
 GRF_dataset_PRO_meta[, paste0("time_",0:100) := NULL]
-
 GRF_dataset_PRO_averages <- GRF_dataset_PRO_meta[,
                      as.list(apply(.SD, 2, mean)), # average basis coefficients of all trials
                      by = .(SUBJECT_ID, SESSION_ID, side, component, CLASS_LABEL, CLASS_LABEL_DETAILED, SEX, AGE, HEIGHT, 
@@ -36,33 +39,37 @@ GRF_dataset_PRO_averages <- GRF_dataset_PRO_meta[,
                            ORTHOPEDIC_INSOLE, SPEED),
                     .SDcols = paste0("bspl4.",1:35)] # says which columns to average
 
-GRF_dataset_PRO_averages_vertical <- GRF_dataset_PRO_averages[component == "vertical" & CLASS_LABEL == "HC" & side == "right"]
-                    # create fd object defined by coefficients and basis object
-GRF_fdobj_PRO_averages_vertical <- fd(coef = t(as.matrix(GRF_dataset_PRO_averages_vertical[, paste0("bspl4.",1:35)])),
+
+
+averages_vertical <- GRF_dataset_PRO_averages[component == "vertical" & CLASS_LABEL == "HC" & side == "right"]
+                                                                               # create fd object defined by coefficients and basis object
+fdobj_averages_vertical <- fd(coef = t(as.matrix(averages_vertical[, paste0("bspl4.",1:35)])),
                                        basisobj = bspl_35)
-GRF_fpca_averages_vertical <- pca.fd(fdobj = GRF_fdobj_PRO_averages_vertical, nharm = 35)
+fpca_averages_vertical <- pca.fd(fdobj = fdobj_averages_vertical, nharm = 35)
 
-GRF_dataset_PRO_averages_anterior_posterior <- GRF_dataset_PRO_averages[component == "anterior_posterior"  & CLASS_LABEL == "HC" & side == "right"]
-                    # create fd object defined by coefficients and basis object
-GRF_fdobj_PRO_averages_anterior_posterior <- fd(coef = t(as.matrix(GRF_dataset_PRO_averages_anterior_posterior[, paste0("bspl4.",1:35)])),
+
+averages_anterior_posterior <- GRF_dataset_PRO_averages[component == "anterior_posterior"  & CLASS_LABEL == "HC" & side == "right"]
+                                                                               # create fd object defined by coefficients and basis object
+fdobj_averages_anterior_posterior <- fd(coef = t(as.matrix(averages_anterior_posterior[, paste0("bspl4.",1:35)])),
                                       basisobj = bspl_35)
-GRF_fpca_averages_anterior_posterior <- pca.fd(fdobj = GRF_fdobj_PRO_averages_anterior_posterior, nharm = 35)
+fpca_averages_anterior_posterior <- pca.fd(fdobj = fdobj_averages_anterior_posterior, nharm = 35)
 
-cumsum(GRF_fpca_averages_vertical$varprop)
-cumsum(GRF_fpca_averages_anterior_posterior$varprop)
+cumsum(fpca_averages_vertical$varprop)
+cumsum(fpca_averages_anterior_posterior$varprop)
+
 
 # Figure for Vertical: ----------------------------------------------------
-vertical_fpcs_eval <- eval.fd(evalarg = 0:100, GRF_fpca_averages_vertical$harmonics)
+vertical_fpcs_eval <- eval.fd(evalarg = 0:100, fpca_averages_vertical$harmonics)
 vertical_fpcs_dt <- data.table(time = 0:100, vertical_fpcs_eval)
 vertical_fpcs_dt_long <- melt.data.table(vertical_fpcs_dt, id.vars = "time", measure.vars = paste0("PC",1:35))
-vertical_mean_dt <- data.table(time = 0:100, mean = c(eval.fd(0:100, GRF_fpca_averages_vertical$meanfd)))
+vertical_mean_dt <- data.table(time = 0:100, mean = c(eval.fd(0:100, fpca_averages_vertical$meanfd)))
 vertical_fpcs_dt_long <- merge.data.table(x = vertical_fpcs_dt_long, 
                                           y = vertical_mean_dt, 
                                           by = "time",
                                           all.x = TRUE)
 vertical_var_explained_dt <- data.table(variable = paste0("PC", 1:35), 
-                                        constant = (2 * sqrt(GRF_fpca_averages_vertical$values))[1:35], # to add to fpcs
-                                        var_explained = paste0("$", round(GRF_fpca_averages_vertical$varprop * 100, 1), "\\%$"))
+                                        constant = (2 * sqrt(fpca_averages_vertical$values))[1:35], # to add to fpcs
+                                        var_explained = paste0("$", round(fpca_averages_vertical$varprop * 100, 1), "\\%$"))
 
 vertical_fpcs_dt_long <- merge.data.table(x = vertical_fpcs_dt_long, 
                                           vertical_var_explained_dt,
@@ -81,17 +88,17 @@ vertical_plot
 
 
 # Figure for Anterior-Posterior: ----------------------------------------------------
-anterior_posterior_fpcs_eval <- eval.fd(evalarg = 0:100, GRF_fpca_averages_anterior_posterior$harmonics)
+anterior_posterior_fpcs_eval <- eval.fd(evalarg = 0:100, fpca_averages_anterior_posterior$harmonics)
 anterior_posterior_fpcs_dt <- data.table(time = 0:100, anterior_posterior_fpcs_eval)
 anterior_posterior_fpcs_dt_long <- melt.data.table(anterior_posterior_fpcs_dt, id.vars = "time", measure.vars = paste0("PC",1:35))
-anterior_posterior_mean_dt <- data.table(time = 0:100, mean = c(eval.fd(0:100, GRF_fpca_averages_anterior_posterior$meanfd)))
+anterior_posterior_mean_dt <- data.table(time = 0:100, mean = c(eval.fd(0:100, fpca_averages_anterior_posterior$meanfd)))
 anterior_posterior_fpcs_dt_long <- merge.data.table(x = anterior_posterior_fpcs_dt_long, 
                                           y = anterior_posterior_mean_dt, 
                                           by = "time",
                                           all.x = TRUE)
 anterior_posterior_var_explained_dt <- data.table(variable = paste0("PC", 1:35), 
-                                        constant = (2 * sqrt(GRF_fpca_averages_anterior_posterior$values))[1:35], # to add to fpcs
-                                        var_explained = paste0("$", round(GRF_fpca_averages_anterior_posterior$varprop * 100, 1), "\\%$"))
+                                        constant = (2 * sqrt(fpca_averages_anterior_posterior$values))[1:35], # to add to fpcs
+                                        var_explained = paste0("$", round(fpca_averages_anterior_posterior$varprop * 100, 1), "\\%$"))
 
 anterior_posterior_fpcs_dt_long <- merge.data.table(x = anterior_posterior_fpcs_dt_long, 
                                           anterior_posterior_var_explained_dt,
@@ -108,7 +115,7 @@ anterior_posterior_plot <- ggplot(anterior_posterior_fpcs_dt_long[variable %in% 
   labs(x = "Normalised Time", y = "Force (BW)", title = "Anterior-Posterior")
 anterior_posterior_plot
 
-combined_plot <- ggpubr::ggarrange(vertical_plot, anterior_posterior_plot, nrow = 2, ncol = 1)
+(combined_plot <- ggpubr::ggarrange(vertical_plot, anterior_posterior_plot, nrow = 2, ncol = 1))
 
 tikz(file.path(plots_path, "fpcs-01.tex"),
      width = 1 * doc_width_inches, 
@@ -121,10 +128,15 @@ tinytex::lualatex(file.path(plots_path, "fpcs-01.tex"))
 
 
 # -------------------------------------------------------------------------
+# Look at cross-correlation between two sets of scores
+cross_cor_mat <- cor(fpca_averages_vertical$scores[,1:5],
+                     fpca_averages_anterior_posterior$scores[,1:5])
 
-
-cross_correlation <- ggcorrplot::ggcorrplot(corr = cor(GRF_fpca_averages_vertical$scores[,1:5], GRF_fpca_averages_anterior_posterior$scores[,1:5]), lab = TRUE) +
-  labs(x = "Vertical FPCA Scores",y =  "Anterior-Posterior FPCA Scores", colour = "Correlation", title = "(a) Cross Correlation") +
+cross_correlation <- ggcorrplot::ggcorrplot(corr = cross_cor_mat, lab = TRUE) +
+  labs(x = "Vertical FPCA Scores",
+       y =  "Anterior-Posterior FPCA Scores",
+       colour = "Correlation",
+       title = "(a) Cross Correlation") +
   theme_bw() +
   theme(axis.title = element_text(face = "bold"), 
         panel.border = element_blank(), 
@@ -148,11 +160,11 @@ tinytex::lualatex(file.path(plots_path, "fpcs-cross-correlation.tex"))
 
 # Now, get maximum force: ------------------------------------------------
 
-stopifnot(GRF_dataset_PRO_averages_anterior_posterior$SUBJECT_ID == GRF_dataset_PRO_averages_vertical$SUBJECT_ID)
+stopifnot(averages_anterior_posterior$SUBJECT_ID == averages_vertical$SUBJECT_ID)
 
 # find maximum:
-max_anterior_posterior <- apply(eval.fd(0:100, GRF_fdobj_PRO_averages_anterior_posterior), 2, max)
-vertical_fpca_scores <- GRF_fpca_averages_vertical$scores
+max_anterior_posterior <- apply(eval.fd(0:100, fdobj_averages_anterior_posterior), 2, max)
+vertical_fpca_scores <- fpca_averages_vertical$scores
 
 
 scores_and_max_dt <- data.table(max_anterior_posterior, vertical_fpca_scores)
@@ -207,7 +219,7 @@ beta_stars <- fpcr$coefficients[-1] # Extract the weights of the coefficient fun
 fpcr_reconstruction <- matrix(NA, nrow = 101, ncol = 35)
 
 # NOTE: ONLY CAN DO THIS BECAUSE ORTHOGONALITY; DOESN'T WORK FOR E.G., SMOOTHED FPCS;
-vertical_fpcs_eval <- eval.fd(0:100, GRF_fpca_averages_vertical$harmonics) # evaluate the FPC basis functions on a grid.
+vertical_fpcs_eval <- eval.fd(0:100, fpca_averages_vertical$harmonics) # evaluate the FPC basis functions on a grid.
 for(k in 1:35) {
   fpcr_reconstruction[, k] <- (vertical_fpcs_eval[, 1:k] %*% matrix(beta_stars[1:k], nrow = k, ncol = 1))[,1]
 }
@@ -234,34 +246,39 @@ fpcr_plot
 
 
 
-#### Use 10-fold cross-validation: -------------------------------------------
+
+# Leave-one-out CV --------------------------------------------------------
+
+
 # Do manually:
 # Use code from https://gist.github.com/duttashi/a51c71acb7388c535e30b57854598e77
 nfolds <- length(max_anterior_posterior)
 folds <- cut(seq(1,length(max_anterior_posterior)),breaks=nfolds,labels=FALSE) # create folds
 
-
-# Perform 10 fold cross validation
 kmax <- 35
 SSE_cv_mat <- matrix(NA, nrow = nfolds, ncol = kmax)
-i <-1
+
 for(i in seq_len(nfolds)){
   print(paste("i =",i))
   #Segement your data by fold using the which() function 
+  # get train data
   testIndexes <- which(folds==i,arr.ind = TRUE)
-
-  fpca_train <- pca.fd(fdobj = GRF_fdobj_PRO_averages_vertical[-testIndexes], nharm = kmax)
+  # perform fpca on training
+  fpca_train <- pca.fd(fdobj = fdobj_averages_vertical[-testIndexes], nharm = kmax)
+  # construct training dataset for model fits
   trainData <- data.frame(max_anterior_posterior = max_anterior_posterior[-testIndexes], fpca_train$scores)
   names(trainData)[-1] <- paste0("PC", 1:kmax)
   
-  fd_obj_test <- GRF_fdobj_PRO_averages_vertical[testIndexes]
+  # get test functional data
+  fd_obj_test <- fdobj_averages_vertical[testIndexes]
+  # get test data fpc scores by centering around training mean and projecting onto training fpcs
   fd_obj_test_cent <- center_fd_around_new_mean(fdobj = fd_obj_test, fpca_train$meanfd)
   fpc_scores_test <- project_data_onto_fpcs(fdobj = fd_obj_test_cent, pca.fd_obj = fpca_train)
   testData <- data.frame(max_anterior_posterior = max_anterior_posterior[testIndexes], fpc_scores_test)
   names(testData)[-1] <- paste0("PC", 1:kmax)
   
   
-  #Use the test and train data partitions however you desire...
+  
   for(k in 1:kmax) {
     print(paste("k =", k))
     formula_k <- formula(paste0("max_anterior_posterior ~ ", paste(colnames(trainData)[-1][1:k], collapse = "+")))
@@ -272,7 +289,7 @@ for(i in seq_len(nfolds)){
   }
 }
 
-#Create 10 equally size folds
+
 SSE_hat <- apply(SSE_cv_mat, 2, mean)
 SSE_se <- apply(SSE_cv_mat, 2, mean) / sqrt(nrow(SSE_cv_mat))
 plot(1:kmax, SSE_hat, ylim = range(SSE_hat - 2*SSE_se, SSE_hat + 2*SSE_se), type = "b", xlab = "k", ylab = "SSE")
@@ -285,11 +302,11 @@ points(1:kmax, SSE_hat - 2*SSE_se, type = "b", col = "red", lty = 2, pch = 14)
            SSE_lower = SSE_hat + 2*SSE_se,
            SSE_upper = SSE_hat - 2*SSE_se)) +
   aes(x = k, y = SSE_hat) +
-  geom_vline(xintercept = 11, lty = 2, col = "red") +
+  geom_vline(xintercept = k_best, lty = 2, col = "red") +
   geom_line(alpha = 0.4) +
   geom_errorbar(aes(ymin = SSE_lower, ymax = SSE_upper), alpha = 0.4) +
   geom_point(alpha = 0.4) + 
-  geom_point(data = . %>% filter(k==11), colour = "red", size = 3, pch = 15) +
+  geom_point(data = . %>% filter(k==k_best), colour = "red", size = 3, pch = 15) +
   labs(x = "Number of FPCs ($R$)",
        y = "Average Squared Prediction Error",
        title = "Cross Validation for Choosing Number of FPCs"))
@@ -302,37 +319,41 @@ cv_plot
 dev.off() 
 tinytex::lualatex(file.path(plots_path, "fpcr-cv.tex"))
 
+
+# Do best fit: ------------------------------------------------------------
 df_fpcr <- data.frame(max_anterior_posterior = max_anterior_posterior,
                       vertical_fpca_scores[, 1:11])
 colnames(df_fpcr)[-1] <- paste0("vertical_fpca_scores", 1:11)
 formula_fpcr <- formula(paste("max_anterior_posterior ~", paste(paste0("vertical_fpca_scores", 1:11), collapse = " + "), collapse = ""))
 fpcr_best <- lm(formula = formula_fpcr, data = df_fpcr)
 
+
+# Get CIs -----------------------------------------------------------------
 fpcr_beta_best <-(vertical_fpcs_eval[, 1:k_best] %*% matrix(fpcr_best$coefficients[-1], nrow = k_best, ncol = 1))[,1]
 fpcr_beta_se_best <- sqrt(diag(vertical_fpcs_eval[, 1:k_best] %*%  vcov(fpcr_best)[-1,-1] %*% t(vertical_fpcs_eval[, 1:k_best])))
 
-plot(max_anterior_posterior, vertical_fpca_scores[,1])
-
-plot(max_anterior_posterior ~ vertical_fpca_scores1, data = df_fpcr)
-
-plot(fpcr_beta_best)
+plot(fpcr_beta_best, type = "l", xlab = "Normalised Time (% of Stance)", ylab = expression(beta(t)))
 abline(h=0)
-lines(fpcr_beta_best - 2 * fpcr_beta_se_best)
-lines(fpcr_beta_best + 2 * fpcr_beta_se_best)
+lines(fpcr_beta_best - 2 * fpcr_beta_se_best, lty = 2)
+lines(fpcr_beta_best + 2 * fpcr_beta_se_best, lty = 2)
+
+par(mfrow = c(1, 2))
+plot(x = max_anterior_posterior,  y = predict(fpcr_best), ylab = "predicted", xlab = "observed")
+hist(resid(fpcr_best), main = "Hist. of Resid.")
 
 ## 2) Fregress -------------------------------------------------------------------
 
 # Need to create constant fd object for scalar predictor to work in fRegress.CV(), weird, I know.
 constant_basis <- create.constant.basis(c(0,100))
-constant_fd <- fd(coef = matrix(1, nrow = 1, ncol = ncol(GRF_fdobj_PRO_averages_vertical$coefs)), basisobj = constant_basis)
+constant_fd <- fd(coef = matrix(1, nrow = 1, ncol = ncol(fdobj_averages_vertical$coefs)), basisobj = constant_basis)
 # List containing predictors (jntercept and functional covariate)
 xfd_list <- list(constant_fd, # for intercept
-                 GRF_fdobj_PRO_averages_vertical) # functional coefficient
+                 fdobj_averages_vertical) # functional coefficient
 log_lambda_seq <- seq(0, 5, by = 0.1)
 # Let's store out of samples predictions errrors:
 SSE_vec <- vector("numeric", length = length(log_lambda_seq))
 
-# Cross-Validation Loop:
+                                                                               # Cross-Validation Loop:
 for(i in seq_along(log_lambda_seq)) {
   print(paste0("Iteration ", i, " of ", length(log_lambda_seq)))
   # set up fdPar with value of lambda for this iteration:
@@ -346,11 +367,12 @@ for(i in seq_along(log_lambda_seq)) {
   SSE_vec[i] <- CV_fit_i$SSE.CV
   }
 
-plot(SSE_hat)
-points(SSE_vec/ length(max_anterior_posterior))
+par(mfrow = c(1, 2))
+plot(1:35, SSE_hat, ylim = range(SSE_hat, SSE_vec/ length(max_anterior_posterior)))
+plot(log_lambda_seq, SSE_vec/ length(max_anterior_posterior), ylim = range(SSE_hat, SSE_vec/ length(max_anterior_posterior)))
 
 
-log_lamba_best <- log_lambda_seq[which.min(SSE_vec)]
+(log_lamba_best <- log_lambda_seq[which.min(SSE_vec)])
 
 beta_list_best <- list(fdPar(create.constant.basis(c(0,100))), # for intercept
                               fdPar(fdobj = bspl_35, Lfdobj = 2, lambda = 10^log_lamba_best)) # for functional coefficient
@@ -368,7 +390,7 @@ max_anterior_posterior_hat <- fRegress_best_fit$yhatfdobj[,1]
 resid <-  max_anterior_posterior - max_anterior_posterior_hat
 SigmaE <- sum(resid^2)/(N- fRegress_best_fit$df)
 SigmaE <- SigmaE*diag(rep(1,N))
-y2cMap <- smooth.basis(argvals = 0:100, y = eval.fd(0:100, GRF_fdobj_PRO_averages_vertical[1]), fdParobj = bspl_35)$y2cMap # didn't have smooth.basis stored.
+y2cMap <- smooth.basis(argvals = 0:100, y = eval.fd(0:100, fdobj_averages_vertical[1]), fdParobj = bspl_35)$y2cMap # didn't have smooth.basis stored.
 fRegress_best_fit_stderrList <- fRegress.stderr(y = fRegress_best_fit, 
                              y2cMap = y2cMap,
                              SigmaE = SigmaE)
@@ -410,8 +432,8 @@ fregress_varying_lambda_plot <- ggplot(data = fregress_varying_lambda_dt) +
 fregress_varying_lambda_plot 
 
 ## 3) Refund ----------------------------------------------------------------
-library(refund)
-vertical_fd_eval <- t(eval.fd(evalarg = 0:100, fdobj = GRF_fdobj_PRO_averages_vertical))
+
+vertical_fd_eval <- t(eval.fd(evalarg = 0:100, fdobj = fdobj_averages_vertical))
 pfr <- pfr(max_anterior_posterior ~ lf(X = vertical_fd_eval, bs = "bs", k = 35, argvals = 0:100))
 
 
@@ -478,7 +500,7 @@ dev.off()
 tinytex::lualatex(file.path(plots_path, "sofr-plot.tex"))
 
 
-str()
+
 # Print R-squared:
 print(paste0("FPCR: ", 100 * round(summary(fpcr_best)$r.squared, 2), "%"))
 print(paste0("pfr: ", 100 * round(summary(pfr)$r.sq, 2), "%"))
@@ -490,9 +512,8 @@ RSQ1 = (SSE0-SSE1.1)/SSE0
 
 print(paste0("fRegress: ", 100 * round(RSQ1, 2), "%"))
 
-
 saveRDS(file = here::here("chapter-06", "data", "model_results.rds"),
-        object = list(fpca_vertical = GRF_fpca_averages_vertical,
+        object = list(fpca_vertical = fpca_averages_vertical,
              fpcr = fpcr_best,
              fregress = fRegress_best_fit,
              pfr = pfr),

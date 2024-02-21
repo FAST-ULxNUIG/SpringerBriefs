@@ -19,7 +19,8 @@ Biomechanics’.
   provided:
   - 📔 [**Part 1** - Data Import and
     Exploration](chapter-06/Case-Study-Part-01-MD.md)
-  - 📔 [**Part 2** - Analysis of Healthy Controls]()
+  - 📔 [**Part 2** - Analysis of Healthy
+    Controls](chapter-06/Case-Study-Part-01-MD.md)
   - 📔 [**Part 3** - Analysis of Impaired Movement]()
 
 # Data
@@ -180,7 +181,8 @@ title("Medio-Lateral")
   Article 1. <https://doi.org/10.1038/s41597-020-0481-z>
 
 - Publicly Available Data-Sharing Repository:
-  <doi:10.6084/m9.figshare.c.4788012.v1>
+  <a href="https://doi.org:10.6084/m9.figshare.c.4788012.v1"
+  class="uri">https://doi.org:10.6084/m9.figshare.c.4788012.v1</a>
 
 ## Edward Gunning’s Ph.D. Thesis
 

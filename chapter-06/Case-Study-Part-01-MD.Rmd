@@ -77,7 +77,6 @@ Loop through and try different basis sizes (different values of $K$).
 
 ```{r}
 k_seq <- seq(15, 80, by = 5)
-SSE_vec <- vector("numeric", length = length(k_seq))
 y <- t(GRF_dataset_PRO_meta[, paste0("time_", 0:100)])
 SSE_mat <- matrix(NA, nrow = ncol(y), ncol = length(k_seq))
 for(k in seq_along(k_seq)) {
@@ -120,7 +119,7 @@ matplot(x = 0:100,
         ylab = "Force (BW)",
         pch = 20)
 matlines(x = 0:100,
-        y = y[, GRF_dataset_PRO_meta$component=="vertical"][, sample_inds],
+        y = yhat[, GRF_dataset_PRO_meta$component=="vertical"][, sample_inds],
         lty = 1)
 title("Vertical")
 
@@ -132,7 +131,7 @@ matplot(x = 0:100,
         ylab = "Force (BW)",
         pch = 20)
 matlines(x = 0:100,
-        y = y[, GRF_dataset_PRO_meta$component=="anterior_posterior"][, sample_inds],
+        y = yhat[, GRF_dataset_PRO_meta$component=="anterior_posterior"][, sample_inds],
         lty = 1)
 title("Anterior-Posterior")
 
@@ -144,7 +143,7 @@ matplot(x = 0:100,
         ylab = "Force (BW)",
         pch = 20)
 matlines(x = 0:100,
-        y = y[, GRF_dataset_PRO_meta$component=="medio_lateral"][, sample_inds],
+        y = yhat[, GRF_dataset_PRO_meta$component=="medio_lateral"][, sample_inds],
         lty = 1)
 title("Medio-Lateral")
 

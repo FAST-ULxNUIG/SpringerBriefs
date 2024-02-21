@@ -227,19 +227,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Loop through and try different basis sizes (different values of <span class="math inline">\(K\)</span>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>k_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">15</span>, <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>SSE_vec <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>, <span class="at">length =</span> <span class="fu">length</span>(k_seq))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta[, <span class="fu">paste0</span>(<span class="st">"time_"</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)])</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>SSE_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(y), <span class="at">ncol =</span> <span class="fu">length</span>(k_seq))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="fu">seq_along</span>(k_seq)) {</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop through different values of k</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"iteration"</span>, k, <span class="st">"of"</span>, <span class="fu">length</span>(k_seq)))</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  bspl_k <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> k_seq[k], <span class="at">norder =</span> <span class="dv">4</span>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">y =</span> y,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">fdParobj =</span> bspl_k)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  SSE_mat[,k] <span class="ot">&lt;-</span> <span class="fu">apply</span>((y <span class="sc">-</span> yhat)<span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>, sum) <span class="co"># calculate (discrete approx. to) integrated squared error</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta[, <span class="fu">paste0</span>(<span class="st">"time_"</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SSE_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(y), <span class="at">ncol =</span> <span class="fu">length</span>(k_seq))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="fu">seq_along</span>(k_seq)) {</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop through different values of k</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"iteration"</span>, k, <span class="st">"of"</span>, <span class="fu">length</span>(k_seq)))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  bspl_k <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> k_seq[k], <span class="at">norder =</span> <span class="dv">4</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">y =</span> y,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">fdParobj =</span> bspl_k)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  SSE_mat[,k] <span class="ot">&lt;-</span> <span class="fu">apply</span>((y <span class="sc">-</span> yhat)<span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>, sum) <span class="co"># calculate (discrete approx. to) integrated squared error</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "iteration 1 of 14"
 [1] "iteration 2 of 14"
@@ -285,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Vertical"</span>)</span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
@@ -297,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
 <span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Anterior-Posterior"</span>)</span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
@@ -309,7 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
 <span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
 <span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
 <span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
 <span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Medio-Lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
