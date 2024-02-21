@@ -20,7 +20,7 @@ This repository contains `R` code for the manuscript 'FDA in Biomechanics'.
   * :open_file_folder: [**Chapter 5**](chapter-05/)
 
 * For the 'Case Study' chapter, _**Quarto**_ notebooks that document the case study analysis in a step-by-step fashion are also provided:
-  * 📔 [**Part 1** - Data Import and Exploration](chapter-06/Case-Study-Part-01.html)
+  * 📔 [**Part 1** - Data Import and Exploration](chapter-06/Case-Study-Part-01-MD.md)
   * 📔 [**Part 2** - Analysis of Healthy Controls]()
   * 📔 [**Part 3** - Analysis of Impaired Movement]()
 

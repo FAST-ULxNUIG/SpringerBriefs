@@ -17,7 +17,7 @@ Biomechanics’.
 - For the ‘Case Study’ chapter, ***Quarto*** notebooks that document the
   case study analysis in a step-by-step fashion are also provided:
   - 📔 [**Part 1** - Data Import and
-    Exploration](chapter-06/Case-Study-Part-01.html)
+    Exploration](chapter-06/Case-Study-Part-01-MD.md)
   - 📔 [**Part 2** - Analysis of Healthy Controls]()
   - 📔 [**Part 3** - Analysis of Impaired Movement]()
 

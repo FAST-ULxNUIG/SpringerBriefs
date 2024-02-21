@@ -1,9 +1,7 @@
 ---
-title: "Case Study Part 1: Exploration and Basis Expansion"
-format: github_document
-author: "Edward Gunning"
+title: "Case Study Part 1"
+output: github_document
 ---
-
 
 # Set Up and Data Import
 
