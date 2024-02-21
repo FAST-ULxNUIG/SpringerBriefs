@@ -1,0 +1,182 @@
+% Created by tikzDevice version 0.12.3.1 on 2024-01-14 18:24:37
+% !TEX encoding = UTF-8 Unicode
+\documentclass[10pt]{article}
+\usepackage{tikz}
+
+\usepackage[active,tightpage,psfixbb]{preview}
+
+\PreviewEnvironment{pgfpicture}
+
+\setlength\PreviewBorder{0pt}
+\begin{document}
+
+\begin{tikzpicture}[x=1pt,y=1pt]
+\definecolor{fillColor}{RGB}{255,255,255}
+\path[use as bounding box,fill=fillColor,fill opacity=0.00] (0,0) rectangle (552.06,602.25);
+\begin{scope}
+\path[clip] ( 49.20, 61.20) rectangle (526.86,553.05);
+\definecolor{fillColor}{RGB}{205,47,188}
+
+\path[fill=fillColor] (168.96,307.99) --
+	(305.04,307.99) --
+	(305.04,376.44) --
+	(168.96,376.44) --
+	cycle;
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 1.6pt,line join=round] (168.96,341.45) -- (305.04,341.45);
+\definecolor{drawColor}{RGB}{169,169,169}
+
+\path[draw=drawColor,line width= 0.8pt,dash pattern=on 4pt off 4pt ,line join=round,line cap=round] (237.00,206.75) -- (237.00,307.99);
+
+\path[draw=drawColor,line width= 0.8pt,dash pattern=on 4pt off 4pt ,line join=round,line cap=round] (237.00,461.86) -- (237.00,376.44);
+\definecolor{drawColor}{RGB}{80,171,234}
+
+\path[draw=drawColor,line width= 1.2pt,line join=round,line cap=round] (202.98,206.75) -- (271.02,206.75);
+
+\path[draw=drawColor,line width= 1.2pt,line join=round,line cap=round] (202.98,461.86) -- (271.02,461.86);
+
+\path[draw=drawColor,line width= 1.2pt,line join=round,line cap=round] (168.96,307.99) --
+	(305.04,307.99) --
+	(305.04,376.44) --
+	(168.96,376.44) --
+	cycle;
+\definecolor{fillColor}{RGB}{255,0,0}
+
+\path[fill=fillColor] (237.00,200.47) circle (  2.25);
+
+\path[fill=fillColor] (237.00,171.20) circle (  2.25);
+\end{scope}
+\begin{scope}
+\path[clip] (  0.00,  0.00) rectangle (552.06,602.25);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20, 79.42) -- ( 49.20,534.83);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20, 79.42) -- ( 43.20, 79.42);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20,155.32) -- ( 43.20,155.32);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20,231.22) -- ( 43.20,231.22);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20,307.12) -- ( 43.20,307.12);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20,383.03) -- ( 43.20,383.03);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20,458.93) -- ( 43.20,458.93);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20,534.83) -- ( 43.20,534.83);
+
+\node[text=drawColor,rotate= 90.00,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 34.80, 79.42) {0.4};
+
+\node[text=drawColor,rotate= 90.00,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 34.80,155.32) {0.5};
+
+\node[text=drawColor,rotate= 90.00,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 34.80,231.22) {0.6};
+
+\node[text=drawColor,rotate= 90.00,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 34.80,307.12) {0.7};
+
+\node[text=drawColor,rotate= 90.00,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 34.80,383.03) {0.8};
+
+\node[text=drawColor,rotate= 90.00,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 34.80,458.93) {0.9};
+
+\node[text=drawColor,rotate= 90.00,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at ( 34.80,534.83) {1.0};
+\end{scope}
+\begin{scope}
+\path[clip] (  0.00,  0.00) rectangle (552.06,602.25);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.20] at (288.03,573.51) {\bfseries Boxplot for Scalar Data};
+\end{scope}
+\begin{scope}
+\path[clip] (  0.00,  0.00) rectangle (552.06,602.25);
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] ( 49.20, 61.20) --
+	(526.86, 61.20) --
+	(526.86,553.05) --
+	( 49.20,553.05) --
+	cycle;
+\end{scope}
+\begin{scope}
+\path[clip] ( 49.20, 61.20) rectangle (526.86,553.05);
+\definecolor{drawColor}{RGB}{205,47,188}
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (151.95,308.14) -- (151.95,376.41);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (153.75,373.28) --
+	(151.95,376.41) --
+	(150.14,373.28);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (151.95,376.41) -- (151.95,308.14);
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (150.14,311.27) --
+	(151.95,308.14) --
+	(153.75,311.27);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (100.91,344.00) {Interquartile};
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (100.91,332.00) {Range (IQR)};
+\definecolor{drawColor}{RGB}{0,0,0}
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (373.09,341.45) -- (322.05,341.45);
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (325.18,343.25) --
+	(322.05,341.45) --
+	(325.18,339.64);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (407.11,338.00) {Median};
+\definecolor{drawColor}{RGB}{80,171,234}
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (373.09,308.14) -- (322.05,308.14);
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (325.18,309.95) --
+	(322.05,308.14) --
+	(325.18,306.34);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (441.13,305.67) {Q1 First Quartile};
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (373.09,376.41) -- (322.05,376.41);
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (325.18,378.22) --
+	(322.05,376.41) --
+	(325.18,374.60);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (441.13,373.94) {Q3 Third Quartile};
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (356.07,206.75) -- (288.03,206.75);
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (291.16,208.56) --
+	(288.03,206.75) --
+	(291.16,204.95);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (441.13,209.31) {Smallest data value};
+\end{scope}
+\end{tikzpicture}
+
+\end{document}
+t, outer sep=0pt, scale=  1.00] at (441.13,197.31) { $\geq$ Q1 - (1.5) IQR};
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (356.07,461.86) -- (288.03,461.86);
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (291.16,463.67) --
+	(288.03,461.86) --
+	(291.16,460.06);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (441.13,464.42) {Largest data value};
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (441.13,452.42) { $\leq$ Q3 + (1.5) IQR};
+\definecolor{drawColor}{RGB}{255,0,0}
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (356.07,155.32) -- (271.02,185.84);
+
+\path[draw=drawColor,line width= 0.8pt,line join=round,line cap=round] (274.58,186.48) --
+	(271.02,185.84) --
+	(273.36,183.08);
+
+\node[text=drawColor,anchor=base,inner sep=0pt, outer sep=0pt, scale=  1.00] at (432.62,152.85) {Outlying values};
+
+\path[draw=drawColor,line width= 0.4pt,line join=round,line cap=round] (237.00,185.84) circle ( 13.50);
+\end{scope}
+\end{tikzpicture}
+
+\end{document}

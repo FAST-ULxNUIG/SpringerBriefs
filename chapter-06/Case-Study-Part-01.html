@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Edward Gunning">
+
+<title>Case Study Part 1: Exploration and Basis Expansion</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Case-Study-Part-01_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Case-Study-Part-01_files/libs/quarto-html/quarto.js"></script>
+<script src="Case-Study-Part-01_files/libs/quarto-html/popper.min.js"></script>
+<script src="Case-Study-Part-01_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Case-Study-Part-01_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Case-Study-Part-01_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Case-Study-Part-01_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Case-Study-Part-01_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Case-Study-Part-01_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Case-Study-Part-01_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#set-up-and-data-import" id="toc-set-up-and-data-import" class="nav-link active" data-scroll-target="#set-up-and-data-import">Set Up and Data Import</a>
+  <ul class="collapse">
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
+  <li><a href="#load-custom-functions" id="toc-load-custom-functions" class="nav-link" data-scroll-target="#load-custom-functions">Load Custom Functions</a></li>
+  <li><a href="#read-in-data" id="toc-read-in-data" class="nav-link" data-scroll-target="#read-in-data">Read in Data</a></li>
+  <li><a href="#plot-a-sample-of-curves" id="toc-plot-a-sample-of-curves" class="nav-link" data-scroll-target="#plot-a-sample-of-curves">Plot a Sample of Curves</a></li>
+  </ul></li>
+  <li><a href="#basis-expansion-interpolation" id="toc-basis-expansion-interpolation" class="nav-link" data-scroll-target="#basis-expansion-interpolation">Basis Expansion/ Interpolation</a></li>
+  <li><a href="#visualisation-functional-boxplot" id="toc-visualisation-functional-boxplot" class="nav-link" data-scroll-target="#visualisation-functional-boxplot">Visualisation: Functional Boxplot</a>
+  <ul class="collapse">
+  <li><a href="#standard-version" id="toc-standard-version" class="nav-link" data-scroll-target="#standard-version">Standard Version</a></li>
+  <li><a href="#experimental-ggplot-version" id="toc-experimental-ggplot-version" class="nav-link" data-scroll-target="#experimental-ggplot-version">(Experimental) <code>ggplot()</code> Version</a></li>
+  </ul></li>
+  <li><a href="#session-information-reproducibility" id="toc-session-information-reproducibility" class="nav-link" data-scroll-target="#session-information-reproducibility">Session Information (Reproducibility)</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Case Study Part 1: Exploration and Basis Expansion</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Edward Gunning </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="set-up-and-data-import" class="level1">
+<h1>Set Up and Data Import</h1>
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">Packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># CRAN v1.3.1 </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co"># CRAN v1.14.2</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fda)        <span class="co"># CRAN v5.5.1        </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="load-custom-functions" class="level2">
+<h2 class="anchored" data-anchor-id="load-custom-functions">Load Custom Functions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"functions"</span>, <span class="st">"theme_gunning.R"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"functions"</span>, <span class="st">"functional_boxplot_gg.R"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_gunning</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="read-in-data" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-data">Read in Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in from storage:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapter-06"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">"data"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">"GRF_dataset_PRO_meta.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plot-a-sample-of-curves" class="level2">
+<h2 class="anchored" data-anchor-id="plot-a-sample-of-curves">Plot a Sample of Curves</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot requires reshaping data from wide to long.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># do reshaping with data.table because it's a little easier</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and then continue to use data.table for a little while!</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta <span class="ot">&lt;-</span> <span class="fu">data.table</span>(GRF_dataset_PRO_meta)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_long <span class="ot">&lt;-</span> <span class="fu">melt.data.table</span>(GRF_dataset_PRO_meta,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">measure.vars =</span> <span class="fu">paste0</span>(<span class="st">"time_"</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">variable.name =</span> <span class="st">"time"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">value.name =</span> <span class="st">"force"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_long[, time <span class="sc">:</span><span class="er">=</span> <span class="fu">as.numeric</span>(stringr<span class="sc">::</span><span class="fu">str_remove</span>(time, <span class="st">"time_"</span>))]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_long[, obs_id <span class="sc">:</span><span class="er">=</span> <span class="fu">paste</span>(SUBJECT_ID, SESSION_ID, TRIAL_ID, <span class="at">sep =</span> <span class="st">"_"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take Sample of Observations</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>random_sample_ids <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">unique</span>(GRF_dataset_PRO_meta_long<span class="sc">$</span>obs_id), <span class="at">size =</span> <span class="dv">100</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_long_sample <span class="ot">&lt;-</span> GRF_dataset_PRO_meta_long[obs_id <span class="sc">%chin%</span> random_sample_ids]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename Factor Labels for Plot:</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_long_sample[, side <span class="sc">:</span><span class="er">=</span> <span class="fu">fifelse</span>(side<span class="sc">==</span><span class="st">"left"</span>, <span class="st">"Left Side"</span>, <span class="st">"Right Side"</span>)]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_long_sample[, component <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(component,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"vertical"</span>, <span class="st">"anterior_posterior"</span>, <span class="st">"medio_lateral"</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Vertical"</span>, <span class="st">"Anterior-Posterior"</span>, <span class="st">"Medio-Lateral"</span>))]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Plot:</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="at">data =</span> GRF_dataset_PRO_meta_long_sample) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> force,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">group =</span> obs_id,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">colour =</span> <span class="fu">interaction</span>(component, side)) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(component <span class="sc">~</span> side, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"GaitRec Ground Reaction Force Dataset"</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"A Random Sample of 100 Observations"</span>) <span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="basis-expansion-interpolation" class="level1">
+<h1>Basis Expansion/ Interpolation</h1>
+<p>Loop through and try different basis sizes (different values of <span class="math inline">\(K\)</span>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>k_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">15</span>, <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>SSE_vec <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"numeric"</span>, <span class="at">length =</span> <span class="fu">length</span>(k_seq))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta[, <span class="fu">paste0</span>(<span class="st">"time_"</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>SSE_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(y), <span class="at">ncol =</span> <span class="fu">length</span>(k_seq))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="fu">seq_along</span>(k_seq)) {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop through different values of k</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"iteration"</span>, k, <span class="st">"of"</span>, <span class="fu">length</span>(k_seq)))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  bspl_k <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> k_seq[k], <span class="at">norder =</span> <span class="dv">4</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">y =</span> y,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">fdParobj =</span> bspl_k)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  SSE_mat[,k] <span class="ot">&lt;-</span> <span class="fu">apply</span>((y <span class="sc">-</span> yhat)<span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>, sum) <span class="co"># calculate (discrete approx. to) integrated squared error</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "iteration 1 of 14"
+[1] "iteration 2 of 14"
+[1] "iteration 3 of 14"
+[1] "iteration 4 of 14"
+[1] "iteration 5 of 14"
+[1] "iteration 6 of 14"
+[1] "iteration 7 of 14"
+[1] "iteration 8 of 14"
+[1] "iteration 9 of 14"
+[1] "iteration 10 of 14"
+[1] "iteration 11 of 14"
+[1] "iteration 12 of 14"
+[1] "iteration 13 of 14"
+[1] "iteration 14 of 14"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">sqrt</span>(SSE_mat),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">names =</span> k_seq,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Number of Basis Functions"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Root SSE"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Approximation Error from Interpolation"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">which</span>(k_seq<span class="sc">==</span><span class="dv">35</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"green4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Choose <span class="math inline">\(K=35\)</span> basis functions and plot some fits:</p>
+<div class="cell" data-fig.asp="0.33">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do basis representation: ------------------------------------------------</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>bspl_35 <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> <span class="dv">35</span>, <span class="at">norder =</span> <span class="dv">4</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">y =</span> y,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">fdParobj =</span> bspl_35)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sample_inds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">ncol</span>(y)<span class="sc">/</span><span class="dv">3</span>), <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Vertical:</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Vertical"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># A-P</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Anterior-Posterior"</span>)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># M-L:</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Medio-Lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Append the calculated basis coefficients to our data matrix so we can use them later:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_basis_coefs <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta_smooth_basis<span class="sc">$</span>fd<span class="sc">$</span>coefs)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta <span class="ot">&lt;-</span> <span class="fu">cbind</span>(GRF_dataset_PRO_meta,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">t</span>(GRF_dataset_PRO_meta_smooth_basis<span class="sc">$</span>fd<span class="sc">$</span>coefs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualisation-functional-boxplot" class="level1">
+<h1>Visualisation: Functional Boxplot</h1>
+<section id="standard-version" class="level2">
+<h2 class="anchored" data-anchor-id="standard-version">Standard Version</h2>
+<p>For exploratory data analysis, construct functional boxplots using the <code>boxplot.fd()</code> (or <code>fbplot()</code>) function.</p>
+<div class="cell" data-fig.asp="0.33">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split into vertical, medio_lateral and anterior_posterior components</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for function boxplots.</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_V <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"vertical"</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_V_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_V[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">basisobj =</span> bspl_35)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_ML <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"medio_lateral"</span>]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_ML_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_ML[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">basisobj =</span> bspl_35)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_AP <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"anterior_posterior"</span>]</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_AP_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_AP[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">basisobj =</span> bspl_35)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_V_fd,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Vertical"</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_AP_fd,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Anterior-Posterior"</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_ML_fd,</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Medio-lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+<section id="experimental-ggplot-version" class="level2">
+<h2 class="anchored" data-anchor-id="experimental-ggplot-version">(Experimental) <code>ggplot()</code> Version</h2>
+<p>Can equivalently use a wrapper function that I’ve written to turn these into pretty <code>ggplot</code> figures for the manuscript:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>V_fboxplot <span class="ot">&lt;-</span><span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_V_fd)<span class="sc">$</span>ggplot <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Vertical"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>AP_fboxplot <span class="ot">&lt;-</span> <span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_AP_fd)<span class="sc">$</span>ggplot <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Anterior-Posterior"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ML_fboxplot <span class="ot">&lt;-</span> <span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_ML_fd)<span class="sc">$</span>ggplot <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Medio-Lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-fig.asp="0.33">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(combined_plot <span class="ot">&lt;-</span> <span class="fu">list</span>(V_fboxplot, AP_fboxplot, ML_fboxplot) <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="cf">function</span>(x) {</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         x <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Force (BW)"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>       }) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(<span class="at">plotlist =</span> ., <span class="at">ncol =</span> <span class="dv">3</span> , <span class="at">nrow =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="session-information-reproducibility" class="level1">
+<h1>Session Information (Reproducibility)</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_IE.UTF-8/en_IE.UTF-8/en_IE.UTF-8/C/en_IE.UTF-8/en_IE.UTF-8
+
+attached base packages:
+[1] splines   stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] fda_5.5.1         deSolve_1.30      fds_1.8           RCurl_1.98-1.6   
+ [5] rainbow_3.6       pcaPP_1.9-74      MASS_7.3-55       Matrix_1.4-0     
+ [9] data.table_1.14.2 forcats_0.5.1     stringr_1.4.0     dplyr_1.1.2      
+[13] purrr_0.3.4       readr_2.1.2       tidyr_1.2.0       tibble_3.2.1     
+[17] ggplot2_3.4.2     tidyverse_1.3.1  
+
+loaded via a namespace (and not attached):
+ [1] bitops_1.0-7       fs_1.6.2           lubridate_1.8.0    httr_1.4.2        
+ [5] rprojroot_2.0.2    tools_4.1.2        backports_1.4.1    utf8_1.2.2        
+ [9] R6_2.5.1           KernSmooth_2.23-20 DBI_1.1.2          colorspace_2.0-3  
+[13] withr_2.5.0        tidyselect_1.2.0   compiler_4.1.2     cli_3.6.0         
+[17] rvest_1.0.2        xml2_1.3.3         labeling_0.4.2     scales_1.2.1      
+[21] mvtnorm_1.1-3      digest_0.6.29      rmarkdown_2.11     pkgconfig_2.0.3   
+[25] htmltools_0.5.5    dbplyr_2.1.1       fastmap_1.1.0      htmlwidgets_1.6.2 
+[29] rlang_1.1.1        readxl_1.3.1       rstudioapi_0.13    generics_0.1.2    
+[33] farver_2.1.0       jsonlite_1.8.0     mclust_5.4.9       car_3.0-12        
+[37] magrittr_2.0.2     Rcpp_1.0.10        munsell_0.5.0      fansi_1.0.2       
+[41] abind_1.4-5        lifecycle_1.0.3    stringi_1.7.6      yaml_2.3.5        
+[45] carData_3.0-5      grid_4.1.2         crayon_1.5.0       lattice_0.20-45   
+[49] haven_2.4.3        cowplot_1.1.1      hms_1.1.1          knitr_1.37        
+[53] pillar_1.9.0       ggpubr_0.4.0       ggsignif_0.6.3     reprex_2.0.1      
+[57] glue_1.6.2         evaluate_0.15      modelr_0.1.8       vctrs_0.6.2       
+[61] tzdb_0.2.0         cellranger_1.1.0   gtable_0.3.0       assertthat_0.2.1  
+[65] ks_1.13.4          xfun_0.39          broom_0.7.12       pracma_2.3.8      
+[69] rstatix_0.7.0      cluster_2.1.2      ellipsis_0.3.2     hdrcde_3.4        
+[73] here_1.0.1        </code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

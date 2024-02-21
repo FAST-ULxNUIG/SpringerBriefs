@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Edward Gunning">
+
+<title>Case Study Part 3: Impaired Movement</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Case-Study-Part-03_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Case-Study-Part-03_files/libs/quarto-html/quarto.js"></script>
+<script src="Case-Study-Part-03_files/libs/quarto-html/popper.min.js"></script>
+<script src="Case-Study-Part-03_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Case-Study-Part-03_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Case-Study-Part-03_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Case-Study-Part-03_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Case-Study-Part-03_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Case-Study-Part-03_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Case-Study-Part-03_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">Set Up</a></li>
+  <li><a href="#fpca" id="toc-fpca" class="nav-link" data-scroll-target="#fpca">FPCA</a></li>
+  <li><a href="#function-on-scalar-regression" id="toc-function-on-scalar-regression" class="nav-link" data-scroll-target="#function-on-scalar-regression">Function-on-Scalar Regression</a>
+  <ul class="collapse">
+  <li><a href="#two-step-pointwise-estimation" id="toc-two-step-pointwise-estimation" class="nav-link" data-scroll-target="#two-step-pointwise-estimation">Two-Step Pointwise Estimation</a>
+  <ul class="collapse">
+  <li><a href="#manual-loop-with-lm" id="toc-manual-loop-with-lm" class="nav-link" data-scroll-target="#manual-loop-with-lm">Manual Loop with <code>lm()</code></a></li>
+  <li><a href="#fosr2s" id="toc-fosr2s" class="nav-link" data-scroll-target="#fosr2s"><code>fosr2s()</code></a></li>
+  </ul></li>
+  <li><a href="#p-gls-fosr" id="toc-p-gls-fosr" class="nav-link" data-scroll-target="#p-gls-fosr">P-GLS (<code>fosr()</code>)</a></li>
+  <li><a href="#famm" id="toc-famm" class="nav-link" data-scroll-target="#famm">FAMM</a></li>
+  <li><a href="#p-ols-fregress" id="toc-p-ols-fregress" class="nav-link" data-scroll-target="#p-ols-fregress">P-OLS (<code>fRegress()</code>)</a>
+  <ul class="collapse">
+  <li><a href="#comparison" id="toc-comparison" class="nav-link" data-scroll-target="#comparison">Comparison:</a></li>
+  </ul></li>
+  <li><a href="#bootstrap-simultaneous-bands" id="toc-bootstrap-simultaneous-bands" class="nav-link" data-scroll-target="#bootstrap-simultaneous-bands">Bootstrap Simultaneous Bands</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">————————————————————————————–</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">————————————————————————————–</a></li>
+  <li><a href="#permutation-f-tests" id="toc-permutation-f-tests" class="nav-link" data-scroll-target="#permutation-f-tests">Permutation F-Tests</a></li>
+  </ul></li>
+  <li><a href="#session-information-reproducibility" id="toc-session-information-reproducibility" class="nav-link" data-scroll-target="#session-information-reproducibility">Session Information (Reproducibility)</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Case Study Part 3: Impaired Movement</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Edward Gunning </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<p>Analysis of impaired movement using FPCA and function-on-scalar regression.</p>
+<p><strong>Note:</strong> This script takes about <span class="math inline">\(4\)</span> hours to run on my <span class="math inline">\(2019\)</span> MacBook pro. This is primarily due to the bootstrap using <span class="math inline">\(1000\)</span> bootstrap replicates. This number could be reduced or the bootstrap skipped to speed it up.</p>
+<section id="set-up" class="level1">
+<h1>Set Up</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>time_start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Packages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># CRAN v1.3.1 </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co"># CRAN v1.14.2</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fda)        <span class="co"># CRAN v5.5.1   </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(refund)     <span class="co"># CRAN v0.1-26</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Some graphics settings.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"functions"</span>, <span class="st">"theme_gunning.R"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_gunning</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_update</span>(<span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read in the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"chapter-06"</span>, <span class="st">"data"</span>, <span class="st">"interpolated-data.rds"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>interpolated_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(data_path)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta <span class="ot">&lt;-</span> interpolated_data<span class="sc">$</span>GRF_dataset_PRO_meta</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>bspl_35 <span class="ot">&lt;-</span> interpolated_data<span class="sc">$</span>bspl_35</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta[, <span class="fu">uniqueN</span>(SESSION_ID), by <span class="ot">=</span> SUBJECT_ID][, <span class="fu">stopifnot</span>(V1 <span class="sc">==</span> <span class="dv">1</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<p>Calculate average curve for each subject/ side.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove discrete values from dataset now we just working with basis coefficients.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta[, <span class="fu">paste0</span>(<span class="st">"time_"</span>,<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">:</span><span class="er">=</span> <span class="cn">NULL</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_averages <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                                 <span class="fu">as.list</span>(<span class="fu">apply</span>(.SD, <span class="dv">2</span>, mean)), <span class="co"># average basis coefficients of all trials</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                                                 by <span class="ot">=</span> .(SUBJECT_ID, SESSION_ID, side, component, CLASS_LABEL, CLASS_LABEL_DETAILED, SEX, AGE, HEIGHT, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                                                        BODY_WEIGHT, BODY_MASS, SHOE_SIZE, AFFECTED_SIDE, SHOD_CONDITION, <span class="co"># defines averaging</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                                                        ORTHOPEDIC_INSOLE, SPEED),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                                                 .SDcols <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">"bspl4."</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)] <span class="co"># says which columns to average</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Only look at Anterior-Posterior (A-P) component. Look at affected side for impaired subjects. Look at right side for Healthy Controls.</p>
+<p><strong>Note:</strong> We will call this <code>dt</code> to make code easier to read in .qmd files (understand this is not best practice – more informative names should be used).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> GRF_dataset_PRO_averages[component <span class="sc">==</span> <span class="st">"anterior_posterior"</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> dt[(CLASS_LABEL <span class="sc">==</span> <span class="st">"HC"</span> <span class="sc">&amp;</span> side <span class="sc">==</span> <span class="st">"right"</span>) <span class="sc">|</span> (AFFECTED_SIDE <span class="sc">==</span> <span class="dv">1</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How many subjects?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 671</code></pre>
+</div>
+</div>
+<p>Create <code>fd</code> object using coefficients and basis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fdobj <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(dt[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])), <span class="co"># basis coefs</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">basisobj =</span> bspl_35) <span class="co"># basis</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="fpca" class="level1">
+<h1>FPCA</h1>
+<p>Perform fpca using <code>pca.fd()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fpca <span class="ot">&lt;-</span> <span class="fu">pca.fd</span>(<span class="at">fdobj =</span> fdobj, <span class="at">nharm =</span> <span class="dv">35</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Look at variance explained:</p>
+<div class="cell" data-layout-align="center" data-fig.asp="1">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>, <span class="fu">cumsum</span>(fpca<span class="sc">$</span>varprop), <span class="at">xlab =</span> <span class="st">"k"</span>, <span class="at">ylab =</span> <span class="st">"cumulative prop. of var explained"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure of FPCA. Need to evaluate/ reshape FPCs to plot.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fpca_eval <span class="ot">&lt;-</span> <span class="fu">eval.fd</span>(<span class="at">evalarg =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fpca<span class="sc">$</span>harmonics)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>fpca_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">time =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fpca_eval)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fpca_dt_long <span class="ot">&lt;-</span> <span class="fu">melt.data.table</span>(fpca_dt,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">id.vars =</span> <span class="st">"time"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">measure.vars =</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>mean_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">time =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">mean =</span> <span class="fu">c</span>(<span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fpca<span class="sc">$</span>meanfd)))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>fpca_dt_long <span class="ot">&lt;-</span> <span class="fu">merge.data.table</span>(<span class="at">x =</span> fpca_dt_long, </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">y =</span> mean_dt, </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">by =</span> <span class="st">"time"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>var_explained_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>), </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">constant =</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">sqrt</span>(fpca<span class="sc">$</span>values))[<span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>], <span class="co"># to add to fpcs</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_explained =</span> <span class="fu">paste0</span>(<span class="st">"$"</span>, <span class="fu">round</span>(fpca<span class="sc">$</span>varprop <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"</span><span class="sc">\\</span><span class="st">%$"</span>))</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>fpca_dt_long <span class="ot">&lt;-</span> <span class="fu">merge.data.table</span>(<span class="at">x =</span> fpca_dt_long, </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                                 var_explained_dt,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">by =</span> <span class="st">"variable"</span>, </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>fpca_dt_long[, facet_label <span class="sc">:</span><span class="er">=</span> <span class="fu">paste0</span>(<span class="st">"F"</span>, variable, <span class="st">" ("</span>, var_explained, <span class="st">" of Variance)"</span>)]</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>anterior_posterior_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(fpca_dt_long[variable <span class="sc">%in%</span> <span class="fu">paste0</span>(<span class="st">"PC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)]) <span class="sc">+</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> time) <span class="sc">+</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> facet_label, <span class="at">ncol =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean)) <span class="sc">+</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean <span class="sc">+</span> constant <span class="sc">*</span> value), <span class="at">pch =</span> <span class="st">"+"</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean <span class="sc">-</span> constant <span class="sc">*</span> value), <span class="at">pch =</span> <span class="st">"-"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Normalised Time"</span>, <span class="at">y =</span> <span class="st">"Force (BW)"</span>, <span class="at">title =</span> <span class="st">"Anterior-Posterior"</span>)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>anterior_posterior_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Plot of scores vs.&nbsp;group labels. Again, extract scores and reshape data.</p>
+<div class="cell" data-layout-align="center" data-fig.asp="0.5">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>boxplots_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">class_label =</span> dt<span class="sc">$</span>CLASS_LABEL,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sex =</span> dt<span class="sc">$</span>SEX,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                          fpca<span class="sc">$</span>scores[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(boxplots_dt)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"FPC"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>boxplots_dt_lng <span class="ot">&lt;-</span> <span class="fu">melt.data.table</span>(boxplots_dt, <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"class_label"</span>, <span class="st">"sex"</span>))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>boxplots_dt_lng[, </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                class_label_fill <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(class_label, <span class="co"># re-label facets for strip texts.</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"HC"</span>, <span class="st">"A"</span>, <span class="st">"K"</span>, <span class="st">"H"</span>, <span class="st">"C"</span>),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Healthy Control"</span>, <span class="st">"Ankle"</span>, <span class="st">"Knee"</span>, <span class="st">"Hip"</span>, <span class="st">"Calcaneous"</span>))]</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>boxplots_dt_lng[, class_label <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(class_label, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"HC"</span>, <span class="st">"A"</span>, <span class="st">"K"</span>, <span class="st">"H"</span>, <span class="st">"C"</span>))]</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>(boxplot_scores <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(boxplots_dt_lng) <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> class_label, <span class="at">y =</span> value, <span class="at">fill =</span> class_label_fill) <span class="sc">+</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span> variable) <span class="sc">+</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"FPC Score"</span>, <span class="at">x =</span> <span class="st">"Impairement"</span>, <span class="at">fill =</span> <span class="st">"Impairement:"</span>) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="function-on-scalar-regression" class="level1">
+<h1>Function-on-Scalar Regression</h1>
+<section id="two-step-pointwise-estimation" class="level2">
+<h2 class="anchored" data-anchor-id="two-step-pointwise-estimation">Two-Step Pointwise Estimation</h2>
+<p>Do manually with a loop and using <code>fosr2s()</code>. <strong>Note</strong>: The sum-to-zero constraint is achieved by <code>contr.sum()</code> command.</p>
+<section id="manual-loop-with-lm" class="level3">
+<h3 class="anchored" data-anchor-id="manual-loop-with-lm">Manual Loop with <code>lm()</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dt[, CLASS_LABEL <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  CLASS_LABEL,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"HC"</span>, <span class="st">"A"</span>, <span class="st">"K"</span>, <span class="st">"H"</span>, <span class="st">"C"</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Healthy Control"</span>, <span class="st">"Ankle"</span>, <span class="st">"Knee"</span>, <span class="st">"Hip"</span>, <span class="st">"Calcaneous"</span>))]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>fdobj_eval <span class="ot">&lt;-</span> <span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fdobj)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>beta_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">101</span>, <span class="at">ncol =</span> <span class="dv">5</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(tind <span class="cf">in</span> <span class="fu">seq_along</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)) {</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#print(paste0("t = ", c(0:100)[tind]))</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  df_lm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">force_t =</span> fdobj_eval[tind,], <span class="at">class_label =</span> dt<span class="sc">$</span>CLASS_LABEL)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contrasts</span>(df_lm<span class="sc">$</span>class_label) <span class="ot">&lt;-</span> <span class="fu">contr.sum</span>(<span class="dv">5</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  test_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(force_t <span class="sc">~</span> class_label, <span class="at">data =</span> df_lm)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  beta_mat[tind, ] <span class="ot">&lt;-</span> <span class="fu">coef</span>(test_lm)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># and last column is obtained by -1 * sum of other predictors (constraint)</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>beta_mat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(beta_mat, <span class="sc">-</span> <span class="fu">apply</span>(beta_mat[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">1</span>, sum))</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(beta_mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="fu">rownames</span>(<span class="fu">contrasts</span>(df_lm<span class="sc">$</span>class_label)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fosr2s" class="level3">
+<h3 class="anchored" data-anchor-id="fosr2s"><code>fosr2s()</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># can also do pointwise regressions with refund; this smoooths not interpolates though.</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fosr2s <span class="ot">&lt;-</span> <span class="fu">fosr2s</span>(<span class="at">Y =</span> <span class="fu">t</span>(fdobj_eval),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">X =</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> class_label, <span class="at">data =</span> df_lm),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">nbasis =</span> <span class="dv">35</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>fosr2s<span class="sc">$</span>est.func <span class="ot">&lt;-</span> <span class="fu">cbind</span>(fosr2s<span class="sc">$</span>est.func, <span class="sc">-</span> <span class="fu">apply</span>(fosr2s<span class="sc">$</span>est.func[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">1</span>, sum))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fosr2s<span class="sc">$</span>est.func) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(beta_mat) </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fosr2s<span class="sc">$</span>se.func) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(fosr2s<span class="sc">$</span>est.func)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Compare by plotting differences in estimates:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(fosr2s<span class="sc">$</span>est.func[,j] <span class="sc">-</span> beta_mat[, j], <span class="at">type =</span> <span class="st">"l"</span>) <span class="co"># plot difference</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>} <span class="co"># identical</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>^ differences of order <span class="math inline">\(10^{-16}\)</span> – identical.</p>
+</section>
+</section>
+<section id="p-gls-fosr" class="level2">
+<h2 class="anchored" data-anchor-id="p-gls-fosr">P-GLS (<code>fosr()</code>)</h2>
+<p><strong>Note</strong>: The sum-to-zero constraint is achieved by using the <code>con</code> argument, a vector saying which columns of design matrix should sum to zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>modmat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">Intercept =</span> <span class="dv">1</span>, <span class="fu">model.matrix</span>(<span class="sc">~</span> <span class="fu">factor</span>(dt<span class="sc">$</span>CLASS_LABEL) <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>(<span class="at">constraints =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dv">1</span>)) <span class="co"># vector says all betas sum to zero</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6]
+[1,]    0    1    1    1    1    1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(modmat)[<span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="fu">colnames</span>(modmat)[<span class="sc">-</span><span class="dv">1</span>],</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">pattern =</span>  <span class="st">"factor</span><span class="sc">\\</span><span class="st">(dt</span><span class="sc">\\</span><span class="st">$CLASS_LABEL</span><span class="sc">\\</span><span class="st">)"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>fosr <span class="ot">&lt;-</span> <span class="fu">fosr</span>(<span class="at">fdobj =</span> fdobj,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">X =</span> modmat, <span class="co"># design matrix</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">con =</span> constraints, <span class="co"># sum-to-zero constraints</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"GLS"</span>, <span class="co"># (Reiss et al., 2010)  </span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fosr<span class="sc">$</span>se.func) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(fosr<span class="sc">$</span>est.func) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(modmat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="famm" class="level2">
+<h2 class="anchored" data-anchor-id="famm">FAMM</h2>
+<p>We add an <code>id</code> column with an indicator for each row. This would allow us to model <span class="math inline">\(\epsilon(t)\)</span> as a smooth residual in the FAMM approach, using basis functions and random effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dt_copy <span class="ot">&lt;-</span> <span class="fu">copy</span>(dt)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contrasts</span>(dt_copy<span class="sc">$</span>CLASS_LABEL) <span class="ot">&lt;-</span> <span class="fu">contr.sum</span>(<span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>X_constraint <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> CLASS_LABEL, <span class="at">data =</span> dt_copy)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X_constraint) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="fu">rownames</span>(<span class="fu">contrasts</span>(dt_copy<span class="sc">$</span>CLASS_LABEL))[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>pffr_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(X_constraint)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>pffr_df<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(N)) <span class="co"># id for each curve = smooth error</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>pffr_df<span class="sc">$</span>Y <span class="ot">&lt;-</span> <span class="fu">t</span>(fdobj_eval)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pffr_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"Healthy_Control"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is how it <em>would</em> be achieved. However, too complicated to fit – <strong>we do not evaluate this chunk</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pffr_fit <span class="ot">&lt;-</span> <span class="fu">pffr</span>(<span class="at">formula =</span> Y <span class="sc">~</span> Healthy_Control <span class="sc">+</span> Ankle <span class="sc">+</span> Knee <span class="sc">+</span> Hip<span class="sc">+</span> <span class="fu">s</span>(id, <span class="at">bs =</span> <span class="st">"re"</span>),</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> pffr_df,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">yind =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">algorithm =</span> <span class="st">"bam"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bs.yindex =</span> <span class="fu">list</span>(<span class="at">bs=</span><span class="st">"ps"</span>, <span class="at">k=</span><span class="dv">35</span>, <span class="at">m=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bs.int  =</span> <span class="fu">list</span>(<span class="at">bs=</span><span class="st">"ps"</span>, <span class="at">k=</span><span class="dv">35</span>, <span class="at">m=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Instead, we fit with assuming <span class="math inline">\(\epsilon_{it} \sim N(0, \sigma)\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pffr_fit <span class="ot">&lt;-</span> <span class="fu">pffr</span>(<span class="at">formula =</span> Y <span class="sc">~</span> Healthy_Control <span class="sc">+</span> Ankle <span class="sc">+</span> Knee <span class="sc">+</span> Hip,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> pffr_df,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">yind =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">algorithm =</span> <span class="st">"bam"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bs.yindex =</span> <span class="fu">list</span>(<span class="at">bs=</span><span class="st">"ps"</span>, <span class="at">k=</span><span class="dv">35</span>, <span class="at">m=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">bs.int  =</span> <span class="fu">list</span>(<span class="at">bs=</span><span class="st">"ps"</span>, <span class="at">k=</span><span class="dv">35</span>, <span class="at">m=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="p-ols-fregress" class="level2">
+<h2 class="anchored" data-anchor-id="p-ols-fregress">P-OLS (<code>fRegress()</code>)</h2>
+<p>Three (perhaps strange) notes on this implementation:</p>
+<ol type="1">
+<li><p>We can use the <code>contr.sum()</code> version of the design matrix to construct a suitable design matrix (same as last fit) to enforce sum-to-zero constraint. However, we first use the “hack” provided in Ramsay, Hooker and Graves p.&nbsp;148 of augmenting a “fake” observation. Then we use <code>contr.sum()</code>.</p></li>
+<li><p>Using <code>fRegress()</code>, <code>xfdlist</code> is typically a list with each element containing the vector that would be a column of the standard design matrix. However, to manually use <code>predict.fRegress()</code>, for some reason we need to create each scalar covariate as a constant “function” using a constant basis (i.e., <code>xfdlist</code> still a list but now each element is an <code>fd</code> object representing the scalar covariates).</p></li>
+<li><p>We manually do 10-fold cross-validation to choose smoothing parameter. The reason being is that <code>fRegress.CV()</code> only does leave-one-out which takes too long to run on this dataset.</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>impairement_classes <span class="ot">&lt;-</span> <span class="fu">unique</span>(dt<span class="sc">$</span>CLASS_LABEL)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>constant_basis <span class="ot">&lt;-</span> <span class="fu">create.constant.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># manually setting up xfdlist with "hack" to enforce sum to zero:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(impairement_classes) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>xfd_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"list"</span>, <span class="at">length =</span> p)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(xfd_list) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="fu">as.character</span>(impairement_classes))</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>xfd_list_constant_coefs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="at">times =</span> N), <span class="dv">0</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>xfd_list[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">matrix</span>(xfd_list_constant_coefs, <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> N <span class="sc">+</span> <span class="dv">1</span>), <span class="at">basisobj =</span> constant_basis)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>p) {</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  xj <span class="ot">&lt;-</span> (dt<span class="sc">$</span>CLASS_LABEL <span class="sc">==</span> impairement_classes[j<span class="dv">-1</span>])</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  xfd_list[[j]] <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">matrix</span>(<span class="at">data  =</span> <span class="fu">c</span>(xj, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> N <span class="sc">+</span> <span class="dv">1</span>), <span class="at">basisobj =</span> constant_basis)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>coefs_tmp <span class="ot">&lt;-</span> fdobj<span class="sc">$</span>coefs</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>coefs_augmented <span class="ot">&lt;-</span> <span class="fu">cbind</span>(coefs_tmp, <span class="fu">matrix</span>(<span class="at">data =</span> <span class="dv">0</span>, <span class="at">nrow =</span> fdobj<span class="sc">$</span>basis<span class="sc">$</span>nbasis, <span class="dv">1</span>))</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>Y_fd_augmented <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> coefs_augmented, </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">basisobj =</span>  fdobj<span class="sc">$</span>basis) <span class="co"># (RHG p. 148)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up basis for predictor and regression functions:</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># use same basis as data</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>betas_basis <span class="ot">&lt;-</span> fdobj<span class="sc">$</span>basis</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's do CV to choose smoothing parameter:</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>log_lambda_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">to =</span> <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>SSE_cv_vec <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> <span class="fu">length</span>(log_lambda_seq))</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Do shuffling of dataset prior to cross-validation</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>ind_obs <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(N)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>ind_obs_shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(ind_obs)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>Y_fd_augmented_shuffled <span class="ot">&lt;-</span> Y_fd_augmented[<span class="fu">c</span>(ind_obs_shuffled, N <span class="sc">+</span> <span class="dv">1</span>),]</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>x_fd_list_shuffled <span class="ot">&lt;-</span> <span class="fu">lapply</span>(xfd_list, <span class="cf">function</span>(x) {x[<span class="fu">c</span>(ind_obs_shuffled, N <span class="sc">+</span> <span class="dv">1</span>)]})</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create folds:</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>nfolds <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>cv_obs <span class="ot">&lt;-</span> <span class="fu">cut</span>(<span class="fu">seq_len</span>(N), <span class="at">labels =</span> <span class="cn">FALSE</span>, <span class="at">breaks =</span> nfolds)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>folds <span class="ot">&lt;-</span> <span class="fu">unique</span>(cv_obs)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">seq_len</span>(nfolds) <span class="sc">==</span> folds)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>SSE_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> nfolds, <span class="at">ncol =</span> <span class="fu">length</span>(log_lambda_seq))</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="fu">seq_along</span>(log_lambda_seq)) {</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create parameters using same lambda value:</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"-------------------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"lambda = "</span>, <span class="dv">10</span><span class="sc">^</span>log_lambda_seq[k]))</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"-------------------------------------------</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>  beta_fdPar_k <span class="ot">&lt;-</span> <span class="fu">fdPar</span>(<span class="at">fdobj =</span> betas_basis, <span class="at">Lfdobj =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="dv">10</span><span class="sc">^</span>log_lambda_seq[k])</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>  beta_list_k <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="at">n =</span> p, <span class="at">expr =</span> beta_fdPar_k, <span class="at">simplify =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Doing Cross-Validation:"</span>)</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(fold_ind <span class="cf">in</span> folds) {</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Fold"</span>, fold_ind, <span class="st">"of"</span>, nfolds))</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Do test:train split.</span></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>    train_inds <span class="ot">&lt;-</span> <span class="fu">which</span>(cv_obs <span class="sc">!=</span> fold_ind)</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>    test_inds <span class="ot">&lt;-</span> <span class="fu">which</span>(cv_obs <span class="sc">==</span> fold_ind)</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Do training:</span></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>    Y_fd_augmented_train <span class="ot">&lt;-</span> Y_fd_augmented_shuffled[<span class="fu">c</span>(train_inds, N<span class="sc">+</span><span class="dv">1</span>),]</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>    x_fd_list_train <span class="ot">&lt;-</span> <span class="fu">lapply</span>(x_fd_list_shuffled, <span class="cf">function</span>(x) {x[<span class="fu">c</span>(train_inds, N<span class="sc">+</span><span class="dv">1</span>)]})</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>    fRegress_fit <span class="ot">&lt;-</span> <span class="fu">fRegress</span>(Y_fd_augmented_train,</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>                             <span class="at">xfdlist =</span> x_fd_list_train,</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>                             <span class="at">betalist =</span> beta_list_k)</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Do testing</span></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>    Y_fd_test <span class="ot">&lt;-</span> Y_fd_augmented_shuffled[test_inds,]</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>    x_fd_list_test <span class="ot">&lt;-</span> <span class="fu">lapply</span>(x_fd_list_shuffled, <span class="cf">function</span>(x) {x[<span class="fu">c</span>(test_inds)]})</span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>    Y_fd_test_hat <span class="ot">&lt;-</span> <span class="fu">predict.fRegress</span>(<span class="at">object =</span> fRegress_fit, <span class="at">newdata =</span> x_fd_list_test)</span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a>    err_fd_test <span class="ot">&lt;-</span> Y_fd_test <span class="sc">-</span> Y_fd_test_hat</span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store Cross-Validated Errors</span></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a>    SSE_mat[fold_ind, k] <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">inprod</span>(err_fd_test<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-------------------------------------------
+[1] "lambda = 1e-10"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e-09"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e-08"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e-07"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e-06"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e-05"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e-04"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 0.001"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 0.01"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 0.1"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 10"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 100"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1000"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
+level.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 10000"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
+level.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e+05"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
+level.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e+06"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
+level.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e+07"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e+08"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e+09"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"
+-------------------------------------------
+[1] "lambda = 1e+10"
+-------------------------------------------
+[1] "Doing Cross-Validation:"
+[1] "Fold 1 of 10"
+[1] "Fold 2 of 10"
+[1] "Fold 3 of 10"
+[1] "Fold 4 of 10"
+[1] "Fold 5 of 10"
+[1] "Fold 6 of 10"
+[1] "Fold 7 of 10"
+[1] "Fold 8 of 10"
+[1] "Fold 9 of 10"
+[1] "Fold 10 of 10"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>SSE_vec <span class="ot">&lt;-</span> <span class="fu">apply</span>(SSE_mat, <span class="dv">2</span>, sum) <span class="co"># sum SSE over folds</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot log(lambda) vs. SSE</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(log_lambda_seq, <span class="fu">log</span>(SSE_vec), <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># zoom in:</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(log_lambda_seq[<span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>], <span class="fu">log</span>(SSE_vec)[<span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># take log(lambda) that minimises SSE CV"</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>(log_lambda_best <span class="ot">&lt;-</span> log_lambda_seq[<span class="fu">which.min</span>(SSE_vec)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do a model fit with best lambda:</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>beta_fdPar_best <span class="ot">&lt;-</span> <span class="fu">fdPar</span>(<span class="at">fdobj =</span> betas_basis, <span class="at">Lfdobj =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="dv">10</span><span class="sc">^</span>log_lambda_best)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>beta_list_best <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="at">n =</span> p, <span class="at">expr =</span> beta_fdPar_best, <span class="at">simplify =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(beta_list_best) <span class="ot">&lt;-</span> <span class="fu">names</span>(xfd_list)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>fRegress_best_fit <span class="ot">&lt;-</span> <span class="fu">fRegress</span>(Y_fd_augmented,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">xfdlist =</span> xfd_list,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">betalist =</span> beta_list_best)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>However this “hack” does not allow for correct CI estimates. Therefore we re-do <code>fRegress</code> this time based on setting up <code>xfdlist</code> using our design matrix <code>X_constraint</code> that was set up earlier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">length</span>(impairement_classes)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>xfd_list_2 <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"list"</span>, <span class="at">length =</span> p2)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(xfd_list_2) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(X_constraint)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p2) {</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  xfd_list_2[[j]] <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">matrix</span>(<span class="at">data  =</span> X_constraint[, j], <span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">ncol =</span> N), <span class="at">basisobj =</span> constant_basis)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>beta_fdPar_best <span class="ot">&lt;-</span> <span class="fu">fdPar</span>(<span class="at">fdobj =</span> betas_basis, <span class="at">Lfdobj =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="dv">10</span><span class="sc">^</span>log_lambda_best)</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>beta_list_best_2 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="at">n =</span> p2, <span class="at">expr =</span> beta_fdPar_best, <span class="at">simplify =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(beta_list_best_2) <span class="ot">&lt;-</span> <span class="fu">names</span>(xfd_list_2)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>fRegress_best_fit_2 <span class="ot">&lt;-</span> <span class="fu">fRegress</span>(fdobj,</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>                                <span class="at">xfdlist =</span> xfd_list_2,</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>                                <span class="at">betalist =</span> beta_list_best_2)</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Healthy Control"</span>, <span class="st">"Ankle"</span>, <span class="st">"Knee"</span>, <span class="st">"Hip"</span>)) {</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(fRegress_best_fit_2<span class="sc">$</span>betaestlist[[j]]<span class="sc">$</span>fd, <span class="at">col =</span> <span class="dv">1</span>)</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(fRegress_best_fit<span class="sc">$</span>betaestlist[[j]]<span class="sc">$</span>fd, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>} <span class="co"># close but still different</span></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a><span class="co"># And construct confidence intervals</span></span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>y2cMap <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> <span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fdobj[<span class="dv">1</span>]),</span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fdParobj =</span> <span class="fu">fdPar</span>(fdobj<span class="sc">$</span>basis, <span class="at">Lfdobj =</span> <span class="dv">2</span>, <span class="at">lambda =</span> <span class="dv">10</span><span class="sc">^-</span><span class="dv">10</span>))<span class="sc">$</span>y2cMap <span class="co"># didn't have smooth.basis stored.</span></span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residual error covariance for getting CIs</span></span>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>err_fd_2 <span class="ot">&lt;-</span> fRegress_best_fit_2<span class="sc">$</span>yhatfdobj <span class="sc">-</span> fRegress_best_fit_2<span class="sc">$</span>yfdobj</span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>err_fd_cov_bifd_2 <span class="ot">&lt;-</span> <span class="fu">var.fd</span>(<span class="at">fdobj1 =</span> err_fd_2, <span class="at">fdobj2 =</span> err_fd_2)</span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>err_fd_cov_eval_2 <span class="ot">&lt;-</span> <span class="fu">eval.bifd</span>(<span class="at">sevalarg =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">tevalarg =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, err_fd_cov_bifd_2)</span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Standard Errors for fRegress()</span></span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a><span class="co"># takes a while!</span></span>
+<span id="cb39-38"><a href="#cb39-38" aria-hidden="true" tabindex="-1"></a>fRegress_best_fit_stderrList_2 <span class="ot">&lt;-</span> <span class="fu">fRegress.stderr</span>(<span class="at">y =</span> fRegress_best_fit_2,</span>
+<span id="cb39-39"><a href="#cb39-39" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">y2cMap =</span> y2cMap,</span>
+<span id="cb39-40"><a href="#cb39-40" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">SigmaE =</span> err_fd_cov_eval_2)</span>
+<span id="cb39-41"><a href="#cb39-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-42"><a href="#cb39-42" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(fRegress_best_fit_stderrList_2<span class="sc">$</span>betastderrlist) <span class="ot">&lt;-</span> <span class="fu">names</span>(fRegress_best_fit_2<span class="sc">$</span>betaestlist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="comparison" class="level3">
+<h3 class="anchored" data-anchor-id="comparison">Comparison:</h3>
+<p>Compare different point estimates:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>pffr_coefs <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">coef</span>(pffr_fit)[[<span class="st">"smterms"</span>]], <span class="cf">function</span>(x) x[[<span class="st">"value"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>using seWithMean for  s(yindex.vec) .</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pffr_coefs) <span class="ot">&lt;-</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(<span class="fu">colnames</span>(pffr_coefs), <span class="st">"</span><span class="sc">\\</span><span class="st">(yindex</span><span class="sc">\\</span><span class="st">)"</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pffr_coefs)[<span class="fu">colnames</span>(pffr_coefs) <span class="sc">==</span> <span class="st">"Healthy_Control"</span>] <span class="ot">&lt;-</span> <span class="st">"Healthy Control"</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>pffr_coefs <span class="ot">&lt;-</span> <span class="fu">cbind</span>(pffr_coefs, <span class="at">Calcaneous =</span> <span class="sc">-</span> <span class="fu">apply</span>(pffr_coefs[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">1</span>, sum))</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>pffr_yind <span class="ot">&lt;-</span> <span class="fu">coef</span>(pffr_fit)[[<span class="st">"smterms"</span>]][[<span class="dv">1</span>]][[<span class="st">"coef"</span>]][[<span class="st">"yindex.vec"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>using seWithMean for  s(yindex.vec) .</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Healthy Control"</span>, <span class="st">"Ankle"</span>, <span class="st">"Knee"</span>, <span class="st">"Hip"</span>, <span class="st">"Calcaneous"</span>)) {</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, beta_mat[,j], <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">xlab =</span> <span class="fu">expression</span>(t), <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">beta</span>(t)))</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">title</span>(j)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(fRegress_best_fit<span class="sc">$</span>betaestlist[[j]]<span class="sc">$</span>fd, <span class="at">col =</span> <span class="dv">2</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(fRegress_best_fit_2<span class="sc">$</span>betaestlist[[j]]<span class="sc">$</span>fd, <span class="at">col =</span> <span class="dv">3</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fosr<span class="sc">$</span>est.func[, j], <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(pffr_yind, pffr_coefs[,j], <span class="at">col =</span> <span class="dv">5</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Compare pointwise CIs for a single coefficient.</p>
+<p><strong>Note:</strong> Because <span class="math inline">\(\beta_5(t)\)</span> is only implicitly defined as <span class="math inline">\(-\sum_a \beta_a (t)\)</span> using some of the approaches, it isslightly more difficult to get CIs for this parameter as we need to know the covariance between other parameters (e.g., <span class="math inline">\(\text{Cov}(\beta_{1}(s), \beta_{2}(t))\)</span>). However <code>fosr()</code> provides this automatically. We do not try to calculate it here.</p>
+<div class="cell" data-fig.asp="1">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's extract point wise confidence intervals</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="st">"Hip"</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>pffr_se_j <span class="ot">&lt;-</span> <span class="fu">coef</span>(pffr_fit)[[<span class="st">"smterms"</span>]][[<span class="fu">paste0</span>(j, <span class="st">"(yindex)"</span>)]][[<span class="st">"se"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>using seWithMean for  s(yindex.vec) .</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data for plot:</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>plot_hip_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">t =</span> <span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, pffr_yind),</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">model =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"P-GLS (</span><span class="sc">\\</span><span class="st">texttt{fosr()})"</span>, <span class="dv">101</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">rep</span>(<span class="st">"Two-Step (</span><span class="sc">\\</span><span class="st">texttt{fosr2s()})"</span>, <span class="dv">101</span>),</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">rep</span>(<span class="st">"P-OLS (</span><span class="sc">\\</span><span class="st">texttt{fRegress()})"</span>, <span class="dv">101</span>),</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">rep</span>(<span class="st">"FAMM (</span><span class="sc">\\</span><span class="st">texttt{pffr()})"</span>, <span class="fu">length</span>(pffr_yind))</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>                     ),</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">point_est =</span> <span class="fu">c</span>(fosr<span class="sc">$</span>est.func[, j],</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>                         fosr2s<span class="sc">$</span>est.func[, j],</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fRegress_best_fit_2<span class="sc">$</span>betaestlist[[j]]<span class="sc">$</span>fd),</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>                         pffr_coefs[,j]),</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">lower =</span> <span class="fu">c</span>(fosr<span class="sc">$</span>est.func[, j] <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> fosr<span class="sc">$</span>se.func[, j],</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>                     fosr2s<span class="sc">$</span>est.func[, j] <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> fosr2s<span class="sc">$</span>se.func[, j],</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fRegress_best_fit_2<span class="sc">$</span>betaestlist[[j]]<span class="sc">$</span>fd) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fRegress_best_fit_stderrList_2<span class="sc">$</span>betastderrlist[[j]]),</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>                     pffr_coefs[, j] <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> pffr_se_j),</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper =</span> <span class="fu">c</span>(fosr<span class="sc">$</span>est.func[, j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> fosr<span class="sc">$</span>se.func[, j],</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>                     fosr2s<span class="sc">$</span>est.func[, j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> fosr2s<span class="sc">$</span>se.func[, j],</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fRegress_best_fit_2<span class="sc">$</span>betaestlist[[j]]<span class="sc">$</span>fd) <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">eval.fd</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fRegress_best_fit_stderrList_2<span class="sc">$</span>betastderrlist[[j]]),</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>                     pffr_coefs[, j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> pffr_se_j))</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>compare_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> plot_hip_dt) <span class="sc">+</span></span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> point_est) <span class="sc">+</span></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> model, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span> lower), <span class="at">linetype =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span> upper), <span class="at">linetype =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"$</span><span class="sc">\\</span><span class="st">beta_4 (t)$ Impaired: Hip"</span>,</span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Normalised Time ($</span><span class="sc">\\</span><span class="st">%$ of Stance)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>compare_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="bootstrap-simultaneous-bands" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrap-simultaneous-bands">Bootstrap Simultaneous Bands</h2>
+<p>Perform bootstrap. Model fits done using <code>fosr()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>inds_for_bootstrap <span class="ot">&lt;-</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(modmat))</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># number of bootstrap samples.</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>bootstrap_estimates <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="at">data =</span> <span class="cn">NA</span>, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">101</span>, <span class="dv">6</span>, B))</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">96</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(b <span class="cf">in</span> <span class="fu">seq_len</span>(B)) {</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># print(paste0("Bootstrap Iteration ", b, " of ", B))</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select bootstrap sample of observations:</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  bootstrap_inds <span class="ot">&lt;-</span> <span class="fu">sample</span>(inds_for_bootstrap, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># fit model on these observations:</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>  fosr_b <span class="ot">&lt;-</span> <span class="fu">fosr</span>(<span class="at">fdobj =</span> fdobj[bootstrap_inds, ], <span class="co"># functional response sub setted for bootstrap obs</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">X =</span> modmat[bootstrap_inds, ], <span class="co"># design matrix sub setted for bootstrap obs</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">con =</span> constraints, <span class="co"># sum-to-zero constraints</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"GLS"</span>, <span class="co"># (Reiss et al., 2010)  </span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>  bootstrap_estimates[,,b] <span class="ot">&lt;-</span> fosr_b<span class="sc">$</span>est.func</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Compare <em>pointwise</em> CIs using the bootstrap and analytic SEs (i.e., those returned by original <code>fosr()</code> fit.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>se_mat <span class="ot">&lt;-</span> <span class="fu">apply</span>(bootstrap_estimates, <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">FUN =</span> sd)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>) {</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  ylim <span class="ot">&lt;-</span> <span class="fu">range</span>(</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    fosr<span class="sc">$</span>est.func[,j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> se_mat,</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    fosr<span class="sc">$</span>est.func[,j] <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> se_mat,</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>    fosr<span class="sc">$</span>est.func[,j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> fosr<span class="sc">$</span>se.func,</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>    fosr<span class="sc">$</span>est.func[,j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> fosr<span class="sc">$</span>se.func)</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fosr<span class="sc">$</span>est.func[, j], <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> ylim)</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fosr<span class="sc">$</span>est.func[,j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> se_mat[,j], <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fosr<span class="sc">$</span>est.func[,j] <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> se_mat[,j], <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fosr<span class="sc">$</span>est.func[,j] <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> fosr<span class="sc">$</span>se.func[,j], <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, fosr<span class="sc">$</span>est.func[,j] <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> fosr<span class="sc">$</span>se.func[,j], <span class="at">col =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>^ almost identical!</p>
+<p>Now construct simultaneous bands using the following algorithm (Crainiceanu et al., 2012; Ruppert, Wand and Carroll, 2003):</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">————————————————————————————–</h2>
+<ol type="1">
+<li><p>Calculate <span class="math inline">\(\widehat{\Sigma}_p(s, t) = \widehat{\text{Cov}}(\widehat{\beta}_p(s), \widehat{\beta}_p (t))\)</span> from bootstrap samples. And also <span class="math inline">\(\widehat{\text{SE}}(\widehat{\beta}_p (t)) = \sqrt{\widehat{\Sigma}_p(t, t)}.\)</span></p></li>
+<li><p><code>for</code> <span class="math inline">\(r\)</span> in <span class="math inline">\(1:\text{nsamples}\)</span></p>
+<ol type="a">
+<li><p>Simulate from <span class="math inline">\(\widehat{\beta}_p^r(s)\)</span> from <span class="math inline">\(GP(\widehat{\beta}(t), \widehat{\Sigma}_p(s, t))\)</span>.</p></li>
+<li><p>Calculate <span class="math inline">\(\text{maxT}_r = \max_{t \in [0,100]} \frac{|\widehat{\beta}_p(t) - \widehat{\beta}_p^r(t)|} {\widehat{\text{SE}}(\widehat{\beta}_p (t))}\)</span></p></li>
+</ol></li>
+<li><p>Compute <span class="math inline">\(q_{p, 0.95}\)</span> as the <span class="math inline">\(95\)</span>th empirical percentile of <span class="math inline">\(\text{maxT}_1,\dots, \text{maxT}_{\text{nsamples}}\)</span>.</p></li>
+<li><p>Construct CI: <span class="math inline">\(\widehat{\beta}_p(t) \pm q_{p, 0.95} \widehat{\text{SE}}(\widehat{\beta}_p (t))\)</span></p></li>
+</ol>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">————————————————————————————–</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do the Crainiceanu et al. (2012) /  Ruppert et al.  (2003) Bands: -------</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>q_vector <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">6</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">100000</span> <span class="co"># no. of samples from mvt normal.</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="dv">6</span>)) {</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(j)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  Beta_hat <span class="ot">&lt;-</span> fosr<span class="sc">$</span>est.func[,j]</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  se_boot_hat <span class="ot">&lt;-</span> se_mat[,j]</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  Cov_Beta_s_Beta_t <span class="ot">&lt;-</span> <span class="fu">cov</span>(<span class="fu">t</span>(bootstrap_estimates[,j,]))</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  Beta_samples <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">mvrnorm</span>(<span class="at">n =</span> n_samples, <span class="at">mu =</span> Beta_hat, <span class="at">Sigma =</span> Cov_Beta_s_Beta_t))</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>  Beta_samples_centered <span class="ot">&lt;-</span> <span class="fu">sweep</span>(Beta_samples, <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>), <span class="at">STATS =</span> Beta_hat, <span class="at">FUN =</span> <span class="st">"-"</span>)</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>  t_stat_samples <span class="ot">&lt;-</span> <span class="fu">sweep</span>(Beta_samples_centered, <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>), <span class="at">STATS =</span> se_boot_hat, <span class="at">FUN =</span> <span class="st">"/"</span>)</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>  t_stat_max_abs_samples <span class="ot">&lt;-</span> <span class="fu">apply</span>(t_stat_samples, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">max</span>(<span class="fu">abs</span>(x)))</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>  q_0<span class="fl">.95</span> <span class="ot">&lt;-</span> <span class="fu">quantile</span>(t_stat_max_abs_samples, <span class="at">probs =</span> <span class="fl">0.95</span>)</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>  q_vector[j] <span class="ot">&lt;-</span> q_0<span class="fl">.95</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5
+[1] 6</code></pre>
+</div>
+</div>
+<p>How much wider are <span class="math inline">\(q_{p, 0.95}\)</span> than the standard critical value of <span class="math inline">\(2\)</span> (or more precisely <span class="math inline">\(1.96\)</span>) for pointwise CIs?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>q_vector<span class="sc">/</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.474996 1.481815 1.472112 1.468527 1.470529 1.487096</code></pre>
+</div>
+</div>
+<p>Gather data for plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>lower_pw <span class="ot">&lt;-</span> upper_pw <span class="ot">&lt;-</span> lower_sim <span class="ot">&lt;-</span> upper_sim <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">101</span>, <span class="at">ncol =</span> <span class="dv">6</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">seq_len</span>(j)) {</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(j)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  Beta_hat <span class="ot">&lt;-</span> fosr<span class="sc">$</span>est.func[,j]</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  se_boot_hat <span class="ot">&lt;-</span> se_mat[,j]</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  lower_pw[, j] <span class="ot">&lt;-</span> Beta_hat <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> se_boot_hat</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  upper_pw[, j] <span class="ot">&lt;-</span> Beta_hat <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> se_boot_hat</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  lower_sim[, j] <span class="ot">&lt;-</span> Beta_hat <span class="sc">-</span> q_vector[j] <span class="sc">*</span> se_boot_hat</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  upper_sim[, j] <span class="ot">&lt;-</span> Beta_hat <span class="sc">+</span> q_vector[j] <span class="sc">*</span> se_boot_hat</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5
+[1] 6</code></pre>
+</div>
+</div>
+<p>Publication-ready plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>plot_dt <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">t =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>),</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">parameter =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Healthy Control"</span>, <span class="st">"Ankle"</span>, <span class="st">"Knee"</span>, <span class="st">"Hip"</span>, <span class="st">"Calcaneous"</span>), <span class="at">each =</span> <span class="dv">101</span>),</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">beta_hat =</span> <span class="fu">c</span>(fosr<span class="sc">$</span>est.func),</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lower_pw =</span> <span class="fu">c</span>(lower_pw),</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">upper_pw =</span> <span class="fu">c</span>(upper_pw),</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lower_sim =</span> <span class="fu">c</span>(lower_sim),</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">upper_sim =</span> <span class="fu">c</span>(upper_sim))</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>plot_dt[, parameter <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(parameter,</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span>  <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Healthy Control"</span>, <span class="st">"Ankle"</span>, <span class="st">"Knee"</span>, <span class="st">"Hip"</span>, <span class="st">"Calcaneous"</span>),</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"$</span><span class="sc">\\</span><span class="st">beta_0 (t)$ Overall Mean"</span>,</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"$</span><span class="sc">\\</span><span class="st">beta_1 (t)$ Healthy Control"</span>,</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"$</span><span class="sc">\\</span><span class="st">beta_2 (t)$ Impaired: Ankle"</span>,</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"$</span><span class="sc">\\</span><span class="st">beta_3 (t)$ Impaired: Knee"</span>,</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"$</span><span class="sc">\\</span><span class="st">beta_4 (t)$ Impaired: Hip"</span>,</span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"$</span><span class="sc">\\</span><span class="st">beta_5 (t)$ Impaired: Calcaneus"</span>))]</span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>coef_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> plot_dt) <span class="sc">+</span></span>
+<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> parameter, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">colour =</span> parameter, <span class="at">fill =</span> parameter) <span class="sc">+</span></span>
+<span id="cb58-22"><a href="#cb58-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">'grey'</span>) <span class="sc">+</span></span>
+<span id="cb58-23"><a href="#cb58-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> beta_hat)) <span class="sc">+</span></span>
+<span id="cb58-24"><a href="#cb58-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(parameter <span class="sc">!=</span> <span class="st">"Intercept"</span>), <span class="co"># TRICK :-)</span></span>
+<span id="cb58-25"><a href="#cb58-25" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> F,</span>
+<span id="cb58-26"><a href="#cb58-26" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">50</span>, <span class="at">y =</span> <span class="sc">-</span><span class="fl">0.06</span>), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb58-27"><a href="#cb58-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> <span class="fu">filter</span>(parameter <span class="sc">!=</span> <span class="st">"Intercept"</span>),</span>
+<span id="cb58-28"><a href="#cb58-28" aria-hidden="true" tabindex="-1"></a>             <span class="at">inherit.aes =</span> F, <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">50</span>, <span class="at">y =</span> <span class="fl">0.06</span>), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb58-29"><a href="#cb58-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> lower_pw), <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb58-30"><a href="#cb58-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> upper_pw), <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb58-31"><a href="#cb58-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">ymin =</span> lower_sim, <span class="at">ymax =</span> upper_sim), <span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">col =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb58-32"><a href="#cb58-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Normalised Time ($</span><span class="sc">\\</span><span class="st">%$ of Stance)"</span>,</span>
+<span id="cb58-33"><a href="#cb58-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"$</span><span class="sc">\\</span><span class="st">widehat{</span><span class="sc">\\</span><span class="st">beta} (t)$"</span>) <span class="sc">+</span></span>
+<span id="cb58-34"><a href="#cb58-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb58-35"><a href="#cb58-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, scales<span class="sc">::</span><span class="fu">hue_pal</span>()(<span class="dv">5</span>))) <span class="sc">+</span></span>
+<span id="cb58-36"><a href="#cb58-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, scales<span class="sc">::</span><span class="fu">hue_pal</span>()(<span class="dv">5</span>)))</span>
+<span id="cb58-37"><a href="#cb58-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-38"><a href="#cb58-38" aria-hidden="true" tabindex="-1"></a>coef_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 606 rows containing missing values (`geom_point()`).
+Removed 606 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="permutation-f-tests" class="level2">
+<h2 class="anchored" data-anchor-id="permutation-f-tests">Permutation F-Tests</h2>
+<p>Do permutations for both P-OLS and P-GLS methods using <span class="math inline">\(400\)</span> permutations (note: <code>warnings</code> turned off).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>Fperm_fd <span class="ot">&lt;-</span> <span class="fu">Fperm.fd</span>(<span class="at">yfdPar =</span> fdobj,</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xfdlist =</span> xfd_list_2,</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">betalist =</span> beta_list_best_2, </span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">nperm =</span> <span class="dv">400</span>, </span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Estimated Computing time = 276 seconds."</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>fosr_perm <span class="ot">&lt;-</span> <span class="fu">fosr.perm</span>(<span class="at">fdobj =</span> fdobj,</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">X =</span> modmat, <span class="co"># design matrix</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">con =</span> constraints, <span class="co"># sum-to-zero constraints</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">"GLS"</span>, <span class="co"># (Reiss et al., 2010)  </span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, </span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nperm =</span> <span class="dv">400</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+***** Fitting full model... *****
+
+***** Preliminary permutations... *****
+***** Estimated computing time for preliminary permutations: 128 seconds *****
+***** Computing time for preliminary permutations: 130.732 seconds *****
+
+***** Main permutations... *****
+
+***** Estimated computing time for permuted-data models: 3800 seconds *****
+Permutation 20 
+Permutation 40 
+Permutation 60 
+Permutation 80 
+Permutation 100 
+Permutation 120 
+Permutation 140 
+Permutation 160 
+Permutation 180 
+Permutation 200 
+Permutation 220 
+Permutation 240 
+Permutation 260 
+Permutation 280 
+Permutation 300 
+Permutation 320 
+Permutation 340 
+Permutation 360 
+Permutation 380 
+Permutation 400 
+***** Computing time for permuted-data models: 3880.329 seconds *****</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Side-by-side comparison:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(Fperm_fd<span class="sc">$</span>Fnullvals,</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="st">"grey"</span>,</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"F statistics"</span>,</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time ($</span><span class="sc">\\</span><span class="st">%$ of Stance)"</span>,</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.0005</span>, <span class="fl">0.45</span>),</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">texttt{Fperm.fd()}"</span>)</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(Fperm_fd<span class="sc">$</span>Fvals, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> Fperm_fd<span class="sc">$</span>qval, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fosr_perm, </span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlabel =</span> <span class="st">"Normalised Time ($</span><span class="sc">\\</span><span class="st">%$ of Stance)"</span>,</span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">70</span>))</span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">texttt{fosr.perm()}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Case-Study-Part-03_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>^ Results identical apart from scaling of <span class="math inline">\(F\)</span>-statistic.</p>
+<hr>
+</section>
+</section>
+<section id="session-information-reproducibility" class="level1">
+<h1>Session Information (Reproducibility)</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_IE.UTF-8/en_IE.UTF-8/en_IE.UTF-8/C/en_IE.UTF-8/en_IE.UTF-8
+
+attached base packages:
+[1] splines   stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] refund_0.1-26     fda_5.5.1         deSolve_1.30      fds_1.8          
+ [5] RCurl_1.98-1.6    rainbow_3.6       pcaPP_1.9-74      MASS_7.3-55      
+ [9] Matrix_1.4-0      data.table_1.14.2 forcats_0.5.1     stringr_1.4.0    
+[13] dplyr_1.1.2       purrr_0.3.4       readr_2.1.2       tidyr_1.2.0      
+[17] tibble_3.2.1      ggplot2_3.4.2     tidyverse_1.3.1  
+
+loaded via a namespace (and not attached):
+ [1] nlme_3.1-155       bitops_1.0-7       fs_1.6.2           lubridate_1.8.0   
+ [5] httr_1.4.2         rprojroot_2.0.2    grpreg_3.4.0       tools_4.1.2       
+ [9] backports_1.4.1    utf8_1.2.2         R6_2.5.1           KernSmooth_2.23-20
+[13] DBI_1.1.2          mgcv_1.8-42        colorspace_2.0-3   withr_2.5.0       
+[17] tidyselect_1.2.0   compiler_4.1.2     cli_3.6.0          rvest_1.0.2       
+[21] xml2_1.3.3         labeling_0.4.2     scales_1.2.1       mvtnorm_1.1-3     
+[25] digest_0.6.29      minqa_1.2.4        rmarkdown_2.11     pkgconfig_2.0.3   
+[29] htmltools_0.5.5    lme4_1.1-30        dbplyr_2.1.1       fastmap_1.1.0     
+[33] htmlwidgets_1.6.2  rlang_1.1.1        readxl_1.3.1       rstudioapi_0.13   
+[37] RLRsim_3.1-6       farver_2.1.0       generics_0.1.2     jsonlite_1.8.0    
+[41] mclust_5.4.9       magrittr_2.0.2     Rcpp_1.0.10        munsell_0.5.0     
+[45] fansi_1.0.2        abind_1.4-5        lifecycle_1.0.3    stringi_1.7.6     
+[49] yaml_2.3.5         grid_4.1.2         parallel_4.1.2     crayon_1.5.0      
+[53] lattice_0.20-45    haven_2.4.3        hms_1.1.1          knitr_1.37        
+[57] pillar_1.9.0       boot_1.3-28        magic_1.6-0        reprex_2.0.1      
+[61] glue_1.6.2         evaluate_0.15      modelr_0.1.8       vctrs_0.6.2       
+[65] nloptr_2.0.0       tzdb_0.2.0         cellranger_1.1.0   gtable_0.3.0      
+[69] assertthat_0.2.1   ks_1.13.4          xfun_0.39          broom_0.7.12      
+[73] pracma_2.3.8       pbs_1.1            cluster_2.1.2      gamm4_0.2-6       
+[77] ellipsis_0.3.2     here_1.0.1         hdrcde_3.4        </code></pre>
+</div>
+</div>
+<p>Total Computing Time:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> time_start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 6.379867 hours</code></pre>
+</div>
+</div>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li><p>James O.. Ramsay, Giles Hooker, and Spencer Graves. Functional Data Analysis with R and MATLAB. USA: Springer, 2009.</p></li>
+<li><p>Crainiceanu, C. M., Staicu, A. M., Ray, S., &amp; Punjabi, N. (2012). Bootstrap‐based inference on the difference in the means of two correlated functional processes. Statistics in medicine, 31(26), 3223-3240.</p></li>
+<li><p>Ruppert, D., Wand, M. P., &amp; Carroll, R. J. (2003). Semiparametric regression (No.&nbsp;12). Cambridge university press.</p></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
