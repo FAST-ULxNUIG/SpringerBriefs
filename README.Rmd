@@ -12,14 +12,14 @@ This repository contains `R` code for the manuscript 'FDA in Biomechanics'.
 
 ## Notes
 
-* For Chapters 1 to 5, standard `.R` scripts to reproduce each figure is contained in a separate folder:
+* For Chapters 1 to 4 and 6, standard `.R` scripts to reproduce each figure are contained in a separate folder:
   * :open_file_folder: [**Chapter 1**](chapter-01/)
   * :open_file_folder: [**Chapter 2**](chapter-02/)
   * :open_file_folder: [**Chapter 3**](chapter-03/)
   * :open_file_folder: [**Chapter 4**](chapter-04/)
   * :open_file_folder: [**Chapter 5**](chapter-05/)
 
-* For the 'Case Study' chapter, _**Quarto**_ notebooks that document the case study analysis in a step-by-step fashion are also provided:
+* For the 'Case Study' chapter, _**Quarto**_ (and `.RMD`) notebooks that document the case study analysis in a step-by-step fashion are also provided:
   * 📔 [**Part 1** - Data Import and Exploration](chapter-06/Case-Study-Part-01-MD.md)
   * 📔 [**Part 2** - Analysis of Healthy Controls]()
   * 📔 [**Part 3** - Analysis of Impaired Movement]()
@@ -58,7 +58,7 @@ matplot(x = gaittime,
 grid(lty = 1)
 ```
 
-2. **The Juggling Data** were initially downloaded from (https://archive.mbi.ohio-state.edu/vod/mbi-media/e-162/1400789954_juggling.zip)[https://archive.mbi.ohio-state.edu/vod/mbi-media/e-162/1400789954_juggling.zip] **but the link is no longer working - FIX this. GET PERMISSION FROM JIM RAMSAY!!!!**. The data can be accessed from from within this repository as follows:
+2. **The Juggling Data** were initially downloaded from (https://archive.mbi.ohio-state.edu/vod/mbi-media/e-162/1400789954_juggling.zip) but the link is no longer working. <span style="color: red;">Note: Pending Permission from Prof. Jim Ramsay</span>. Therefore, we have uploaded a copy of the data to :open_file_folder: [**chapter-02/juggling-data/**](chapter-02/juggling-data/), which can be accessed from within this repository as follows:
 
 ```{r, fig.asp = 1, fig.width=8, message=FALSE, warning=FALSE, fig.align='center'}
 x <- readr::read_table2("chapter-02/juggling-data/Xcoord.txt", col_names = FALSE) # x coordinates
@@ -79,12 +79,43 @@ grid(lty = 1)
 title(expression(z(t)))
 ```
 
-3. **The GaitRec Data Set** is available for download at [here](doi:10.6084/m9.figshare.c.4788012.v1). We have written a `.R` script to import and wrangle the subset of the data used in the review in [📄 here](chapter-06/01-data-import-and-wrangling.R). 
+3. **The GaitRec Data Set** is available for download at https://doi.org/10.6084/m9.figshare.c.4788012.v1. We have written a `.R` script to import, wrangle and store the subset of the data used in the review in [📄 here](chapter-06/01-data-import-and-wrangling.R). 
 
-# Session Information (Reproducibility)
+```{r, fig.asp=0.4, fig.align='center', fig.width=10}
+# from the stored copy:
+gaitrec <- readRDS("chapter-06/data/GRF_dataset_PRO_meta.rds")
 
-```{r}
-sessionInfo()
+# split into three force components:
+v <- as.matrix(gaitrec[gaitrec$component == "vertical", paste0("time_", 0:100)])
+ap <- as.matrix(gaitrec[gaitrec$component == "anterior_posterior", paste0("time_", 0:100)])
+ml <- as.matrix(gaitrec[gaitrec$component == "medio_lateral", paste0("time_", 0:100)])
+
+# plot first 10 obs.:
+par(mfrow = c(1, 3))
+matplot(x = 0:100,
+        y = t(v[1:10,]),
+        type = "l",
+        lty = 1,
+        xlab = "Normalised Time (% of Stance)", 
+        ylab = "Force (BW)")
+grid(lty = 1)
+title("Vertical")
+matplot(x = 0:100,
+        y = t(ap[1:10,]),
+        type = "l", 
+        lty = 1, 
+        xlab = "Normalised Time (% of Stance)",
+        ylab = "Force (BW)")
+grid(lty = 1)
+title("Anterior-Posterior")
+matplot(x = 0:100,
+        y = t(ml[1:10,]), 
+        type = "l", 
+        lty = 1, 
+        xlab = "Normalised Time (% of Stance)",
+        ylab = "Force (BW)")
+grid(lty = 1)
+title("Medio-Lateral")
 ```
 
 
@@ -119,3 +150,12 @@ sessionInfo()
 ## Edward Gunning's Ph.D. Thesis
 
 * The examples in this review were initially developed for Edward Gunning's Ph.D. thesis. The corresponding `GitHub` repository that was released is hosted at [https://github.com/FAST-ULxNUIG/thesis-chapt-1-2](https://github.com/FAST-ULxNUIG/thesis-chapt-1-2)
+
+
+# Session Information (Reproducibility)
+
+```{r}
+sessionInfo()
+```
+
+
