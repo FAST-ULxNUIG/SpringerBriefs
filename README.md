@@ -21,7 +21,8 @@ Biomechanics’.
     Exploration](chapter-06/Case-Study-Part-01-MD.md)
   - 📔 [**Part 2** - Analysis of Healthy
     Controls](chapter-06/Case-Study-Part-02-MD.md)
-  - 📔 [**Part 3** - Analysis of Impaired Movement]()
+  - 📔 [**Part 3** - Analysis of Impaired
+    Movement](chapter-06/Case-Study-Part-03-MD.md)
 
 # Data
 

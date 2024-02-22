@@ -22,7 +22,7 @@ This repository contains `R` code for the manuscript 'FDA in Biomechanics'.
 * For the 'Case Study' chapter, _**Quarto**_ (and `.RMD`) notebooks that document the case study analysis in a step-by-step fashion are also provided:
   * 📔 [**Part 1** - Data Import and Exploration](chapter-06/Case-Study-Part-01-MD.md)
   * 📔 [**Part 2** - Analysis of Healthy Controls](chapter-06/Case-Study-Part-02-MD.md)
-  * 📔 [**Part 3** - Analysis of Impaired Movement]()
+  * 📔 [**Part 3** - Analysis of Impaired Movement](chapter-06/Case-Study-Part-03-MD.md)
 
 
 # Data
