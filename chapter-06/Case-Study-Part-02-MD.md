@@ -842,7 +842,7 @@ plot(x = max_anterior_posterior_test,
      ylab = "predicted")
 ```
 
-![](Case-Study-Part-02-MD_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+<img src="Case-Study-Part-02-MD_files/figure-gfm/unnamed-chunk-34-1.png" style="display: block; margin: auto;" />
 
 #### Comparison of Absolute Errors
 
@@ -874,6 +874,68 @@ error_plot
 ```
 
 <img src="Case-Study-Part-02-MD_files/figure-gfm/unnamed-chunk-35-1.png" style="display: block; margin: auto;" />
+
+# Session Information (Reproducibility)
+
+``` r
+sessionInfo()
+```
+
+    ## R version 4.1.2 (2021-11-01)
+    ## Platform: x86_64-apple-darwin17.0 (64-bit)
+    ## Running under: macOS Big Sur 10.16
+    ## 
+    ## Matrix products: default
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+    ## 
+    ## locale:
+    ## [1] en_IE.UTF-8/en_IE.UTF-8/en_IE.UTF-8/C/en_IE.UTF-8/en_IE.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] splines   stats     graphics  grDevices utils     datasets  methods  
+    ## [8] base     
+    ## 
+    ## other attached packages:
+    ##  [1] refund_0.1-26     fda_5.5.1         deSolve_1.30      fds_1.8          
+    ##  [5] RCurl_1.98-1.6    rainbow_3.6       pcaPP_1.9-74      MASS_7.3-55      
+    ##  [9] Matrix_1.4-0      data.table_1.14.2 forcats_0.5.1     stringr_1.4.0    
+    ## [13] dplyr_1.1.2       purrr_0.3.4       readr_2.1.2       tidyr_1.2.0      
+    ## [17] tibble_3.2.1      ggplot2_3.4.2     tidyverse_1.3.1  
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] minqa_1.2.4        colorspace_2.0-3   ggsignif_0.6.3     ellipsis_0.3.2    
+    ##  [5] mclust_5.4.9       rprojroot_2.0.2    fs_1.6.2           rstudioapi_0.13   
+    ##  [9] farver_2.1.0       ggpubr_0.4.0       fansi_1.0.2        mvtnorm_1.1-3     
+    ## [13] lubridate_1.8.0    xml2_1.3.3         knitr_1.37         jsonlite_1.8.0    
+    ## [17] nloptr_2.0.0       broom_0.7.12       cluster_2.1.2      dbplyr_2.1.1      
+    ## [21] compiler_4.1.2     httr_1.4.2         backports_1.4.1    ggcorrplot_0.1.4  
+    ## [25] assertthat_0.2.1   fastmap_1.1.0      cli_3.6.0          htmltools_0.5.5   
+    ## [29] tools_4.1.2        gtable_0.3.0       glue_1.6.2         reshape2_1.4.4    
+    ## [33] Rcpp_1.0.10        carData_3.0-5      cellranger_1.1.0   vctrs_0.6.2       
+    ## [37] svglite_2.1.0      nlme_3.1-155       grpreg_3.4.0       xfun_0.39         
+    ## [41] lme4_1.1-30        rvest_1.0.2        lifecycle_1.0.3    rstatix_0.7.0     
+    ## [45] scales_1.2.1       hms_1.1.1          parallel_4.1.2     gamm4_0.2-6       
+    ## [49] yaml_2.3.5         stringi_1.7.6      highr_0.9          pbs_1.1           
+    ## [53] boot_1.3-28        hdrcde_3.4         rlang_1.1.1        pkgconfig_2.0.3   
+    ## [57] systemfonts_1.0.4  bitops_1.0-7       pracma_2.3.8       evaluate_0.15     
+    ## [61] lattice_0.20-45    ks_1.13.4          labeling_0.4.2     cowplot_1.1.1     
+    ## [65] tidyselect_1.2.0   here_1.0.1         plyr_1.8.6         magrittr_2.0.2    
+    ## [69] R6_2.5.1           generics_0.1.2     RLRsim_3.1-6       DBI_1.1.2         
+    ## [73] pillar_1.9.0       haven_2.4.3        withr_2.5.0        mgcv_1.8-42       
+    ## [77] abind_1.4-5        modelr_0.1.8       crayon_1.5.0       car_3.0-12        
+    ## [81] KernSmooth_2.23-20 utf8_1.2.2         tzdb_0.2.0         rmarkdown_2.11    
+    ## [85] grid_4.1.2         readxl_1.3.1       reprex_2.0.1       digest_0.6.29     
+    ## [89] webshot_0.5.2      munsell_0.5.0      viridisLite_0.4.0  kableExtra_1.3.4  
+    ## [93] magic_1.6-0
+
+Total Computing Time:
+
+``` r
+Sys.time() - time_start
+```
+
+    ## Time difference of 7.191015 mins
 
 # References
 

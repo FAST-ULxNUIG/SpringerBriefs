@@ -646,7 +646,7 @@ plot(x = max_anterior_posterior_test,
 
 #### `pfr()`
 
-```{r}
+```{r, fig.asp=1, fig.width=4, fig.align='center'}
 vertical_fd_eval_test <- t(eval.fd(evalarg = 0:100, fdobj = fdobj_averages_vertical_test))
 pfr_test_yhat <- predict(object = pfr, newdata = list(vertical_fd_eval = vertical_fd_eval_test))
 
@@ -685,6 +685,18 @@ error_plot <- ggplot(abs_errors_dt_lng) +
   theme(legend.position = "none")
 
 error_plot
+```
+
+# Session Information (Reproducibility)
+
+```{r}
+sessionInfo()
+```
+
+Total Computing Time:
+
+```{r}
+Sys.time() - time_start
 ```
 
 # References

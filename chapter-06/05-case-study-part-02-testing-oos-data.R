@@ -1,3 +1,7 @@
+# ------------------------------------------------------------------------#
+# Just get testing data for out-of-sample sofr predictions:
+# ------------------------------------------------------------------------#
+
 # Packages: ---------------------------------------------------------------
 library(readr)      # CRAN v1.3.1
 library(fda)        # CRAN v5.1.9
@@ -171,88 +175,3 @@ data_for_testing <- list(
   max_anterior_posterior_test = max_anterior_posterior_test
 )
 
-
-saveRDS(object = data_for_testing,
-        file = here::here("chapter-06", "data", "test-data.rds"))
-
-# Extract Model Results: --------------------------------------------------
-
-model_results <- readRDS(file = here::here("chapter-06", "data", "model_results.rds"))
-GRF_fpca_averages_vertical <- model_results$fpca_vertical
-fpcr_best <- model_results$fpcr
-fRegress_best_fit <- model_results$fregress  
-pfr <- model_results$pfr  
-
-
-
-# FPCR --------------------------------------------------------------------
-
-
-fdobj_averages_vertical_test_cent <- center_fd_around_new_mean(fdobj = fdobj_averages_vertical_test, GRF_fpca_averages_vertical$meanfd)
-GRF_fpc_scores_test <- project_data_onto_fpcs(fdobj = fdobj_averages_vertical_test_cent,
-                                              pca.fd_obj = GRF_fpca_averages_vertical)
-
-test_df_fpcr <- data.frame(max_anterior_posterior = max_anterior_posterior_test,
-                           GRF_fpc_scores_test)
-names(test_df_fpcr)[-1] <- paste0("vertical_fpca_scores", 1:35)
-
-plot(predict(object = fpcr_best, newdata = test_df_fpcr),
-     max_anterior_posterior_test)
-
-fpcr_test_yhat <- predict(object = fpcr_best, newdata = test_df_fpcr)
-
-
-
-
-
-
-# fRegress() --------------------------------------------------------------
-# Need to create constant fd object for scalar predictor to work in fRegress.CV(), weird, I know.
-constant_basis <- create.constant.basis(c(0,100))
-constant_fd <- fd(coef = matrix(1, nrow = 1, ncol = ncol(fdobj_averages_vertical_test$coefs)), basisobj = constant_basis)
-# List containing predictors (jntercept and functional covariate)
-xfd_list_test <- list(constant_fd, # for intercept
-                 fdobj_averages_vertical_test) 
-fregress_test_yhat <- predict.fRegress(object = fRegress_best_fit,
-                 newdata = xfd_list_test)
-
-
-
-
-# pfr ---------------------------------------------------------------------
-
-vertical_fd_eval_test <- t(eval.fd(evalarg = 0:100, fdobj = fdobj_averages_vertical_test))
-pfr <- pfr(max_anterior_posterior ~ lf(X = vertical_fd_eval, bs = "bs", k = 35, argvals = 0:100))
-pfr_test_yhat <- predict(object = pfr, newdata = list(vertical_fd_eval = vertical_fd_eval_test))
-
-
-abs_errors_dt <- data.table(
-  ind = seq_len(length(max_anterior_posterior_test)),
-  fpcr = abs(fpcr_test_yhat - max_anterior_posterior_test),
-  fRegress =  abs(c(fregress_test_yhat) - max_anterior_posterior_test),
-  pfr = abs(pfr_test_yhat - max_anterior_posterior_test))
-
-abs_errors_dt_lng <- melt.data.table(data = abs_errors_dt, 
-                                     id.vars = "ind")
-
-abs_errors_dt_lng[, method := fcase(
-  variable == "pfr", "\\texttt{pfr()}",
-  variable == "fRegress", "\\texttt{fRegress()}",
-  variable == "fpcr", "FPCR"
-)]
-
-error_plot <- ggplot(abs_errors_dt_lng) +
-  aes(x = method, y = value, group = method, fill = method) +
-  geom_boxplot(alpha = 0.5) +
-  labs(x = "Method",
-       y = "Absolute Error", 
-       title = "Out-of-Sample Prediction Errors") +
-  theme(legend.position = "none")
-
-tikz(file = file.path(plots_path, "sofr-plot-error.tex"),
-     width = 0.6 * doc_width_inches, 
-     height = 0.5 * doc_width_inches, 
-     standAlone = TRUE)
-error_plot
-dev.off() 
-tinytex::lualatex(file.path(plots_path, "sofr-plot-error.tex"))
