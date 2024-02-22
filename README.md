@@ -7,16 +7,17 @@ Biomechanics’.
 
 ## Notes
 
-- For Chapters 1 to 4 and 6, standard `.R` scripts to reproduce each
-  figure are contained in a separate folder:
+- For all chapters, standard `.R` scripts to reproduce each figure are
+  contained in a separate folder:
   - :open_file_folder: [**Chapter 1**](chapter-01/)
   - :open_file_folder: [**Chapter 2**](chapter-02/)
   - :open_file_folder: [**Chapter 3**](chapter-03/)
   - :open_file_folder: [**Chapter 4**](chapter-04/)
   - :open_file_folder: [**Chapter 5**](chapter-05/)
-- For the ‘Case Study’ chapter, ***Quarto*** (and `.RMD`) notebooks that
-  document the case study analysis in a step-by-step fashion are also
-  provided:
+  - :open_file_folder: [**Case Study**](chapter-06/)
+- For the **‘Case Study’** chapter, ***Quarto*** (and `.RMD`) notebooks
+  that document the case study analysis in a step-by-step fashion are
+  also provided:
   - 📔 [**Part 1** - Data Import and
     Exploration](chapter-06/Case-Study-Part-01-MD.md)
   - 📔 [**Part 2** - Analysis of Healthy
