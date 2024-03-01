@@ -135,6 +135,14 @@ title("Medio-Lateral")
 
 <img src="README_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
+# `tikzDevice`
+
+We use the [`tikzDevice`
+package](https://cran.r-project.org/web/packages/tikzDevice/index.html)
+to produce figure outputs in $\LaTeX$ (e.g., fonts and math symbols). If
+you are not interested in producing the `.pdf` plots with latex font,
+then calls such as `tikz(...)` can be ignored.
+
 # References
 
 ## Childrens’ Gait Data
@@ -192,6 +200,12 @@ title("Medio-Lateral")
   Gunning’s Ph.D. thesis. The corresponding `GitHub` repository that was
   released is hosted at
   <https://github.com/FAST-ULxNUIG/thesis-chapt-1-2>
+
+## `tikzDevice`
+
+- Sharpsteen, C., Bracken, C., Müller, K., Xie, Y., Stubner, R., &
+  Bellack, N. (2023). R package ‘tikzDevice’
+  <https://github.com/daqana/tikzDevice>.
 
 # Session Information (Reproducibility)
 
