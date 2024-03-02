@@ -39,8 +39,10 @@ GRF_dataset_PRO_averages <- GRF_dataset_PRO_meta[,
 
 # Different Filtering: ----------------------------------------------------
 data <- GRF_dataset_PRO_averages[component == "anterior_posterior"]
-data <- data[(CLASS_LABEL == "HC" & side == "right") | (AFFECTED_SIDE == 1)]
-N <- nrow(data)
+data <- data[(CLASS_LABEL == "HC" & side == "right") | (AFFECTED_SIDE == 0 & side == "left") | (AFFECTED_SIDE == 1 & side == "right") | (AFFECTED_SIDE == 2 & side == "right")]
+(N <- nrow(data))
+
+table(data$CLASS_LABEL)
 
 # create fd object defined by coefficients and basis object
 fdobj <- fd(coef = t(as.matrix(data[, paste0("bspl4.",1:35)])),

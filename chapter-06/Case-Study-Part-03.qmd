@@ -61,15 +61,20 @@ GRF_dataset_PRO_averages <- GRF_dataset_PRO_meta[,
                                                  .SDcols = paste0("bspl4.",1:35)] # says which columns to average
 ```
 
-Only look at Anterior-Posterior (A-P) component. 
-Look at affected side for impaired subjects. 
-Look at right side for Healthy Controls.
+Only look at Anterior-Posterior (A-P) component.
+
+Then for comparisons:
+* Look at affected side for impaired subjects who are affected on one side:
+ * Left side for subjects affected on the left `(AFFECTED_SIDE == 0 & side == "left")`.
+ * Right side for subjects affected on the right `(AFFECTED_SIDE == 1 & side == "right")`.
+* Look at right side for Healthy Controls `(CLASS_LABEL == "HC" & side == "right")`.
+* Look at right side for those affected on both sides `(AFFECTED_SIDE == 2 & side == "right")`.
 
 **Note:** We will call this `dt` to make code easier to read in .qmd files (understand this is not best practice -- more informative names should be used). 
 
 ```{r}
 dt <- GRF_dataset_PRO_averages[component == "anterior_posterior"]
-dt <- dt[(CLASS_LABEL == "HC" & side == "right") | (AFFECTED_SIDE == 1)]
+dt <- dt[(CLASS_LABEL == "HC" & side == "right") | (AFFECTED_SIDE == 0 & side == "left") | (AFFECTED_SIDE == 1 & side == "right") | (AFFECTED_SIDE == 2 & side == "right")]
 ```
 
 How many subjects?
@@ -472,10 +477,10 @@ pffr_se_j <- coef(pffr_fit)[["smterms"]][[paste0(j, "(yindex)")]][["se"]]
 
 # create data for plot:
 plot_hip_dt <- data.table(t = c(0:100, 0:100, 0:100, pffr_yind),
-           model = c(rep("P-GLS (\\texttt{fosr()})", 101),
-                     rep("Two-Step (\\texttt{fosr2s()})", 101),
-                     rep("P-OLS (\\texttt{fRegress()})", 101),
-                     rep("FAMM (\\texttt{pffr()})", length(pffr_yind))
+           model = c(rep("3. P-GLS (\\texttt{fosr()})", 101),
+                     rep("1. Two-Step (\\texttt{fosr2s()})", 101),
+                     rep("2. P-OLS (\\texttt{fRegress()})", 101),
+                     rep("4. FAMM (\\texttt{pffr()})", length(pffr_yind))
                      ),
            point_est = c(fosr$est.func[, j],
                          fosr2s$est.func[, j],
@@ -489,6 +494,13 @@ plot_hip_dt <- data.table(t = c(0:100, 0:100, 0:100, pffr_yind),
                      fosr2s$est.func[, j] + 2 * fosr2s$se.func[, j],
                      eval.fd(0:100, fRegress_best_fit_2$betaestlist[[j]]$fd) + 2 * eval.fd(0:100, fRegress_best_fit_stderrList_2$betastderrlist[[j]]),
                      pffr_coefs[, j] + 2 * pffr_se_j))
+
+plot_hip_dt[, model := factor(model, levels = c(
+  "1. Two-Step (\\texttt{fosr2s()})",
+  "2. P-OLS (\\texttt{fRegress()})",
+  "3. P-GLS (\\texttt{fosr()})",
+  "4. FAMM (\\texttt{pffr()})"
+))]
 
 
 compare_plot <- ggplot(data = plot_hip_dt) +
@@ -636,7 +648,7 @@ coef_plot <- ggplot(data = plot_dt) +
   geom_line(aes(y = beta_hat)) +
   geom_point(data = . %>% filter(parameter != "Intercept"), # TRICK :-)
              inherit.aes = F,
-             aes(x = 50, y = -0.06), color = NA) +
+             aes(x = 50, y = -0.07), color = NA) +
   geom_point(data = . %>% filter(parameter != "Intercept"),
              inherit.aes = F, aes(x = 50, y = 0.06), color = NA) +
   geom_line(aes(y = lower_pw), linetype = "dotted") +
@@ -683,14 +695,14 @@ matplot(Fperm_fd$Fnullvals,
         lty = 1,
         ylab = "F statistics",
         xlab = "Normalised Time ($\\%$ of Stance)",
-        ylim = c(-0.0005, 0.45),
+        ylim = c(-0.0005, 1),
         xlim = c(0, 100))
 title("\\texttt{Fperm.fd()}")
 lines(Fperm_fd$Fvals, type = "l", col = "blue")
 abline(h = Fperm_fd$qval, col = "red", lty = 2)
 plot(fosr_perm, 
      xlabel = "Normalised Time ($\\%$ of Stance)",
-     ylim = c(0, 70))
+     ylim = c(0, 170))
 title("\\texttt{fosr.perm()}")
 ```
 

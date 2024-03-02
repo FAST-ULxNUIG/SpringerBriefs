@@ -60,8 +60,15 @@ GRF_dataset_PRO_averages <- GRF_dataset_PRO_meta[,
                                                  .SDcols = paste0("bspl4.",1:35)] # says which columns to average
 ```
 
-Only look at Anterior-Posterior (A-P) component. Look at affected side
-for impaired subjects. Look at right side for Healthy Controls.
+Only look at Anterior-Posterior (A-P) component.
+
+Then for comparisons: \* Look at affected side for impaired subjects who
+are affected on one side: \* Left side for subjects affected on the left
+`(AFFECTED_SIDE == 0 & side == "left")`. \* Right side for subjects
+affected on the right `(AFFECTED_SIDE == 1 & side == "right")`. \* Look
+at right side for Healthy Controls
+`(CLASS_LABEL == "HC" & side == "right")`. \* Look at right side for
+those affected on both sides `(AFFECTED_SIDE == 2 & side == "right")`.
 
 **Note:** We will call this `dt` to make code easier to read in .qmd
 files (understand this is not best practice – more informative names
@@ -69,7 +76,10 @@ should be used).
 
 ``` r
 dt <- GRF_dataset_PRO_averages[component == "anterior_posterior"]
-dt <- dt[(CLASS_LABEL == "HC" & side == "right") | (AFFECTED_SIDE == 1)]
+dt <- dt[(CLASS_LABEL == "HC" & side == "right") |
+           (AFFECTED_SIDE == 0 & side == "left") |
+           (AFFECTED_SIDE == 1 & side == "right") |
+           (AFFECTED_SIDE == 2 & side == "right")]
 ```
 
 How many subjects?
@@ -78,7 +88,7 @@ How many subjects?
 (N <- nrow(dt))
 ```
 
-    ## [1] 671
+    ## [1] 725
 
 Create `fd` object using coefficients and basis.
 
@@ -586,10 +596,6 @@ for(k in seq_along(log_lambda_seq)) {
     ## -------------------------------------------
     ## [1] "Doing Cross-Validation:"
     ## [1] "Fold 1 of 10"
-
-    ## Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
-    ## level.
-
     ## [1] "Fold 2 of 10"
     ## [1] "Fold 3 of 10"
     ## [1] "Fold 4 of 10"
@@ -604,10 +610,6 @@ for(k in seq_along(log_lambda_seq)) {
     ## -------------------------------------------
     ## [1] "Doing Cross-Validation:"
     ## [1] "Fold 1 of 10"
-
-    ## Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
-    ## level.
-
     ## [1] "Fold 2 of 10"
     ## [1] "Fold 3 of 10"
     ## [1] "Fold 4 of 10"
@@ -622,16 +624,16 @@ for(k in seq_along(log_lambda_seq)) {
     ## -------------------------------------------
     ## [1] "Doing Cross-Validation:"
     ## [1] "Fold 1 of 10"
-
-    ## Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
-    ## level.
-
     ## [1] "Fold 2 of 10"
     ## [1] "Fold 3 of 10"
     ## [1] "Fold 4 of 10"
     ## [1] "Fold 5 of 10"
     ## [1] "Fold 6 of 10"
     ## [1] "Fold 7 of 10"
+
+    ## Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
+    ## level.
+
     ## [1] "Fold 8 of 10"
     ## [1] "Fold 9 of 10"
     ## [1] "Fold 10 of 10"
@@ -640,15 +642,15 @@ for(k in seq_along(log_lambda_seq)) {
     ## -------------------------------------------
     ## [1] "Doing Cross-Validation:"
     ## [1] "Fold 1 of 10"
-
-    ## Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
-    ## level.
-
     ## [1] "Fold 2 of 10"
     ## [1] "Fold 3 of 10"
     ## [1] "Fold 4 of 10"
     ## [1] "Fold 5 of 10"
     ## [1] "Fold 6 of 10"
+
+    ## Warning in `^.fd`(err_fd_test, 2): The maximum error exceeds the tolerance
+    ## level.
+
     ## [1] "Fold 7 of 10"
     ## [1] "Fold 8 of 10"
     ## [1] "Fold 9 of 10"
@@ -843,10 +845,10 @@ pffr_se_j <- coef(pffr_fit)[["smterms"]][[paste0(j, "(yindex)")]][["se"]]
 ``` r
 # create data for plot:
 plot_hip_dt <- data.table(t = c(0:100, 0:100, 0:100, pffr_yind),
-           model = c(rep("P-GLS (\\texttt{fosr()})", 101),
-                     rep("Two-Step (\\texttt{fosr2s()})", 101),
-                     rep("P-OLS (\\texttt{fRegress()})", 101),
-                     rep("FAMM (\\texttt{pffr()})", length(pffr_yind))
+           model = c(rep("3. P-GLS (\\texttt{fosr()})", 101),
+                     rep("1. Two-Step (\\texttt{fosr2s()})", 101),
+                     rep("2. P-OLS (\\texttt{fRegress()})", 101),
+                     rep("4. FAMM (\\texttt{pffr()})", length(pffr_yind))
                      ),
            point_est = c(fosr$est.func[, j],
                          fosr2s$est.func[, j],
@@ -860,6 +862,14 @@ plot_hip_dt <- data.table(t = c(0:100, 0:100, 0:100, pffr_yind),
                      fosr2s$est.func[, j] + 2 * fosr2s$se.func[, j],
                      eval.fd(0:100, fRegress_best_fit_2$betaestlist[[j]]$fd) + 2 * eval.fd(0:100, fRegress_best_fit_stderrList_2$betastderrlist[[j]]),
                      pffr_coefs[, j] + 2 * pffr_se_j))
+
+plot_hip_dt[, model := factor(model, levels = c(
+  "1. Two-Step (\\texttt{fosr2s()})",
+  "2. P-OLS (\\texttt{fRegress()})",
+  "3. P-GLS (\\texttt{fosr()})",
+  "4. FAMM (\\texttt{pffr()})"
+))]
+
 
 
 compare_plot <- ggplot(data = plot_hip_dt) +
@@ -990,7 +1000,7 @@ How much wider are $q_{p, 0.95}$ than the standard critical value of $2$
 q_vector/2
 ```
 
-    ## [1] 1.474996 1.481815 1.472112 1.468527 1.470529 1.487096
+    ## [1] 1.475835 1.476832 1.471975 1.475343 1.470441 1.478247
 
 Gather data for plot.
 
@@ -1076,7 +1086,7 @@ Fperm_fd <- Fperm.fd(yfdPar = fdobj,
                      argvals = 0:100)
 ```
 
-    ## [1] "Estimated Computing time = 298 seconds."
+    ## [1] "Estimated Computing time = 266 seconds."
 
 ![](Case-Study-Part-03-MD_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
@@ -1093,12 +1103,12 @@ fosr_perm <- fosr.perm(fdobj = fdobj,
     ## ***** Fitting full model... *****
     ## 
     ## ***** Preliminary permutations... *****
-    ## ***** Estimated computing time for preliminary permutations: 136 seconds *****
-    ## ***** Computing time for preliminary permutations: 127.7 seconds *****
+    ## ***** Estimated computing time for preliminary permutations: 133 seconds *****
+    ## ***** Computing time for preliminary permutations: 132.9 seconds *****
     ## 
     ## ***** Main permutations... *****
     ## 
-    ## ***** Estimated computing time for permuted-data models: 3653 seconds *****
+    ## ***** Estimated computing time for permuted-data models: 3569 seconds *****
     ## Permutation 20 
     ## Permutation 40 
     ## Permutation 60 
@@ -1119,7 +1129,7 @@ fosr_perm <- fosr.perm(fdobj = fdobj,
     ## Permutation 360 
     ## Permutation 380 
     ## Permutation 400 
-    ## ***** Computing time for permuted-data models: 3365.941 seconds *****
+    ## ***** Computing time for permuted-data models: 3669.58 seconds *****
 
 ![](Case-Study-Part-03-MD_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
 
@@ -1206,7 +1216,7 @@ Total Computing Time:
 Sys.time() - time_start
 ```
 
-    ## Time difference of 4.204694 hours
+    ## Time difference of 4.388218 hours
 
 # References
 

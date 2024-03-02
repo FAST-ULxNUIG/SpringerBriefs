@@ -1,8 +1,9 @@
 # Packages: ---------------------------------------------------------------
-library(readr) # CRAN v1.3.1
-library(fda) # CRAN v5.1.9
-library(tidyverse) # CRAN v1.3.0
-
+library(readr)        # CRAN v1.3.1
+library(fda)          # CRAN v5.1.9
+library(tidyverse)    # CRAN v1.3.0
+library(modelsummary) # CRAN v1.4.1
+library(data.table)   # CRAN v1.14.2
 # Data Import: ------------------------------------------------------------
 
 # From:
@@ -89,7 +90,7 @@ stopifnot(all.equal(names(GRF_F_V_PRO_left), names(GRF_F_ML_PRO_right)))
 stopifnot(all.equal(names(GRF_F_V_PRO_left), names(GRF_F_AP_PRO_left)))
 stopifnot(all.equal(names(GRF_F_V_PRO_left), names(GRF_F_AP_PRO_right)))
 
-# create full dataset for analysis:
+                      # create full dataset for analysis:
 
 GRF_dataset_PRO <- rbind(
   GRF_F_V_PRO_left,
@@ -118,8 +119,42 @@ GRF_dataset_PRO_meta <- relocate(GRF_dataset_PRO_meta,
 GRF_dataset_PRO_meta <- GRF_dataset_PRO_meta %>%
   filter(SHOD_CONDITION == 1 & SPEED == 2 & TRAIN_BALANCED == 1)
 
+
 saveRDS(object = GRF_dataset_PRO_meta, 
         file = here::here(here::here(
           "chapter-06",
           "data", 
           "GRF_dataset_PRO_meta.rds")))
+
+
+# Add some information on characteristics (i.e., table)
+
+
+GRF_dataset_PRO_meta <- as.data.table(GRF_dataset_PRO_meta)
+# Sample Characteristics
+GRF_dataset_PRO_meta_subject_char <- GRF_dataset_PRO_meta[, .(bilateral_obs = uniqueN(side) == 2), by = .(SUBJECT_ID, CLASS_LABEL, SEX, AGE, BODY_MASS)]
+
+GRF_dataset_PRO_meta_subject_char[, SEX := factor(SEX, levels = c(0, 1), labels = c("Female", "Male"))]
+stopifnot(GRF_dataset_PRO_meta_subject_char[, unique(bilateral_obs) == TRUE])
+
+GRF_dataset_PRO_meta_subject_char[, CLASS_LABEL := factor(CLASS_LABEL, # re-label facets for strip texts.
+                                                          levels = c("HC", "A", "K", "H", "C"),
+                                                          labels = c("Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous"))]
+
+setnames(GRF_dataset_PRO_meta_subject_char, old = c("SEX", "CLASS_LABEL", "AGE", "BODY_MASS"), new =  c("Sex", "Impairment Class", "Age (years)", "Body Mass (kg)"))
+
+GaitRec_table <- datasummary_balance(~ 1,
+                    data = GRF_dataset_PRO_meta_subject_char[, c("Age (years)", "Body Mass (kg)", "Sex", "Impairment Class")],
+                    output = "latex",
+                    escape = FALSE)
+GaitRec_table <- stringr::str_replace(GaitRec_table,
+                               pattern = "& N & Pct.\\\\\\\\\n",
+                               replacement = "& N & Pct.\\\\\\\\\n\\\\midrule\n")
+GaitRec_table <- stringr::str_replace(GaitRec_table, pattern = "N & Pct.", 
+                               replacement = "\\\\textbf{N} & $\\\\mathbf{\\\\mathbf{(\\\\%)}}$")
+GaitRec_table <- stringr::str_replace(GaitRec_table, pattern = "Mean & Std. Dev.", 
+                               replacement = "\\\\textbf{Mean} & \\\\textbf{Std. Dev.}")
+GaitRec_table <- stringr::str_replace(GaitRec_table, pattern = "\\\\end\\{tabular\\}\n\\\\end\\{table\\}",
+                               replacement = "\\\\end\\{tabular\\}\\\n\\\\caption\\{Summary characteristics of the GaitRec data used in this case study.\\}\n\\\\label\\{tab:tab1.\\}\n\\\\end\\{table\\}")
+
+writeLines(text = GaitRec_table, con = here::here("chapter-06", "tables", "gaitrec_table.tex"))

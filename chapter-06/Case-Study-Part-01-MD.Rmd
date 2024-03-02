@@ -10,7 +10,8 @@ output: github_document
 ```{r packages, message=FALSE, warning = FALSE}
 library(tidyverse)  # CRAN v1.3.1 
 library(data.table) # CRAN v1.14.2
-library(fda)        # CRAN v5.5.1        
+library(fda)        # CRAN v5.5.1
+library(modelsummary) # CRAN v1.14.2(for table)
 ```
 
 ## Load Custom Functions
@@ -71,6 +72,25 @@ GRF_dataset_PRO_meta_long_sample[, component := factor(component,
         plot.subtitle = element_text(size = 10, hjust = 0.5))
 ```
 
+# Sample Characteristics
+
+Simple table to summarise the data.
+
+```{r, sample characteristics, fig.align = 'center'}
+GRF_dataset_PRO_meta_subject_char <- GRF_dataset_PRO_meta[, .(bilateral_obs = uniqueN(side) == 2), by = .(SUBJECT_ID, CLASS_LABEL, SEX, AGE, BODY_MASS)]
+
+GRF_dataset_PRO_meta_subject_char[, SEX := factor(SEX, levels = c(0, 1), labels = c("Female", "Male"))]
+stopifnot(GRF_dataset_PRO_meta_subject_char[, unique(bilateral_obs) == TRUE])
+
+GRF_dataset_PRO_meta_subject_char[, CLASS_LABEL := factor(CLASS_LABEL, # re-label facets for strip texts.
+                       levels = c("HC", "A", "K", "H", "C"),
+                       labels = c("Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous"))]
+
+setnames(GRF_dataset_PRO_meta_subject_char, old = c("SEX", "CLASS_LABEL", "AGE", "BODY_MASS"), new =  c("Sex", "Impairment Class", "Age (years)", "Body Mass (kg)"))
+
+datasummary_balance(~ 1, data = GRF_dataset_PRO_meta_subject_char[, c("Age (years)", "Body Mass (kg)", "Sex", "Impairment Class")], output = "markdown")
+```
+
 # Basis Expansion/ Interpolation
 
 Loop through and try different basis sizes (different values of $K$).
@@ -102,7 +122,6 @@ abline(v = which(k_seq==35), lwd = 3, col = "green4")
 Choose $K=35$ basis functions and plot some fits:
 
 ```{r, fig.asp = 0.33, fig.width = 10}
-# Do basis representation: ------------------------------------------------
 bspl_35 <- create.bspline.basis(rangeval = c(0, 100), nbasis = 35, norder = 4)
 GRF_dataset_PRO_meta_smooth_basis <- smooth.basis(argvals = 0:100,
                                                   y = y,

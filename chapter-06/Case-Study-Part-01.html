@@ -117,6 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#read-in-data" id="toc-read-in-data" class="nav-link" data-scroll-target="#read-in-data">Read in Data</a></li>
   <li><a href="#plot-a-sample-of-curves" id="toc-plot-a-sample-of-curves" class="nav-link" data-scroll-target="#plot-a-sample-of-curves">Plot a Sample of Curves</a></li>
   </ul></li>
+  <li><a href="#sample-characteristics" id="toc-sample-characteristics" class="nav-link" data-scroll-target="#sample-characteristics">Sample Characteristics</a></li>
   <li><a href="#basis-expansion-interpolation" id="toc-basis-expansion-interpolation" class="nav-link" data-scroll-target="#basis-expansion-interpolation">Basis Expansion/ Interpolation</a></li>
   <li><a href="#visualisation-functional-boxplot" id="toc-visualisation-functional-boxplot" class="nav-link" data-scroll-target="#visualisation-functional-boxplot">Visualisation: Functional Boxplot</a>
   <ul class="collapse">
@@ -158,7 +159,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)  <span class="co"># CRAN v1.3.1 </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co"># CRAN v1.14.2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fda)        <span class="co"># CRAN v5.5.1        </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fda)        <span class="co"># CRAN v5.5.1   </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary) <span class="co"># CRAN v1.14.2 (for table)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-custom-functions" class="level2">
@@ -222,23 +224,121 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
+<section id="sample-characteristics" class="level1">
+<h1>Sample Characteristics</h1>
+<p>Simple table to summarise the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_subject_char <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[, .(<span class="at">bilateral_obs =</span> <span class="fu">uniqueN</span>(side) <span class="sc">==</span> <span class="dv">2</span>), by <span class="ot">=</span> .(SUBJECT_ID, CLASS_LABEL, SEX, AGE, BODY_MASS)]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_subject_char[, SEX <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(SEX, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>))]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(GRF_dataset_PRO_meta_subject_char[, <span class="fu">unique</span>(bilateral_obs) <span class="sc">==</span> <span class="cn">TRUE</span>])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_subject_char[, CLASS_LABEL <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(CLASS_LABEL, <span class="co"># re-label facets for strip texts.</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"HC"</span>, <span class="st">"A"</span>, <span class="st">"K"</span>, <span class="st">"H"</span>, <span class="st">"C"</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Healthy Control"</span>, <span class="st">"Ankle"</span>, <span class="st">"Knee"</span>, <span class="st">"Hip"</span>, <span class="st">"Calcaneous"</span>))]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(GRF_dataset_PRO_meta_subject_char, <span class="at">old =</span> <span class="fu">c</span>(<span class="st">"SEX"</span>, <span class="st">"CLASS_LABEL"</span>, <span class="st">"AGE"</span>, <span class="st">"BODY_MASS"</span>), <span class="at">new =</span>  <span class="fu">c</span>(<span class="st">"Sex"</span>, <span class="st">"Impairment Class"</span>, <span class="st">"Age (years)"</span>, <span class="st">"Body Mass (kg)"</span>))</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">datasummary_balance</span>(<span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> GRF_dataset_PRO_meta_subject_char[, <span class="fu">c</span>(<span class="st">"Age (years)"</span>, <span class="st">"Body Mass (kg)"</span>, <span class="st">"Sex"</span>, <span class="st">"Impairment Class"</span>)], <span class="at">output =</span> <span class="st">"markdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;"></th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Std. Dev.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age (years)</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">40.8</td>
+<td style="text-align: right;">12.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Body Mass (kg)</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">81.0</td>
+<td style="text-align: right;">16.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">:—————–</td>
+<td style="text-align: right;">—————-:</td>
+<td style="text-align: right;">—–:</td>
+<td style="text-align: right;">———-:</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">N</td>
+<td style="text-align: right;">Pct.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sex</td>
+<td style="text-align: right;">Female</td>
+<td style="text-align: right;">195</td>
+<td style="text-align: right;">26.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">Male</td>
+<td style="text-align: right;">530</td>
+<td style="text-align: right;">73.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Impairment Class</td>
+<td style="text-align: right;">Healthy Control</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">20.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">Ankle</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">20.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">Knee</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">20.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">Hip</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">20.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: right;">Calcaneous</td>
+<td style="text-align: right;">145</td>
+<td style="text-align: right;">20.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
 <section id="basis-expansion-interpolation" class="level1">
 <h1>Basis Expansion/ Interpolation</h1>
 <p>Loop through and try different basis sizes (different values of <span class="math inline">\(K\)</span>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>k_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">15</span>, <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta[, <span class="fu">paste0</span>(<span class="st">"time_"</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)])</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SSE_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(y), <span class="at">ncol =</span> <span class="fu">length</span>(k_seq))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="fu">seq_along</span>(k_seq)) {</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop through different values of k</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"iteration"</span>, k, <span class="st">"of"</span>, <span class="fu">length</span>(k_seq)))</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  bspl_k <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> k_seq[k], <span class="at">norder =</span> <span class="dv">4</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">y =</span> y,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">fdParobj =</span> bspl_k)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  SSE_mat[,k] <span class="ot">&lt;-</span> <span class="fu">apply</span>((y <span class="sc">-</span> yhat)<span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>, sum) <span class="co"># calculate (discrete approx. to) integrated squared error</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>k_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">15</span>, <span class="dv">80</span>, <span class="at">by =</span> <span class="dv">5</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta[, <span class="fu">paste0</span>(<span class="st">"time_"</span>, <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>)])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>SSE_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(y), <span class="at">ncol =</span> <span class="fu">length</span>(k_seq))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="fu">seq_along</span>(k_seq)) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># loop through different values of k</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"iteration"</span>, k, <span class="st">"of"</span>, <span class="fu">length</span>(k_seq)))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  bspl_k <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> k_seq[k], <span class="at">norder =</span> <span class="dv">4</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">y =</span> y,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">fdParobj =</span> bspl_k)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  SSE_mat[,k] <span class="ot">&lt;-</span> <span class="fu">apply</span>((y <span class="sc">-</span> yhat)<span class="sc">^</span><span class="dv">2</span>, <span class="dv">2</span>, sum) <span class="co"># calculate (discrete approx. to) integrated squared error</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "iteration 1 of 14"
 [1] "iteration 2 of 14"
@@ -255,71 +355,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [1] "iteration 13 of 14"
 [1] "iteration 14 of 14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">sqrt</span>(SSE_mat),</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">names =</span> k_seq,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Number of Basis Functions"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Root SSE"</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Approximation Error from Interpolation"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">which</span>(k_seq<span class="sc">==</span><span class="dv">35</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"green4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">sqrt</span>(SSE_mat),</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">names =</span> k_seq,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Number of Basis Functions"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Root SSE"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Approximation Error from Interpolation"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="fu">which</span>(k_seq<span class="sc">==</span><span class="dv">35</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"green4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Choose <span class="math inline">\(K=35\)</span> basis functions and plot some fits:</p>
 <div class="cell" data-fig.asp="0.33">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do basis representation: ------------------------------------------------</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>bspl_35 <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> <span class="dv">35</span>, <span class="at">norder =</span> <span class="dv">4</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">y =</span> y,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">fdParobj =</span> bspl_35)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sample_inds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">ncol</span>(y)<span class="sc">/</span><span class="dv">3</span>), <span class="at">size =</span> <span class="dv">3</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Vertical:</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Vertical"</span>)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># A-P</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Anterior-Posterior"</span>)</span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># M-L:</span></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Medio-Lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do basis representation: ------------------------------------------------</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>bspl_35 <span class="ot">&lt;-</span> <span class="fu">create.bspline.basis</span>(<span class="at">rangeval =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">nbasis =</span> <span class="dv">35</span>, <span class="at">norder =</span> <span class="dv">4</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_smooth_basis <span class="ot">&lt;-</span> <span class="fu">smooth.basis</span>(<span class="at">argvals =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">y =</span> y,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                                                  <span class="at">fdParobj =</span> bspl_35)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">predict</span>(GRF_dataset_PRO_meta_smooth_basis)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>sample_inds <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">ncol</span>(y)<span class="sc">/</span><span class="dv">3</span>), <span class="at">size =</span> <span class="dv">3</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Vertical:</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"vertical"</span>][, sample_inds],</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Vertical"</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># A-P</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"anterior_posterior"</span>][, sample_inds],</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Anterior-Posterior"</span>)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># M-L:</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">alpha</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="fl">0.5</span>), </span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="fu">matlines</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> yhat[, GRF_dataset_PRO_meta<span class="sc">$</span>component<span class="sc">==</span><span class="st">"medio_lateral"</span>][, sample_inds],</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Medio-Lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
 <p>Append the calculated basis coefficients to our data matrix so we can use them later:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_basis_coefs <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta_smooth_basis<span class="sc">$</span>fd<span class="sc">$</span>coefs)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta <span class="ot">&lt;-</span> <span class="fu">cbind</span>(GRF_dataset_PRO_meta,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">t</span>(GRF_dataset_PRO_meta_smooth_basis<span class="sc">$</span>fd<span class="sc">$</span>coefs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_basis_coefs <span class="ot">&lt;-</span> <span class="fu">t</span>(GRF_dataset_PRO_meta_smooth_basis<span class="sc">$</span>fd<span class="sc">$</span>coefs)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta <span class="ot">&lt;-</span> <span class="fu">cbind</span>(GRF_dataset_PRO_meta,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">t</span>(GRF_dataset_PRO_meta_smooth_basis<span class="sc">$</span>fd<span class="sc">$</span>coefs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="visualisation-functional-boxplot" class="level1">
@@ -328,33 +428,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="standard-version">Standard Version</h2>
 <p>For exploratory data analysis, construct functional boxplots using the <code>boxplot.fd()</code> (or <code>fbplot()</code>) function.</p>
 <div class="cell" data-fig.asp="0.33">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split into vertical, medio_lateral and anterior_posterior components</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for function boxplots.</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_V <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"vertical"</span>]</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_V_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_V[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">basisobj =</span> bspl_35)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_ML <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"medio_lateral"</span>]</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_ML_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_ML[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">basisobj =</span> bspl_35)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_AP <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"anterior_posterior"</span>]</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_AP_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_AP[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">basisobj =</span> bspl_35)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_V_fd,</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Vertical"</span>)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_AP_fd,</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Anterior-Posterior"</span>)</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_ML_fd,</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Medio-lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split into vertical, medio_lateral and anterior_posterior components</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for function boxplots.</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_V <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"vertical"</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_V_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_V[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">basisobj =</span> bspl_35)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_ML <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"medio_lateral"</span>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_ML_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_ML[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">basisobj =</span> bspl_35)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_AP <span class="ot">&lt;-</span> GRF_dataset_PRO_meta[component<span class="sc">==</span><span class="st">"anterior_posterior"</span>]</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>GRF_dataset_PRO_meta_AP_fd <span class="ot">&lt;-</span> <span class="fu">fd</span>(<span class="at">coef =</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(GRF_dataset_PRO_meta_AP[, <span class="fu">paste0</span>(<span class="st">"bspl4."</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">35</span>)])),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">basisobj =</span> bspl_35)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_V_fd,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Vertical"</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_AP_fd,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Anterior-Posterior"</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> fda<span class="sc">::</span><span class="fu">boxplot.fd</span>(GRF_dataset_PRO_meta_ML_fd,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xlab =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ylab =</span> <span class="st">"Force (BW)"</span>,</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">main =</span> <span class="st">"Medio-lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="768"></p>
 </div>
@@ -364,20 +464,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="experimental-ggplot-version">(Experimental) <code>ggplot()</code> Version</h2>
 <p>Can equivalently use a wrapper function that I’ve written to turn these into pretty <code>ggplot</code> figures for the manuscript:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>V_fboxplot <span class="ot">&lt;-</span><span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_V_fd)<span class="sc">$</span>ggplot <span class="sc">+</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Vertical"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>AP_fboxplot <span class="ot">&lt;-</span> <span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_AP_fd)<span class="sc">$</span>ggplot <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Anterior-Posterior"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ML_fboxplot <span class="ot">&lt;-</span> <span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_ML_fd)<span class="sc">$</span>ggplot <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Medio-Lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>V_fboxplot <span class="ot">&lt;-</span><span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_V_fd)<span class="sc">$</span>ggplot <span class="sc">+</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Vertical"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>AP_fboxplot <span class="ot">&lt;-</span> <span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_AP_fd)<span class="sc">$</span>ggplot <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Anterior-Posterior"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ML_fboxplot <span class="ot">&lt;-</span> <span class="fu">create_functional_boxplot_gg</span>(<span class="at">time_grid =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">fd_obj =</span> GRF_dataset_PRO_meta_ML_fd)<span class="sc">$</span>ggplot <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Medio-Lateral"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-fig.asp="0.33">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(combined_plot <span class="ot">&lt;-</span> <span class="fu">list</span>(V_fboxplot, AP_fboxplot, ML_fboxplot) <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="cf">function</span>(x) {</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         x <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Normalised Time"</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Force (BW)"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>       }) <span class="sc">%&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(<span class="at">plotlist =</span> ., <span class="at">ncol =</span> <span class="dv">3</span> , <span class="at">nrow =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(combined_plot <span class="ot">&lt;-</span> <span class="fu">list</span>(V_fboxplot, AP_fboxplot, ML_fboxplot) <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="cf">function</span>(x) {</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         x <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Normalised Time"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Force (BW)"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       }) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  ggpubr<span class="sc">::</span><span class="fu">ggarrange</span>(<span class="at">plotlist =</span> ., <span class="at">ncol =</span> <span class="dv">3</span> , <span class="at">nrow =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Case-Study-Part-01_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="768"></p>
 </div>
@@ -387,7 +487,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="session-information-reproducibility" class="level1">
 <h1>Session Information (Reproducibility)</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
@@ -405,32 +505,34 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] fda_5.5.1         deSolve_1.30      fds_1.8           RCurl_1.98-1.6   
- [5] rainbow_3.6       pcaPP_1.9-74      MASS_7.3-55       Matrix_1.4-0     
- [9] data.table_1.14.2 forcats_0.5.1     stringr_1.4.0     dplyr_1.1.2      
-[13] purrr_0.3.4       readr_2.1.2       tidyr_1.2.0       tibble_3.2.1     
-[17] ggplot2_3.4.2     tidyverse_1.3.1  
+ [1] modelsummary_1.4.1 fda_5.5.1          deSolve_1.30       fds_1.8           
+ [5] RCurl_1.98-1.6     rainbow_3.6        pcaPP_1.9-74       MASS_7.3-55       
+ [9] Matrix_1.4-0       data.table_1.14.2  forcats_0.5.1      stringr_1.4.0     
+[13] dplyr_1.1.2        purrr_0.3.4        readr_2.1.2        tidyr_1.2.0       
+[17] tibble_3.2.1       ggplot2_3.4.2      tidyverse_1.3.1   
 
 loaded via a namespace (and not attached):
- [1] bitops_1.0-7       fs_1.6.2           lubridate_1.8.0    httr_1.4.2        
- [5] rprojroot_2.0.2    tools_4.1.2        backports_1.4.1    utf8_1.2.2        
- [9] R6_2.5.1           KernSmooth_2.23-20 DBI_1.1.2          colorspace_2.0-3  
-[13] withr_2.5.0        tidyselect_1.2.0   compiler_4.1.2     cli_3.6.0         
-[17] rvest_1.0.2        xml2_1.3.3         labeling_0.4.2     scales_1.2.1      
-[21] mvtnorm_1.1-3      digest_0.6.29      rmarkdown_2.11     pkgconfig_2.0.3   
-[25] htmltools_0.5.5    dbplyr_2.1.1       fastmap_1.1.0      htmlwidgets_1.6.2 
-[29] rlang_1.1.1        readxl_1.3.1       rstudioapi_0.13    generics_0.1.2    
-[33] farver_2.1.0       jsonlite_1.8.0     mclust_5.4.9       car_3.0-12        
-[37] magrittr_2.0.2     Rcpp_1.0.10        munsell_0.5.0      fansi_1.0.2       
-[41] abind_1.4-5        lifecycle_1.0.3    stringi_1.7.6      yaml_2.3.5        
-[45] carData_3.0-5      grid_4.1.2         crayon_1.5.0       lattice_0.20-45   
-[49] haven_2.4.3        cowplot_1.1.1      hms_1.1.1          knitr_1.37        
-[53] pillar_1.9.0       ggpubr_0.4.0       ggsignif_0.6.3     reprex_2.0.1      
-[57] glue_1.6.2         evaluate_0.15      modelr_0.1.8       vctrs_0.6.2       
-[61] tzdb_0.2.0         cellranger_1.1.0   gtable_0.3.0       assertthat_0.2.1  
-[65] ks_1.13.4          xfun_0.39          broom_0.7.12       pracma_2.3.8      
-[69] rstatix_0.7.0      cluster_2.1.2      ellipsis_0.3.2     hdrcde_3.4        
-[73] here_1.0.1        </code></pre>
+ [1] bitops_1.0-7       fs_1.6.2           lubridate_1.8.0    insight_0.19.3    
+ [5] webshot_0.5.2      httr_1.4.2         rprojroot_2.0.2    tools_4.1.2       
+ [9] backports_1.4.1    utf8_1.2.2         R6_2.5.1           DT_0.20           
+[13] KernSmooth_2.23-20 DBI_1.1.2          colorspace_2.0-3   withr_2.5.0       
+[17] tidyselect_1.2.0   compiler_4.1.2     cli_3.6.0          rvest_1.0.2       
+[21] gt_0.9.0           xml2_1.3.3         labeling_0.4.2     checkmate_2.2.0   
+[25] scales_1.2.1       mvtnorm_1.1-3      tables_0.9.17      systemfonts_1.0.4 
+[29] digest_0.6.29      rmarkdown_2.11     svglite_2.1.0      pkgconfig_2.0.3   
+[33] htmltools_0.5.5    dbplyr_2.1.1       fastmap_1.1.0      htmlwidgets_1.6.2 
+[37] rlang_1.1.1        readxl_1.3.1       rstudioapi_0.13    farver_2.1.0      
+[41] generics_0.1.2     jsonlite_1.8.0     mclust_5.4.9       car_3.0-12        
+[45] magrittr_2.0.2     kableExtra_1.3.4   Rcpp_1.0.10        munsell_0.5.0     
+[49] fansi_1.0.2        abind_1.4-5        lifecycle_1.0.3    stringi_1.7.6     
+[53] yaml_2.3.5         carData_3.0-5      grid_4.1.2         crayon_1.5.0      
+[57] lattice_0.20-45    cowplot_1.1.1      haven_2.4.3        hms_1.1.1         
+[61] knitr_1.37         pillar_1.9.0       ggpubr_0.4.0       ggsignif_0.6.3    
+[65] reprex_2.0.1       glue_1.6.2         evaluate_0.15      modelr_0.1.8      
+[69] vctrs_0.6.2        tzdb_0.2.0         cellranger_1.1.0   gtable_0.3.0      
+[73] assertthat_0.2.1   ks_1.13.4          xfun_0.39          broom_0.7.12      
+[77] pracma_2.3.8       rstatix_0.7.0      viridisLite_0.4.0  cluster_2.1.2     
+[81] ellipsis_0.3.2     hdrcde_3.4         here_1.0.1        </code></pre>
 </div>
 </div>
 </section>

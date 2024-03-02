@@ -1,243 +1,69 @@
----
-title: "Case Study Part 3: Impaired Movement"
-output: github_document
----
-
-Analysis of impaired movement using FPCA and function-on-scalar regression.
-
-**Note:** This script takes about $4$ hours to run on my $2019$ MacBook pro. 
-This is primarily due to the bootstrap using $1000$ bootstrap replicates. 
-This number could be reduced or the bootstrap skipped to speed it up.
-
-# Set Up
-
-```{r}
-time_start <- Sys.time()
-```
-
-Packages.
-
-```{r packages, message=FALSE, warning = FALSE}
-library(tidyverse)  # CRAN v1.3.1 
 library(data.table) # CRAN v1.14.2
-library(fda)        # CRAN v5.5.1   
+library(fda)        # CRAN v5.5.1
+library(tidyverse)  # CRAN v1.3.1
+library(tikzDevice) # CRAN v0.12.3.1
 library(refund)     # CRAN v0.1-26
-```
 
-Some graphics settings.
-
-```{r}
 source(here::here("functions", "theme_gunning.R"))
+# Some settings for the Figure: -------------------------------------------
 theme_gunning()
 theme_update(strip.text = element_text(size = 10),
              axis.text = element_text(size = 9),
              axis.title = element_text(size = 10),
              plot.title = element_text(size = 11))
-```
 
-Read in the data.
+doc_width_cm <- 16
+doc_width_inches <- doc_width_cm *  0.3937
 
-```{r}
-data_path <- here::here("chapter-06", "data", "interpolated-data.rds")
-interpolated_data <- readRDS(data_path)
-GRF_dataset_PRO_meta <- interpolated_data$GRF_dataset_PRO_meta
-bspl_35 <- interpolated_data$bspl_35
-GRF_dataset_PRO_meta[, uniqueN(SESSION_ID), by = SUBJECT_ID][, stopifnot(V1 == 1)]
-```
+data_stored <- readRDS(file = here::here("chapter-06",
+                       "data",
+                       "function-on-scalar-data.rds"))
 
-Calculate average curve for each subject/ side.
+dt <- data_stored$data
+fdobj <- data_stored$fd_obj
+(N <- nrow(dt)) # sample size
 
-```{r}
-# remove discrete values from dataset now we just working with basis coefficients.
-GRF_dataset_PRO_meta[, paste0("time_",0:100) := NULL]
-GRF_dataset_PRO_averages <- GRF_dataset_PRO_meta[,
-                                                 as.list(apply(.SD, 2, mean)), # average basis coefficients of all trials
-                                                 by = .(SUBJECT_ID, SESSION_ID, side, component, CLASS_LABEL, CLASS_LABEL_DETAILED, SEX, AGE, HEIGHT, 
-                                                        BODY_WEIGHT, BODY_MASS, SHOE_SIZE, AFFECTED_SIDE, SHOD_CONDITION, # defines averaging
-                                                        ORTHOPEDIC_INSOLE, SPEED),
-                                                 .SDcols = paste0("bspl4.",1:35)] # says which columns to average
-```
-
-Only look at Anterior-Posterior (A-P) component.
-
-Then for comparisons:
-* Look at affected side for impaired subjects who are affected on one side:
- * Left side for subjects affected on the left `(AFFECTED_SIDE == 0 & side == "left")`.
- * Right side for subjects affected on the right `(AFFECTED_SIDE == 1 & side == "right")`.
-* Look at right side for Healthy Controls `(CLASS_LABEL == "HC" & side == "right")`.
-* Look at right side for those affected on both sides `(AFFECTED_SIDE == 2 & side == "right")`.
-
-**Note:** We will call this `dt` to make code easier to read in .qmd files (understand this is not best practice -- more informative names should be used). 
-
-```{r}
-dt <- GRF_dataset_PRO_averages[component == "anterior_posterior"]
-dt <- dt[(CLASS_LABEL == "HC" & side == "right") |
-           (AFFECTED_SIDE == 0 & side == "left") |
-           (AFFECTED_SIDE == 1 & side == "right") |
-           (AFFECTED_SIDE == 2 & side == "right")]
-```
-
-How many subjects?
-
-```{r}
-(N <- nrow(dt))
-```
-
-Create `fd` object using coefficients and basis.
-
-```{r}
-fdobj <- fd(coef = t(as.matrix(dt[, paste0("bspl4.",1:35)])), # basis coefs
-            basisobj = bspl_35) # basis
-```
-------------------------------------------------------------------------------------------------------------------------------------
-
-# FPCA
-
-Perform fpca using `pca.fd()`.
-
-```{r}
-fpca <- pca.fd(fdobj = fdobj, nharm = 35)
-```
-
-Look at variance explained:
-
-```{r, fig.align='center', fig.asp=1, fig.width=4}
-plot(1:35, cumsum(fpca$varprop), xlab = "k", ylab = "cumulative prop. of var explained")
-```
-
-Figure of FPCA. Need to evaluate/ reshape FPCs to plot.
-
-```{r, fig.align='center'}
-fpca_eval <- eval.fd(evalarg = 0:100, fpca$harmonics)
-
-fpca_dt <- data.table(time = 0:100, fpca_eval)
-
-fpca_dt_long <- melt.data.table(fpca_dt,
-                                id.vars = "time",
-                                measure.vars = paste0("PC",1:35))
-
-mean_dt <- data.table(time = 0:100,
-                      mean = c(eval.fd(0:100, fpca$meanfd)))
-
-fpca_dt_long <- merge.data.table(x = fpca_dt_long, 
-                                 y = mean_dt, 
-                                 by = "time",
-                                 all.x = TRUE)
-var_explained_dt <- data.table(
-  variable = paste0("PC", 1:35), 
-  constant = (2 * sqrt(fpca$values))[1:35], # to add to fpcs
-  var_explained = paste0("$", round(fpca$varprop * 100, 1), "\\%$"))
-
-fpca_dt_long <- merge.data.table(x = fpca_dt_long, 
-                                 var_explained_dt,
-                                 by = "variable", 
-                                 all.x = TRUE)
-
-fpca_dt_long[, facet_label := paste0("F", variable, " (", var_explained, " of Variance)")]
-
-anterior_posterior_plot <- ggplot(fpca_dt_long[variable %in% paste0("PC", 1:6)]) +
-  aes(x = time) +
-  facet_wrap(~ facet_label, ncol = 3) +
-  geom_line(aes(y = mean)) +
-  geom_point(aes(y = mean + constant * value), pch = "+", size = 1.5) +
-  geom_point(aes(y = mean - constant * value), pch = "-", size = 3) +
-  labs(x = "Normalised Time", y = "Force (BW)", title = "Anterior-Posterior")
-
-anterior_posterior_plot
-```
-
-
-Plot of scores vs. group labels. Again, extract scores and reshape data.
-
-
-```{r, fig.align='center', fig.asp=1.5/3}
-boxplots_dt <- data.table(class_label = dt$CLASS_LABEL,
-                          sex = dt$SEX,
-                          fpca$scores[, 1:3])
-names(boxplots_dt)[-c(1:2)] <- paste0("FPC", 1:3)
-boxplots_dt_lng <- melt.data.table(boxplots_dt, id.vars = c("class_label", "sex"))
-boxplots_dt_lng[, 
-                class_label_fill := factor(class_label, # re-label facets for strip texts.
-                       levels = c("HC", "A", "K", "H", "C"),
-                       labels = c("Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous"))]
-boxplots_dt_lng[, class_label := factor(class_label, levels = c("HC", "A", "K", "H", "C"))]
-
-(boxplot_scores <- ggplot(boxplots_dt_lng) +
-  aes(x = class_label, y = value, fill = class_label_fill) +
-  geom_hline(yintercept = 0, lty = 2) +
-  facet_grid(~ variable) +
-  geom_boxplot() +
-  labs(y = "FPC Score", x = "Impairement", fill = "Impairement:") +
-  theme(legend.position = "bottom",
-        legend.title = element_text(face = "bold")))
-```
-
-
-------------------------------------------------------------------------------------------------------------------------------------
-
-# Function-on-Scalar Regression
-
-## Two-Step Pointwise Estimation
-
-Do manually with a loop and using `fosr2s()`.
-**Note**: The sum-to-zero constraint is achieved by `contr.sum()` command.
-
-### Manual Loop with `lm()`
-
-```{r}
-dt[, CLASS_LABEL := factor(
-  CLASS_LABEL,
-  levels = c("HC", "A", "K", "H", "C"),
-  labels = c("Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous"))]
+# Pointwise Minimisation: -------------------------------------------------
+dt[, CLASS_LABEL := factor(CLASS_LABEL,
+                           levels = c("HC", "A", "K", "H", "C"),
+                           labels = c("Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous"))]
 fdobj_eval <- eval.fd(0:100, fdobj)
+
+
 
 beta_mat <- matrix(NA, nrow = 101, ncol = 5)
 for(tind in seq_along(0:100)) {
-  #print(paste0("t = ", c(0:100)[tind]))
+  print(paste0("t = ", c(0:100)[tind]))
   df_lm <- data.frame(force_t = fdobj_eval[tind,], class_label = dt$CLASS_LABEL)
   contrasts(df_lm$class_label) <- contr.sum(5)
   test_lm <- lm(force_t ~ class_label, data = df_lm)
   beta_mat[tind, ] <- coef(test_lm)
 }
 
-# and last column is obtained by -1 * sum of other predictors (constraint)
+# and last column is obtained by sum of other predictors (constraint)
 beta_mat <- cbind(beta_mat, - apply(beta_mat[,-1], 1, sum))
 colnames(beta_mat) <- c("Intercept", rownames(contrasts(df_lm$class_label)))
-```
 
-### `fosr2s()`
-
-```{r}
 # can also do pointwise regressions with refund; this smoooths not interpolates though.
 fosr2s <- fosr2s(Y = t(fdobj_eval),
                  X = model.matrix(~ class_label, data = df_lm),
                  argvals = 0:100,
                  nbasis = 35)
+
 fosr2s$est.func <- cbind(fosr2s$est.func, - apply(fosr2s$est.func[,-1], 1, sum))
 colnames(fosr2s$est.func) <- colnames(beta_mat) 
 colnames(fosr2s$se.func) <- colnames(fosr2s$est.func)[1:5]
-```
 
-Compare by plotting differences in estimates:
-
-```{r, fig.align='center'}
 par(mfrow = c(2, 3))
 for(j in 1:5) {
   plot(fosr2s$est.func[,j] - beta_mat[, j], type = "l") # plot difference
 } # identical
-```
 
-^ differences of order $10^{-16}$ -- identical.
 
-## P-GLS (`fosr()`)
-
-**Note**: The sum-to-zero constraint is achieved by using the `con` argument, a vector saying which columns of design matrix should sum to zero.
-
-```{r}
+# Fosr --------------------------------------------------------------------
 modmat <- cbind(Intercept = 1, model.matrix(~ factor(dt$CLASS_LABEL) - 1))
-(constraints = matrix(c(0, 1, 1, 1, 1, 1), 1)) # vector says all betas sum to zero
-colnames(modmat)[-1] <- stringr::str_remove(colnames(modmat)[-1],
-                                            pattern =  "factor\\(dt\\$CLASS_LABEL\\)")
+(constraints = matrix(c(0, 1, 1, 1, 1, 1), 1)) # all betas sum to zero
+colnames(modmat)[-1] <- stringr::str_remove(colnames(modmat)[-1], pattern =  "factor\\(dt\\$CLASS_LABEL\\)")
 fosr <- fosr(fdobj = fdobj,
              X = modmat, # design matrix
              con = constraints, # sum-to-zero constraints
@@ -245,37 +71,29 @@ fosr <- fosr(fdobj = fdobj,
              argvals = 0:100)
 
 colnames(fosr$se.func) <- colnames(fosr$est.func) <- colnames(modmat)
-```
 
-## FAMM
 
-We add an `id` column with an indicator for each row. This would allow us to model $\epsilon(t)$ as a smooth residual in the FAMM approach, using basis functions and random effects.
-
-```{r}
+# pffr() -------------------------------------------------------------------
 dt_copy <- copy(dt)
 contrasts(dt_copy$CLASS_LABEL) <- contr.sum(n = 5)
 X_constraint <- model.matrix(~ CLASS_LABEL, data = dt_copy)
 colnames(X_constraint) <- c("Intercept", rownames(contrasts(dt_copy$CLASS_LABEL))[1:4])
 pffr_df <- as.data.frame(X_constraint)
-pffr_df$id <- factor(seq_len(N)) # id for each curve = smooth error
+names(pffr_df)[1:5]
+# just in case we could fit smooth error:
+pffr_df$id <- factor(seq_len(N))
 pffr_df$Y <- t(fdobj_eval)
+
+
+# pffr_fit <- pffr(formula = Y ~ class_label1 + class_label2 + class_label3 + class_label4 + s(id, bs = "re"),
+#      data = pffr_df,
+#      yind = 0:100,
+#      algorithm = "bam",
+#      bs.yindex = list(bs="ps", k=10, m=c(2, 1)),
+#      bs.int  = list(bs="ps", k=35, m=c(2, 1)))
+
 names(pffr_df)[2] <- "Healthy_Control"
-```
 
-This is how it *would* be achieved. However, too complicated to fit -- **we do not evaluate this chunk**:
-
-```{r, eval=FALSE}
-pffr_fit <- pffr(formula = Y ~ Healthy_Control + Ankle + Knee + Hip+ s(id, bs = "re"),
-                 data = pffr_df,
-                 yind = 0:100,
-                 algorithm = "bam",
-                 bs.yindex = list(bs="ps", k=35, m=c(2, 1)),
-                 bs.int  = list(bs="ps", k=35, m=c(2, 1)))
-```
-
-Instead, we fit with assuming $\epsilon_{it} \sim N(0, \sigma)$.
-
-```{r}
 pffr_fit <- pffr(formula = Y ~ Healthy_Control + Ankle + Knee + Hip,
                  data = pffr_df,
                  yind = 0:100,
@@ -283,20 +101,28 @@ pffr_fit <- pffr(formula = Y ~ Healthy_Control + Ankle + Knee + Hip,
                  bs.yindex = list(bs="ps", k=35, m=c(2, 1)),
                  bs.int  = list(bs="ps", k=35, m=c(2, 1)))
 
-```
 
-## P-OLS (`fRegress()`)
+# fRegress: ---------------------------------------------------------------
+
+# Three (perhaps strange) notes on this implementation: ---------------------
+
+# 1)
+# We could use the contr.sum() version of the design matrix to construct a 
+# suitable design matrix (same as last fit) to enforce sum-to-zero constraint.
+# however, we use the "hack" provided in Ramsay, Hooker and Graves p. 148
+
+# 2)
+# For fitting the fosr model, xfdlist is typically a list with each element
+# containing the vector that would be a column of the standard design matrix.
+# However, to manually use predict.fRegress(), for some reason there we need
+# to create each scalar covariate as a constant "function" using a constant basis.
+
+# 3) 
+# We manually do 10-fold cross-validation to choose smoothing parameter.
+# The reason being is that fRegress.CV only does leave-one-out which takes
+# too long to run on this dataset
 
 
-Three (perhaps strange) notes on this implementation:
-
-1. We can use the `contr.sum()` version of the design matrix to construct a  suitable design matrix (same as last fit) to enforce sum-to-zero constraint. However, we first use the "hack" provided in Ramsay, Hooker and Graves p. 148 of augmenting a "fake" observation. Then we use `contr.sum()`.
-
-2. Using `fRegress()`, `xfdlist` is typically a list with each element containing the vector that would be a column of the standard design matrix. However, to manually use `predict.fRegress()`, for some reason we need to create each scalar covariate as a constant "function" using a constant basis (i.e., `xfdlist` still a list but now each element is an `fd` object representing the scalar covariates).
-
-3. We manually do 10-fold cross-validation to choose smoothing parameter. The reason being is that `fRegress.CV()` only does leave-one-out which takes too long to run on this dataset.
-
-```{r}
 impairement_classes <- unique(dt$CLASS_LABEL)
 constant_basis <- create.constant.basis(rangeval = c(0, 100))
 
@@ -313,17 +139,15 @@ for (j in 2:p) {
 coefs_tmp <- fdobj$coefs
 coefs_augmented <- cbind(coefs_tmp, matrix(data = 0, nrow = fdobj$basis$nbasis, 1))
 Y_fd_augmented <- fd(coef = coefs_augmented, 
-                     basisobj =  fdobj$basis) # (RHG p. 148)
-
-```
+                     basisobj =  fdobj$basis)
 
 
-```{r}
+# (RHG p. 148)
 # Set up basis for predictor and regression functions:
 # use same basis as data
 betas_basis <- fdobj$basis
 
-# Let's do CV to choose smoothing parameter:
+# Let's do CV to choos smoothing parameter:
 log_lambda_seq <- seq(from = -10, to = 10, by = 1)
 SSE_cv_vec <- vector(mode = "numeric", length = length(log_lambda_seq))
 
@@ -393,35 +217,6 @@ names(beta_list_best) <- names(xfd_list)
 fRegress_best_fit <- fRegress(Y_fd_augmented,
                               xfdlist = xfd_list,
                               betalist = beta_list_best)
-```
-
-However this "hack" does not allow for correct CI estimates. Therefore we re-do `fRegress` this time based on setting up `xfdlist` using our design matrix `X_constraint` that was set up earlier.
-
-```{r}
-p2 <- length(impairement_classes)
-
-xfd_list_2 <- vector(mode = "list", length = p2)
-
-names(xfd_list_2) <- colnames(X_constraint)
-
-for (j in 1:p2) {
-  xfd_list_2[[j]] <- fd(coef = matrix(data  = X_constraint[, j], nrow = 1, ncol = N), basisobj = constant_basis)
-}
-
-beta_fdPar_best <- fdPar(fdobj = betas_basis, Lfdobj = 2, lambda = 10^log_lambda_best)
- 
-beta_list_best_2 <- replicate(n = p2, expr = beta_fdPar_best, simplify = FALSE)
- 
-names(beta_list_best_2) <- names(xfd_list_2)
-
-fRegress_best_fit_2 <- fRegress(fdobj,
-                                xfdlist = xfd_list_2,
-                                betalist = beta_list_best_2)
-par(mfrow = c(2, 3))
-for(j in c("Intercept", "Healthy Control", "Ankle", "Knee", "Hip")) {
-  plot(fRegress_best_fit_2$betaestlist[[j]]$fd, col = 1)
-  lines(fRegress_best_fit$betaestlist[[j]]$fd, col = 2)
-} # close but still different
 
 
 # And construct confidence intervals
@@ -430,23 +225,65 @@ y2cMap <- smooth.basis(argvals = 0:100,
                        fdParobj = fdPar(fdobj$basis, Lfdobj = 2, lambda = 10^-10))$y2cMap # didn't have smooth.basis stored.
 
 # Calculate residual error covariance for getting CIs
+err_fd <- fRegress_best_fit$yhatfdobj[1:N, ] - fRegress_best_fit$yfdobj[1:N, ]
+err_fd_cov_bifd <- var.fd(fdobj1 = err_fd, fdobj2 = err_fd)
+err_fd_cov_eval <- eval.bifd(0:100, 0:100, err_fd_cov_bifd)
+
+par(mfrow = c(1, 2))
+plot(fosr$resid, type = "l")
+plot(err_fd)
+
+
+# Get Standard Errors for fRegress()
+# can skip this for now: takes a while!
+# not a good approach -- comment out!
+# fRegress_best_fit_stderrList <- fRegress.stderr(y = fRegress_best_fit,
+#                                                 y2cMap = y2cMap,
+#                                                 SigmaE = err_fd_cov_eval)
+
+
+
+# This approach DOES NOT WORK for getting CIs: ----------------------------
+# do it by constructing design matrix:
+p2 <- length(impairement_classes)
+xfd_list_2 <- vector(mode = "list", length = p2)
+names(xfd_list_2) <- colnames(X_constraint)
+
+for (j in 1:p2) {
+  xfd_list_2[[j]] <- fd(coef = matrix(data  = X_constraint[, j], nrow = 1, ncol = N), basisobj = constant_basis)
+}
+
+beta_fdPar_best <- fdPar(fdobj = betas_basis, Lfdobj = 2, lambda = 10^log_lambda_best)
+beta_list_best_2 <- replicate(n = p2, expr = beta_fdPar_best, simplify = FALSE)
+names(beta_list_best_2) <- names(xfd_list_2)
+
+
+fRegress_best_fit_2 <- fRegress(fdobj,
+                                xfdlist = xfd_list_2,
+                                betalist = beta_list_best_2)
+
+par(mfrow = c(3, 2))
+for(j in c("Intercept", "Healthy Control", "Ankle", "Knee", "Hip")) {
+  plot(fRegress_best_fit_2$betaestlist[[j]]$fd, col = 2)
+  lines(fRegress_best_fit$betaestlist[[j]]$fd, col = 2)
+} # close but still different
+
+# Calculate residual error covariance for getting CIs
 err_fd_2 <- fRegress_best_fit_2$yhatfdobj - fRegress_best_fit_2$yfdobj
 err_fd_cov_bifd_2 <- var.fd(fdobj1 = err_fd_2, fdobj2 = err_fd_2)
 err_fd_cov_eval_2 <- eval.bifd(sevalarg = 0:100, tevalarg = 0:100, err_fd_cov_bifd_2)
 # Get Standard Errors for fRegress()
-# takes a while!
+# can skip this for now: takes a while!
 fRegress_best_fit_stderrList_2 <- fRegress.stderr(y = fRegress_best_fit_2,
                                                   y2cMap = y2cMap,
                                                   SigmaE = err_fd_cov_eval_2)
-
 names(fRegress_best_fit_stderrList_2$betastderrlist) <- names(fRegress_best_fit_2$betaestlist)
-```
 
-### Comparison:
 
-Compare different point estimates: 
 
-```{r}
+# Comparison: -------------------------------------------------------------
+
+
 pffr_coefs <- sapply(coef(pffr_fit)[["smterms"]], function(x) x[["value"]])
 colnames(pffr_coefs) <- stringr::str_remove(colnames(pffr_coefs), "\\(yindex\\)")
 colnames(pffr_coefs)[colnames(pffr_coefs) == "Healthy_Control"] <- "Healthy Control"
@@ -463,24 +300,17 @@ for(j in c("Intercept", "Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous")
   lines(0:100, fosr$est.func[, j], col = 4)
   lines(pffr_yind, pffr_coefs[,j], col = 5)
 }
-```
+# all reasonably similar!
 
-Compare pointwise CIs for a single coefficient. 
-
-**Note:** Because $\beta_5(t)$ is only implicitly defined as $-\sum_a \beta_a (t)$ using some of the approaches, it is slightly more difficult to get CIs for this parameter as we need to know the covariance between other parameters (e.g., $\text{Cov}(\beta_{1}(s), \beta_{2}(t))$). However `fosr()` provides this automatically. We do not try to calculate it here.
-
-```{r, fig.asp=1}
 # Let's extract point wise confidence intervals
 j <- "Hip"
 
 pffr_se_j <- coef(pffr_fit)[["smterms"]][[paste0(j, "(yindex)")]][["se"]]
-
-# create data for plot:
 plot_hip_dt <- data.table(t = c(0:100, 0:100, 0:100, pffr_yind),
-           model = c(rep("3. P-GLS (\\texttt{fosr()})", 101),
-                     rep("1. Two-Step (\\texttt{fosr2s()})", 101),
-                     rep("2. P-OLS (\\texttt{fRegress()})", 101),
-                     rep("4. FAMM (\\texttt{pffr()})", length(pffr_yind))
+           model = c(rep("\\textbf{3.} P-GLS (\\texttt{fosr()})", 101),
+                     rep("\\textbf{1.} Two-Step (\\texttt{fosr2s()})", 101),
+                     rep("\\textbf{2.} P-OLS (\\texttt{fRegress()})", 101),
+                     rep("\\textbf{4.} FAMM (\\texttt{pffr()})", length(pffr_yind))
                      ),
            point_est = c(fosr$est.func[, j],
                          fosr2s$est.func[, j],
@@ -496,13 +326,11 @@ plot_hip_dt <- data.table(t = c(0:100, 0:100, 0:100, pffr_yind),
                      pffr_coefs[, j] + 2 * pffr_se_j))
 
 plot_hip_dt[, model := factor(model, levels = c(
-  "1. Two-Step (\\texttt{fosr2s()})",
-  "2. P-OLS (\\texttt{fRegress()})",
-  "3. P-GLS (\\texttt{fosr()})",
-  "4. FAMM (\\texttt{pffr()})"
+  "\\textbf{1.} Two-Step (\\texttt{fosr2s()})",
+  "\\textbf{2.} P-OLS (\\texttt{fRegress()})",
+  "\\textbf{3.} P-GLS (\\texttt{fosr()})",
+  "\\textbf{4.} FAMM (\\texttt{pffr()})"
 ))]
-
-
 
 compare_plot <- ggplot(data = plot_hip_dt) +
   aes(x = t, y = point_est) +
@@ -513,19 +341,31 @@ compare_plot <- ggplot(data = plot_hip_dt) +
   labs(y = "$\\beta_4 (t)$ Impaired: Hip",
        x = "Normalised Time ($\\%$ of Stance)")
 compare_plot
-```
 
-## Bootstrap Simultaneous Bands
+tikz(here::here("chapter-06", "figures", "fosr-coefs-different-methods.tex"),
+     width = 1 * doc_width_inches, standAlone = TRUE,
+     height = 0.9 *  doc_width_inches)
+compare_plot
+dev.off()
 
-Perform bootstrap. Model fits done using `fosr()`.
 
-```{r}
+tinytex::lualatex(here::here("chapter-06", "figures", "fosr-coefs-different-methods.tex"))
+
+# -------------------------------------------------------------------------
+
+
+
+
+# Do bootstrap: -----------------------------------------------------------
+
+# choose to use P-GLS for this:
+# Fosr --------------------------------------------------------------------
 inds_for_bootstrap <- seq_len(nrow(modmat))
 B <- 1000 # number of bootstrap samples.
 bootstrap_estimates <- array(data = NA, dim = c(101, 6, B))
 set.seed(96)
 for(b in seq_len(B)) {
-  # print(paste0("Bootstrap Iteration ", b, " of ", B))
+  print(paste0("Bootstrap Iteration ", b, " of ", B))
   # select bootstrap sample of observations:
   bootstrap_inds <- sample(inds_for_bootstrap, replace = TRUE)
   # fit model on these observations:
@@ -536,12 +376,11 @@ for(b in seq_len(B)) {
                  argvals = 0:100)
   bootstrap_estimates[,,b] <- fosr_b$est.func
 }
-```
 
-Compare *pointwise* CIs using the bootstrap and analytic SEs (i.e., those returned by original `fosr()` fit.)
 
-```{r}
 se_mat <- apply(bootstrap_estimates, MARGIN = c(1, 2), FUN = sd)
+
+
 
 par(mfrow = c(2, 3))
 for(j in 1:6) {
@@ -556,34 +395,10 @@ for(j in 1:6) {
   lines(0:100, fosr$est.func[,j] + 2 * fosr$se.func[,j], col = 3, lty = 2)
   lines(0:100, fosr$est.func[,j] - 2 * fosr$se.func[,j], col = 3, lty = 2)
 }
-```
+# bootstrap and analytic intervals v similar!
 
-^ almost identical!
-
-Now construct simultaneous bands using the following algorithm (Crainiceanu et al., 2012; Ruppert, Wand and Carroll, 2003):
-
---------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------
-
-1. Calculate $\widehat{\Sigma}_p(s, t) = \widehat{\text{Cov}}(\widehat{\beta}_p(s), \widehat{\beta}_p (t))$ from bootstrap samples. And also $\widehat{\text{SE}}(\widehat{\beta}_p (t)) = \sqrt{\widehat{\Sigma}_p(t, t)}.$
-
-2. `for` $r$ in $1:\text{nsamples}$ 
-
-   a.  Simulate from $\widehat{\beta}_p^r(s)$ from $GP(\widehat{\beta}(t), \widehat{\Sigma}_p(s, t))$.
-
-   b. Calculate $\text{maxT}_r = \max_{t \in [0,100]} \frac{|\widehat{\beta}_p(t) - \widehat{\beta}_p^r(t)|} {\widehat{\text{SE}}(\widehat{\beta}_p (t))}$
-
-3. Compute $q_{p, 0.95}$ as the $95$th empirical percentile of $\text{maxT}_1,\dots, \text{maxT}_{\text{nsamples}}$.
-
-4. Construct CI: $\widehat{\beta}_p(t) \pm q_{p, 0.95} \widehat{\text{SE}}(\widehat{\beta}_p (t))$
-
---------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------
-
-
-
-```{r}
 # Do the Crainiceanu et al. (2012) /  Ruppert et al.  (2003) Bands: -------
+
 q_vector <- vector(mode = "numeric", length = 6)
 n_samples <- 100000 # no. of samples from mvt normal.
 for(j in seq_len(6)) {
@@ -598,17 +413,7 @@ for(j in seq_len(6)) {
   q_0.95 <- quantile(t_stat_max_abs_samples, probs = 0.95)
   q_vector[j] <- q_0.95
 }
-```
 
-How much wider are $q_{p, 0.95}$ than the standard critical value of $2$ (or more precisely $1.96$) for pointwise CIs?
-
-```{r}
-q_vector/2
-```
-
-Gather data for plot.
-
-```{r}
 lower_pw <- upper_pw <- lower_sim <- upper_sim <- matrix(NA, nrow = 101, ncol = 6)
 for(j in seq_len(j)) {
   print(j)
@@ -619,11 +424,10 @@ for(j in seq_len(j)) {
   lower_sim[, j] <- Beta_hat - q_vector[j] * se_boot_hat
   upper_sim[, j] <- Beta_hat + q_vector[j] * se_boot_hat
 }
-```
 
-Publication-ready plot.
 
-```{r}
+q_vector/2
+
 plot_dt <- data.table(t = rep(0:100),
                       parameter = rep(c("Intercept", "Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous"), each = 101),
                       beta_hat = c(fosr$est.func),
@@ -651,7 +455,7 @@ coef_plot <- ggplot(data = plot_dt) +
              inherit.aes = F,
              aes(x = 50, y = -0.06), color = NA) +
   geom_point(data = . %>% filter(parameter != "Intercept"),
-             inherit.aes = F, aes(x = 50, y = 0.06), color = NA) +
+             inherit.aes = F, aes(x = 50, y = 0.07), color = NA) +
   geom_line(aes(y = lower_pw), linetype = "dotted") +
   geom_line(aes(y = upper_pw), linetype = "dotted") +
   geom_ribbon(mapping = aes(ymin = lower_sim, ymax = upper_sim), alpha = 0.25, col = NA) +
@@ -662,33 +466,35 @@ coef_plot <- ggplot(data = plot_dt) +
   scale_fill_manual(values = c("black", scales::hue_pal()(5)))
 
 coef_plot
-```
 
-## Permutation F-Tests
+tikz(here::here("chapter-06", "figures", "fosr-coefs-pw-sim.tex"),
+     width = 1 * doc_width_inches, standAlone = TRUE,
+     height = (2.1/3) *  doc_width_inches)
+coef_plot
+dev.off()
 
-Do permutations for both P-OLS and P-GLS methods using $400$ permutations (note: `warnings` turned off).
 
-```{r, warning=FALSE}
+tinytex::lualatex(here::here("chapter-06", "figures", "fosr-coefs-pw-sim.tex"))
+
+
+# -------------------------------------------------------------------------
+
 set.seed(1)
 Fperm_fd <- Fperm.fd(yfdPar = fdobj,
                      xfdlist = xfd_list_2,
                      betalist = beta_list_best_2, 
                      nperm = 400, 
                      argvals = 0:100)
-```
-
-```{r, warning=FALSE, message=FALSE}
 fosr_perm <- fosr.perm(fdobj = fdobj,
                        X = modmat, # design matrix
                        con = constraints, # sum-to-zero constraints
                        method = "GLS", # (Reiss et al., 2010)  
                        argvals = 0:100, 
                        nperm = 400)
-```
 
-Side-by-side comparison:
-
-```{r}
+tikz(here::here("chapter-06", "figures", "fosr-perm-tests.tex"),
+     width = 1 * doc_width_inches, standAlone = TRUE,
+     height = 0.5 *  doc_width_inches)
 par(mfrow = c(1, 2))
 matplot(Fperm_fd$Fnullvals,
         col = "grey",
@@ -696,38 +502,15 @@ matplot(Fperm_fd$Fnullvals,
         lty = 1,
         ylab = "F statistics",
         xlab = "Normalised Time ($\\%$ of Stance)",
-        ylim = c(-0.0005, 0.45),
+        ylim = c(-0.0005, 1),
         xlim = c(0, 100))
 title("\\texttt{Fperm.fd()}")
 lines(Fperm_fd$Fvals, type = "l", col = "blue")
 abline(h = Fperm_fd$qval, col = "red", lty = 2)
 plot(fosr_perm, 
      xlabel = "Normalised Time ($\\%$ of Stance)",
-     ylim = c(0, 70))
+     ylim = c(0, 170))
 title("\\texttt{fosr.perm()}")
-```
+dev.off()
 
-^ Results identical apart from scaling of $F$-statistic.
-
-------------------------------------------------------------------------------------------------------------------------------------
-
-# Session Information (Reproducibility)
-
-```{r}
-sessionInfo()
-```
-
-Total Computing Time:
-
-```{r}
-Sys.time() - time_start
-```
-
-# References
-
-* James O.. Ramsay, Giles Hooker, and Spencer Graves. Functional Data Analysis with R and MATLAB. USA: Springer, 2009.
-
-* Crainiceanu, C. M., Staicu, A. M., Ray, S., & Punjabi, N. (2012). Bootstrap‐based inference on the difference in the means of two correlated functional processes. Statistics in medicine, 31(26), 3223-3240.
-
-* Ruppert, D., Wand, M. P., & Carroll, R. J. (2003). Semiparametric regression (No. 12). Cambridge university press.
-
+tinytex::lualatex(here::here("chapter-06", "figures", "fosr-perm-tests.tex"))

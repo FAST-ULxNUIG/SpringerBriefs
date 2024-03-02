@@ -8,7 +8,8 @@ Case Study Part 1
 ``` r
 library(tidyverse)  # CRAN v1.3.1 
 library(data.table) # CRAN v1.14.2
-library(fda)        # CRAN v5.5.1        
+library(fda)        # CRAN v5.5.1
+library(modelsummary) # CRAN v1.14.2(for table)
 ```
 
 ## Load Custom Functions
@@ -71,6 +72,39 @@ GRF_dataset_PRO_meta_long_sample[, component := factor(component,
 
 ![](Case-Study-Part-01-MD_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
+# Sample Characteristics
+
+Simple table to summarise the data.
+
+``` r
+GRF_dataset_PRO_meta_subject_char <- GRF_dataset_PRO_meta[, .(bilateral_obs = uniqueN(side) == 2), by = .(SUBJECT_ID, CLASS_LABEL, SEX, AGE, BODY_MASS)]
+
+GRF_dataset_PRO_meta_subject_char[, SEX := factor(SEX, levels = c(0, 1), labels = c("Female", "Male"))]
+stopifnot(GRF_dataset_PRO_meta_subject_char[, unique(bilateral_obs) == TRUE])
+
+GRF_dataset_PRO_meta_subject_char[, CLASS_LABEL := factor(CLASS_LABEL, # re-label facets for strip texts.
+                       levels = c("HC", "A", "K", "H", "C"),
+                       labels = c("Healthy Control", "Ankle", "Knee", "Hip", "Calcaneous"))]
+
+setnames(GRF_dataset_PRO_meta_subject_char, old = c("SEX", "CLASS_LABEL", "AGE", "BODY_MASS"), new =  c("Sex", "Impairment Class", "Age (years)", "Body Mass (kg)"))
+
+datasummary_balance(~ 1, data = GRF_dataset_PRO_meta_subject_char[, c("Age (years)", "Body Mass (kg)", "Sex", "Impairment Class")], output = "markdown")
+```
+
+|                  |                 | Mean | Std. Dev. |
+|:-----------------|----------------:|-----:|----------:|
+| Age (years)      |                 | 40.8 |      12.4 |
+| Body Mass (kg)   |                 | 81.0 |      16.7 |
+| :—————–          |         —————-: |  —–: |     ———-: |
+|                  |                 |    N |      Pct. |
+| Sex              |          Female |  195 |      26.9 |
+|                  |            Male |  530 |      73.1 |
+| Impairment Class | Healthy Control |  145 |      20.0 |
+|                  |           Ankle |  145 |      20.0 |
+|                  |            Knee |  145 |      20.0 |
+|                  |             Hip |  145 |      20.0 |
+|                  |      Calcaneous |  145 |      20.0 |
+
 # Basis Expansion/ Interpolation
 
 Loop through and try different basis sizes (different values of $K$).
@@ -120,7 +154,6 @@ abline(v = which(k_seq==35), lwd = 3, col = "green4")
 Choose $K=35$ basis functions and plot some fits:
 
 ``` r
-# Do basis representation: ------------------------------------------------
 bspl_35 <- create.bspline.basis(rangeval = c(0, 100), nbasis = 35, norder = 4)
 GRF_dataset_PRO_meta_smooth_basis <- smooth.basis(argvals = 0:100,
                                                   y = y,
@@ -269,29 +302,31 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ##  [1] fda_5.5.1         deSolve_1.30      fds_1.8           RCurl_1.98-1.6   
-    ##  [5] rainbow_3.6       pcaPP_1.9-74      MASS_7.3-55       Matrix_1.4-0     
-    ##  [9] data.table_1.14.2 forcats_0.5.1     stringr_1.4.0     dplyr_1.1.2      
-    ## [13] purrr_0.3.4       readr_2.1.2       tidyr_1.2.0       tibble_3.2.1     
-    ## [17] ggplot2_3.4.2     tidyverse_1.3.1  
+    ##  [1] modelsummary_1.4.1 fda_5.5.1          deSolve_1.30       fds_1.8           
+    ##  [5] RCurl_1.98-1.6     rainbow_3.6        pcaPP_1.9-74       MASS_7.3-55       
+    ##  [9] Matrix_1.4-0       data.table_1.14.2  forcats_0.5.1      stringr_1.4.0     
+    ## [13] dplyr_1.1.2        purrr_0.3.4        readr_2.1.2        tidyr_1.2.0       
+    ## [17] tibble_3.2.1       ggplot2_3.4.2      tidyverse_1.3.1   
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] bitops_1.0-7       fs_1.6.2           lubridate_1.8.0    httr_1.4.2        
-    ##  [5] rprojroot_2.0.2    tools_4.1.2        backports_1.4.1    utf8_1.2.2        
-    ##  [9] R6_2.5.1           KernSmooth_2.23-20 DBI_1.1.2          colorspace_2.0-3  
-    ## [13] withr_2.5.0        tidyselect_1.2.0   compiler_4.1.2     cli_3.6.0         
-    ## [17] rvest_1.0.2        xml2_1.3.3         labeling_0.4.2     scales_1.2.1      
-    ## [21] mvtnorm_1.1-3      digest_0.6.29      rmarkdown_2.11     pkgconfig_2.0.3   
-    ## [25] htmltools_0.5.5    dbplyr_2.1.1       fastmap_1.1.0      highr_0.9         
-    ## [29] rlang_1.1.1        readxl_1.3.1       rstudioapi_0.13    generics_0.1.2    
-    ## [33] farver_2.1.0       jsonlite_1.8.0     mclust_5.4.9       car_3.0-12        
-    ## [37] magrittr_2.0.2     Rcpp_1.0.10        munsell_0.5.0      fansi_1.0.2       
-    ## [41] abind_1.4-5        lifecycle_1.0.3    stringi_1.7.6      yaml_2.3.5        
-    ## [45] carData_3.0-5      grid_4.1.2         crayon_1.5.0       lattice_0.20-45   
-    ## [49] haven_2.4.3        cowplot_1.1.1      hms_1.1.1          knitr_1.37        
-    ## [53] pillar_1.9.0       ggpubr_0.4.0       ggsignif_0.6.3     reprex_2.0.1      
-    ## [57] glue_1.6.2         evaluate_0.15      modelr_0.1.8       vctrs_0.6.2       
-    ## [61] tzdb_0.2.0         cellranger_1.1.0   gtable_0.3.0       assertthat_0.2.1  
-    ## [65] ks_1.13.4          xfun_0.39          broom_0.7.12       pracma_2.3.8      
-    ## [69] rstatix_0.7.0      cluster_2.1.2      ellipsis_0.3.2     hdrcde_3.4        
-    ## [73] here_1.0.1
+    ##  [1] bitops_1.0-7       fs_1.6.2           lubridate_1.8.0    insight_0.19.3    
+    ##  [5] webshot_0.5.2      httr_1.4.2         rprojroot_2.0.2    tools_4.1.2       
+    ##  [9] backports_1.4.1    utf8_1.2.2         R6_2.5.1           DT_0.20           
+    ## [13] KernSmooth_2.23-20 DBI_1.1.2          colorspace_2.0-3   withr_2.5.0       
+    ## [17] tidyselect_1.2.0   compiler_4.1.2     cli_3.6.0          rvest_1.0.2       
+    ## [21] gt_0.9.0           xml2_1.3.3         labeling_0.4.2     checkmate_2.2.0   
+    ## [25] scales_1.2.1       mvtnorm_1.1-3      tables_0.9.17      systemfonts_1.0.4 
+    ## [29] digest_0.6.29      rmarkdown_2.11     svglite_2.1.0      pkgconfig_2.0.3   
+    ## [33] htmltools_0.5.5    highr_0.9          dbplyr_2.1.1       fastmap_1.1.0     
+    ## [37] htmlwidgets_1.6.2  rlang_1.1.1        readxl_1.3.1       rstudioapi_0.13   
+    ## [41] farver_2.1.0       generics_0.1.2     jsonlite_1.8.0     mclust_5.4.9      
+    ## [45] car_3.0-12         magrittr_2.0.2     kableExtra_1.3.4   Rcpp_1.0.10       
+    ## [49] munsell_0.5.0      fansi_1.0.2        abind_1.4-5        lifecycle_1.0.3   
+    ## [53] stringi_1.7.6      yaml_2.3.5         carData_3.0-5      grid_4.1.2        
+    ## [57] crayon_1.5.0       lattice_0.20-45    cowplot_1.1.1      haven_2.4.3       
+    ## [61] hms_1.1.1          knitr_1.37         pillar_1.9.0       ggpubr_0.4.0      
+    ## [65] ggsignif_0.6.3     reprex_2.0.1       glue_1.6.2         evaluate_0.15     
+    ## [69] modelr_0.1.8       vctrs_0.6.2        tzdb_0.2.0         cellranger_1.1.0  
+    ## [73] gtable_0.3.0       assertthat_0.2.1   ks_1.13.4          xfun_0.39         
+    ## [77] broom_0.7.12       pracma_2.3.8       rstatix_0.7.0      viridisLite_0.4.0 
+    ## [81] cluster_2.1.2      ellipsis_0.3.2     hdrcde_3.4         here_1.0.1
