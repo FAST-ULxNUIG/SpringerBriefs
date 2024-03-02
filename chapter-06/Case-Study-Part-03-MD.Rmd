@@ -5,7 +5,7 @@ output: github_document
 
 Analysis of impaired movement using FPCA and function-on-scalar regression.
 
-**Note:** This script takes about $4$ hours to run on my $2019$ MacBook pro. 
+**Note:** This script takes about $4$ hours to run on my $2019$ MacBook pro.
 This is primarily due to the bootstrap using $1000$ bootstrap replicates. 
 This number could be reduced or the bootstrap skipped to speed it up.
 
@@ -649,7 +649,7 @@ coef_plot <- ggplot(data = plot_dt) +
   geom_line(aes(y = beta_hat)) +
   geom_point(data = . %>% filter(parameter != "Intercept"), # TRICK :-)
              inherit.aes = F,
-             aes(x = 50, y = -0.06), color = NA) +
+             aes(x = 50, y = -0.07), color = NA) +
   geom_point(data = . %>% filter(parameter != "Intercept"),
              inherit.aes = F, aes(x = 50, y = 0.06), color = NA) +
   geom_line(aes(y = lower_pw), linetype = "dotted") +
@@ -696,14 +696,14 @@ matplot(Fperm_fd$Fnullvals,
         lty = 1,
         ylab = "F statistics",
         xlab = "Normalised Time ($\\%$ of Stance)",
-        ylim = c(-0.0005, 0.45),
+        ylim = c(-0.0005, 1),
         xlim = c(0, 100))
 title("\\texttt{Fperm.fd()}")
 lines(Fperm_fd$Fvals, type = "l", col = "blue")
 abline(h = Fperm_fd$qval, col = "red", lty = 2)
 plot(fosr_perm, 
      xlabel = "Normalised Time ($\\%$ of Stance)",
-     ylim = c(0, 70))
+     ylim = c(0, 170))
 title("\\texttt{fosr.perm()}")
 ```
 
