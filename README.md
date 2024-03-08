@@ -135,6 +135,23 @@ title("Medio-Lateral")
 
 <img src="README_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
+# Packages
+
+We primarily use the `fda` (Ramsay, Hooker and Graves, 2020) and
+`refund` (Goldsmith et al., 202) `R` packages to fit functional data
+analysis models to biomechanical data.
+
+These extensive software packages have full, dedicated textbooks on how
+to use them:
+
+- `fda`: Ramsay, Hooker and Graves (2009)
+
+- `refund`: Crainiceanu, Goldsmith, Leroux and Cui (2024) (just
+  released)
+
+These texts, along with the reference manuals for the packages, as great
+places to learn about the full functionality of the packages.
+
 # `tikzDevice`
 
 We use the [`tikzDevice`
@@ -206,6 +223,18 @@ then calls such as `tikz(...)` can be ignored.
 - Sharpsteen, C., Bracken, C., Müller, K., Xie, Y., Stubner, R., &
   Bellack, N. (2023). R package ‘tikzDevice’
   <https://github.com/daqana/tikzDevice>.
+
+## `refund`
+
+- Goldsmith, J., Scheipl, F., Huang, L., Wrobel, J., Di, C.-Z., Gellar,
+  J., Harezlak, J., McLean, M. W., Swihart, B., Xiao, L.,
+  Crainiceanu, C. M., Reiss, P. T., Chen, Y., Greven, S., Huo, L.,
+  Kundu, M. G., Park, S. Y., Miller, D. L., & Staicu, A.-M. (2020).
+  `refund`: Regression with Functional Data (0.1-23) \[Sp-ES\].
+  <https://CRAN.R-project.org/package=refund>
+
+- Crainiceanu, C. M., Goldsmith, J., Leroux, A., & Cui, E. (2024).
+  Functional Data Analysis with R (1st edition). Chapman and Hall/CRC.
 
 # Session Information (Reproducibility)
 
