@@ -113,7 +113,7 @@ hip_vs_knee <- hip_knee_df %>%
   geom_path(lwd = 1) +
   geom_point() +
   labs(x = "Hip Angle ($^{\\circ}$)",
-       title = "(b) Childrens' Gait",
+       title = "(b) Children's Gait",
        y = "Knee Angle ($^{\\circ}$)") + # axis labels
   theme(legend.position = "none") # don't need a legend
 
@@ -201,10 +201,10 @@ color_cut <- cut(time, record_1_launches)
 
 ## 9.3 Plot ----------------------------------------------------------------
 
-open3d()
-plot3d(x_t$X1, y_t$X1, z_t$X1, type = "l", xlab = "x", ylab = "y", zlab = "z", col = as.numeric(color_cut), size = 5)
-plot3d(x_t$X1, y_t$X1, z_t$X1, add = T, col = as.numeric(color_cut), size = 6)
-par3d(windowRect = c(20, 30, 800, 800), cex = 1.5)
+# open3d()
+# plot3d(x_t$X1, y_t$X1, z_t$X1, type = "l", xlab = "x", ylab = "y", zlab = "z", col = as.numeric(color_cut), size = 5)
+# plot3d(x_t$X1, y_t$X1, z_t$X1, add = T, col = as.numeric(color_cut), size = 6)
+# par3d(windowRect = c(20, 30, 800, 800), cex = 1.5)
 # save current angle viewpoint
 #(view <- par3d("userMatrix"))
 #par3d(userMatrix = view)
