@@ -58,7 +58,7 @@ matplot(x = gaittime,
 grid(lty = 1)
 ```
 
-2. **The Juggling Data** were initially downloaded from (https://archive.mbi.ohio-state.edu/vod/mbi-media/e-162/1400789954_juggling.zip) but the link is no longer working. <span style="color: red;">Note: Pending Permission from Prof. Jim Ramsay</span>. Therefore, we have uploaded a copy of the data to :open_file_folder: [**chapter-02/juggling-data/**](chapter-02/juggling-data/), which can be accessed from within this repository as follows:
+2. **The Juggling Data** were initially downloaded from (https://archive.mbi.ohio-state.edu/vod/mbi-media/e-162/1400789954_juggling.zip) but the link is no longer working. With permission from Prof. Jim Ramsay, we have uploaded a copy of the data to :open_file_folder:[**chapter-02/juggling-data/**](chapter-02/juggling-data/), which can be accessed from within this repository as follows:
 
 ```{r, fig.asp = 1, fig.width=8, message=FALSE, warning=FALSE, fig.align='center'}
 x <- readr::read_table2("chapter-02/juggling-data/Xcoord.txt", col_names = FALSE) # x coordinates
