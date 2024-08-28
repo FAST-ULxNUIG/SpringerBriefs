@@ -1,0 +1,6 @@
+---
+title: "Errata for 'Functional Data Analysis in Biomechanics'"
+output: github_document
+---
+
+None yet.

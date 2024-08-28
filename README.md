@@ -1,9 +1,20 @@
-Code for ‘FDA in Biomechanics’
+Code for ‘*Functional Data Analysis in Biomechanics: A Concise Review of
+Core Techniques, Applications and Emerging Areas*’
 ================
 Edward Gunning
 
-This repository contains `R` code for the manuscript ‘FDA in
-Biomechanics’.
+This repository contains `R` code for the SpringerBriefs publication
+[‘Functional Data Analysis in
+Biomechanics’](https://link.springer.com/book/9783031688614). It is due
+to be published in October 2024.
+
+<figure>
+<img src="images/book_frontcover.png"
+alt="The front cover for ‘Functional Data Analysis in Biomechanics’." />
+<figcaption aria-hidden="true">The front cover for <a
+href="https://link.springer.com/book/9783031688614">‘Functional Data
+Analysis in Biomechanics’</a>.</figcaption>
+</figure>
 
 ## Notes
 
@@ -241,34 +252,36 @@ then calls such as `tikz(...)` can be ignored.
 sessionInfo()
 ```
 
-    ## R version 4.1.2 (2021-11-01)
-    ## Platform: x86_64-apple-darwin17.0 (64-bit)
-    ## Running under: macOS Big Sur 10.16
+    ## R version 4.4.1 (2024-06-14)
+    ## Platform: aarch64-apple-darwin20
+    ## Running under: macOS Sonoma 14.5
     ## 
     ## Matrix products: default
-    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
     ## 
     ## locale:
-    ## [1] en_IE.UTF-8/en_IE.UTF-8/en_IE.UTF-8/C/en_IE.UTF-8/en_IE.UTF-8
+    ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+    ## 
+    ## time zone: Europe/Dublin
+    ## tzcode source: internal
     ## 
     ## attached base packages:
     ## [1] splines   stats     graphics  grDevices utils     datasets  methods  
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] fda_5.5.1      deSolve_1.30   fds_1.8        RCurl_1.98-1.6 rainbow_3.6   
-    ## [6] pcaPP_1.9-74   MASS_7.3-55    Matrix_1.4-0  
+    ## [1] fda_6.1.8       deSolve_1.40    fds_1.8         RCurl_1.98-1.14
+    ## [5] rainbow_3.8     pcaPP_2.0-4     MASS_7.3-60.2  
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] pracma_2.3.8       pillar_1.9.0       compiler_4.1.2     highr_0.9         
-    ##  [5] ks_1.13.4          bitops_1.0-7       tools_4.1.2        digest_0.6.29     
-    ##  [9] mclust_5.4.9       tibble_3.2.1       lifecycle_1.0.3    evaluate_0.15     
-    ## [13] lattice_0.20-45    pkgconfig_2.0.3    rlang_1.1.1        cli_3.6.0         
-    ## [17] rstudioapi_0.13    yaml_2.3.5         mvtnorm_1.1-3      xfun_0.39         
-    ## [21] fastmap_1.1.0      stringr_1.4.0      cluster_2.1.2      knitr_1.37        
-    ## [25] vctrs_0.6.2        hms_1.1.1          grid_4.1.2         glue_1.6.2        
-    ## [29] hdrcde_3.4         R6_2.5.1           fansi_1.0.2        rmarkdown_2.11    
-    ## [33] tzdb_0.2.0         readr_2.1.2        magrittr_2.0.2     ellipsis_0.3.2    
-    ## [37] htmltools_0.5.5    colorspace_2.0-3   utf8_1.2.2         KernSmooth_2.23-20
-    ## [41] stringi_1.7.6      crayon_1.5.0
+    ##  [1] Matrix_1.7-0       crayon_1.5.3       compiler_4.4.1     highr_0.11        
+    ##  [5] ks_1.14.2          bitops_1.0-7       cluster_2.1.6      yaml_2.3.8        
+    ##  [9] fastmap_1.2.0      lattice_0.22-6     readr_2.1.5        R6_2.5.1          
+    ## [13] knitr_1.47         tibble_3.2.1       tzdb_0.4.0         pillar_1.9.0      
+    ## [17] rlang_1.1.4        utf8_1.2.4         hdrcde_3.4         xfun_0.45         
+    ## [21] cli_3.6.3          magrittr_2.0.3     digest_0.6.36      grid_4.4.1        
+    ## [25] rstudioapi_0.16.0  mvtnorm_1.2-5      hms_1.1.3          mclust_6.1.1      
+    ## [29] lifecycle_1.0.4    vctrs_0.6.5        KernSmooth_2.23-24 glue_1.7.0        
+    ## [33] evaluate_0.24.0    pracma_2.4.4       fansi_1.0.6        colorspace_2.1-0  
+    ## [37] rmarkdown_2.27     tools_4.4.1        pkgconfig_2.0.3    htmltools_0.5.8.1

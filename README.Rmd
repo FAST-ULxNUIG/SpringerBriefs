@@ -1,5 +1,5 @@
 ---
-title: "Code for 'FDA in Biomechanics'"
+title: "Code for '*Functional Data Analysis in Biomechanics: A Concise Review of Core Techniques, Applications and Emerging Areas*'"
 output: github_document
 author: Edward Gunning
 ---
@@ -8,7 +8,9 @@ author: Edward Gunning
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This repository contains `R` code for the manuscript 'FDA in Biomechanics'.
+This repository contains `R` code for the SpringerBriefs publication ['Functional Data Analysis in Biomechanics'](https://link.springer.com/book/9783031688614). It is due to be published in October 2024.
+
+![The front cover for ['Functional Data Analysis in Biomechanics'](https://link.springer.com/book/9783031688614).](images/book_frontcover.png)
 
 ## Notes
 
